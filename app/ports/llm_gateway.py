@@ -29,9 +29,22 @@
 
 from __future__ import annotations
 
-from typing import Protocol, runtime_checkable
+from typing import Final, Protocol, runtime_checkable
 
 from pydantic import BaseModel
+
+#: 没有接入模型时的 `model_version`。它是**配置快照**（"这一批没接模型"），
+#: 不是运行结果 —— 单次调用失败记在规则的 `reason_code` 上，不改它。
+NONE_MODEL_ID: Final[str] = "none:fallback"
+
+
+def model_version_of(gateway: "LLMGateway | None") -> str:
+    """批次的 `model_version`：**唯一**的推导处。
+
+    ⚠️ 入队方（REST / MCP）与执行方（Worker）必须都调用它，
+    而不是各自拼一个模型名 —— 两边分叉时，批次会声明一个它并没有使用的模型。
+    """
+    return NONE_MODEL_ID if gateway is None else gateway.model_id
 
 
 @runtime_checkable

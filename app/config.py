@@ -98,6 +98,9 @@ class Settings(BaseSettings):
     #: 单次送进模型的正文上限（字符）。**超限时拒绝判断**，不截断 ——
     #: 截断会让"判断不完整"与"判断为否"在下游变得无法区分（见 app/rules/llm_judge.py）。
     llm_max_input_chars: int = 20_000
+    #: 是否要求服务端支持 JSON 模式。自建/量化的 OpenAI 兼容服务常常直接 400 ——
+    #: 关掉之后仍靠 schema 校验兜底：格式约束不是正确性的来源，**校验**才是。
+    llm_use_json_response_format: bool = True
 
     # ---- harness（回写门禁）----
     # True：整体风险为 high 时必须人工确认才允许回写。"AI 不代替人工审批"的执行开关。

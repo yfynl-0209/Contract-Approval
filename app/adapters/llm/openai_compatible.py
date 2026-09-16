@@ -155,6 +155,17 @@ class OpenAiCompatibleLlm:
             )
         return self._client
 
+    def close(self) -> None:
+        """关闭底层客户端的连接池。**只关已经构造过的**（构造是惰性的）。
+
+        与 `MockApprovalGateway.close()` 同一约定：进程退出时由组合根调用，
+        不主动建一个再关 —— "从未用过网关"的进程不该凭空付一次构造开销。
+        """
+        client, self._client = self._client, None
+        close = getattr(client, "close", None)
+        if callable(close):
+            close()
+
 
 def _error_fields(exc: ValidationError) -> list[str]:
     """只取**字段路径**，不取值 —— 值里可能含合同原文。"""

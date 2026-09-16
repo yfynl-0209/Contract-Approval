@@ -84,6 +84,7 @@ from app.errors import PermanentError
 from app.models import ApprovalTask, ContractParse, ParseArtifact, ReviewRun
 from app.models import RuleEvaluation as RuleHitRow
 from app.ports.field_contract import BasicInfoFieldSet, ClauseFieldSet, ExtractedField
+from app.ports.llm_gateway import NONE_MODEL_ID
 from app.ports.object_storage import ObjectStorage
 from app.ports.parse_document import StandardDocument
 from app.rules.fact_resolver import resolve_derived_fields
@@ -526,7 +527,9 @@ def rule_ids_by_code(rules: Sequence[ActiveRule]) -> dict[str, int]:
 #: 无模型时的 `model_version`。它是**配置快照**（接入了哪个模型），
 #: 不是运行结果 —— 单次调用失败记在该规则的 `reason_code` 上，不得改它。
 #: M5 阶段没有接入真实模型：9 条 `llm` 规则走规则自带的 fallback（验收 3/19）。
-DEFAULT_MODEL_VERSION: Final[str] = "none:fallback"
+#: M11：改为引用端口常量 —— "没有模型时用什么版本号"只有一个来源，
+#: 不再容忍组合根与这里各写一个 `"none:fallback"` 字面量。
+DEFAULT_MODEL_VERSION: Final[str] = NONE_MODEL_ID
 
 #: 引擎配置版本（阈值 / 开关）。
 #: ⚠️ 改了影响判定的配置就必须改它，否则同一份"输入"会复用旧批次的结论 ——
