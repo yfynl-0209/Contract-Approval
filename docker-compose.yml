@@ -1,0 +1,171 @@
+# 合同审查系统 —— 生产形态拓扑（M9）。
+#
+# ⚠️ **凭证不进本文件**：所有密码经环境变量注入（`${VAR:?}` 缺失即拒绝启动）。
+#    供 compose 读取的变量放在部署环境的 .env（compose 自动读取项目根 .env）
+#    或 CI 注入 —— 该 .env 与应用的 .env 是同一份（应用配置也在里面）。
+#
+# 拓扑纪律：
+# - postgres / redis / minio / api / worker / outbox-dispatcher / mock-approval
+#   只在**内网**（internal: true），无端口映射 —— 对外只暴露 frontend 网关；
+# - 有状态服务用命名卷；每个依赖都有 healthcheck；
+# - api / worker 用 `condition: service_healthy` 等依赖，**不用固定 sleep**；
+# - `migrate` 是一次性作业：Alembic 迁移 + 幂等种子，先于 API 就绪。
+#
+# 开发端口映射与调试覆盖在 docker-compose.override.yml（compose 默认叠加）。
+
+name: contract-approval
+
+x-backend: &backend
+  restart: unless-stopped
+  networks:
+    - internal
+  environment: &backend-env
+    # ⚠️ 变量名是 `DB_URL`（与 app/config.py 的字段对应），不是 DATABASE_URL
+    DB_URL: postgresql+psycopg://contract:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/contract
+    REDIS_URL: redis://redis:6379/0
+    STORAGE_BACKEND: minio
+    MINIO_ENDPOINT: minio:9000
+    MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:?MINIO_ROOT_USER is required}
+    MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD is required}
+    MINIO_BUCKET: contract-objects
+    MOCK_APPROVAL_BASE_URL: http://mock-approval:8001
+    MOCK_APPROVAL_TOKEN: ${MOCK_APPROVAL_TOKEN:?MOCK_APPROVAL_TOKEN is required}
+    AUTH_MODE: ${AUTH_MODE:-dev}
+    ENV: ${ENV:-production}
+    APP_HOST: 0.0.0.0
+    APP_PORT: "8000"
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+    minio:
+      condition: service_healthy
+    mock-approval:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16.4-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: contract
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: contract
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contract -d contract"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks:
+      - internal
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks:
+      - internal
+
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-02-28T09-55-16Z
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?MINIO_ROOT_USER is required}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD is required}
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "mc ready local || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks:
+      - internal
+
+  # 一次性作业：迁移 + 幂等种子（计划 Task 7：显式的一次性 Compose 作业）
+  migrate:
+    <<: *backend
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    restart: "no"
+    command: ["sh", "-c", "python scripts/wait_for_dependencies.py --timeout 60 && python scripts/run_migrate.py"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  mock-approval:
+    image: python:3.11.11-slim-bookworm
+    working_dir: /mock
+    command: >
+      sh -c "pip install --no-cache-dir fastapi==0.115.6 uvicorn[standard]==0.34.0 pydantic==2.10.4 &&
+             python -m uvicorn mock_approval.main:app --host 0.0.0.0 --port 8001"
+    volumes:
+      - ./mock_approval:/mock/mock_approval:ro
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request;urllib.request.urlopen('http://127.0.0.1:8001/health/live', timeout=3)\""]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks:
+      - internal
+
+  api:
+    <<: *backend
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health/live', timeout=3)\""]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+
+  worker:
+    <<: *backend
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    command: ["python", "scripts/run_worker.py"]
+    # 多副本安全：领取带 SKIP LOCKED + 租约；Redis 唤醒键同名只会多醒，不会漏
+
+  outbox-dispatcher:
+    <<: *backend
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    command: ["python", "scripts/run_outbox_dispatcher.py"]
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - internal
+      - edge
+
+networks:
+  internal:
+    internal: true
+  edge:
+
+volumes:
+  pg-data:
+  minio-data:

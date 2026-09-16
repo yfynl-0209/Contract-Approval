@@ -1,0 +1,29 @@
+# 后端 API 与 Worker 共用的 Python 运行时（差异只在启动命令）。
+# 固定运行时版本；非 root；不拷贝 .env / 测试 / 缓存 / 虚拟环境（见 .dockerignore）。
+FROM python:3.11.11-slim-bookworm
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+# 先装依赖再拷代码：依赖层不变时，代码改动不触发重装
+# ⚠️ 用国内镜像源：默认 PyPI 在本环境下拉大包（pymupdf ~20MB）会卡死
+COPY requirements.txt ./
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+
+# 运行时只需要：应用、入口脚本、schema（init_db 用）。测试 / 文档 / 前端不进镜像。
+COPY app ./app
+COPY scripts ./scripts
+COPY db ./db
+COPY alembic ./alembic
+COPY alembic.ini ./
+
+# 非 root：应用进程不需要任何特权
+RUN useradd --create-home --uid 10001 appuser && chown -R appuser:appuser /app
+USER appuser
+
+# 两个镜像共享本文件，由 COMPOSE 的 `command:` 覆盖启动命令；
+# 单独 build 本文件时默认起 API。
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

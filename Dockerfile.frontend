@@ -1,0 +1,22 @@
+# 前端：Node 构建 + Nginx 运行时（静态资源 + /api 反向代理到 api:8000）。
+FROM node:20.18.1-alpine AS build
+
+WORKDIR /web
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci
+
+COPY frontend ./
+# 构建期注入 API 基址（默认同源 /api，由 Nginx 代理）
+RUN npm run build
+
+FROM nginx:1.27.4-alpine
+
+COPY --from=build /web/dist /usr/share/nginx/html
+COPY deploy/nginx-frontend.conf /etc/nginx/conf.d/default.conf
+
+# nginx 镜像自带非 root 不了（80 端口）—— 用 nginx 官方的非特权约定：
+# 监听由配置文件里的 listen 8080 决定，进程仍以 nginx 用户运行
+USER nginx
+
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]

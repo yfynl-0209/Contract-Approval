@@ -168,6 +168,31 @@ def get_storage(request: Request) -> ObjectStorage:
     return storage
 
 
+def probe_storage() -> None:
+    """健康探测：构建存储并探一个必然不存在的键（M9 /health/dependencies）。
+
+    放在组合根（而不是 main.py）—— `main.py` 不得直接 import 适配器
+    （`tests/test_source_invariants.py` 的组合根纪律）。
+    探测失败以异常表达，由健康端点转成 {ok: false}。
+    """
+    from app.adapters.storage import build_storage
+
+    build_storage().exists("sha256/health-probe-nonexistent")
+
+
+def probe_redis() -> None:
+    """健康探测：Redis 写读一轮。未配置时静默返回（该形态没有 Redis）。"""
+    from app.adapters.queue.redis_notifier import RedisJobNotifier
+
+    if not settings.redis_url:
+        return
+    notifier = RedisJobNotifier(
+        url=settings.redis_url, namespace=f"{settings.env}:{settings.tenant_id}"
+    )
+    if not notifier.acquire_lock("health-probe", ttl_seconds=1):
+        pass  # 拿不到锁也是"可用"：说明 Redis 活着且有人在用
+
+
 def get_parser_engine_version() -> str:
     """解析引擎版本（进 `parser_version`，进而进 `cache_key`）。
 

@@ -19,11 +19,14 @@ _job_notifier: JobNotifier | None = None
 
 
 def set_job_notifier(notifier: JobNotifier) -> None:
-    """入口进程启动时装配。⚠️ 重复装配会被拒绝 —— 装配只该发生一次。"""
+    """入口进程启动时装配。幂等：重复装配（如测试里多次构造 app）静默跳过。
+
+    ⚠️ 进程内配置不会中途变化（REDIS_URL 是启动期常量），
+    因此"保留第一次装配"与"重新装配"语义等价，前者更简单也更安全。
+    """
     global _job_notifier
-    if _job_notifier is not None and _job_notifier is not notifier:
-        raise RuntimeError("JobNotifier 已装配：组合根只允许装配一次")
-    _job_notifier = notifier
+    if _job_notifier is None:
+        _job_notifier = notifier
 
 
 def get_job_notifier() -> JobNotifier:

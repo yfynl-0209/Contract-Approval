@@ -36,6 +36,7 @@ from __future__ import annotations
 import json
 import random
 import string
+import threading
 import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -217,6 +218,7 @@ class OutboxDispatcher:
         self._gateway = gateway
         self._lease_seconds = lease_seconds
         self._poll_interval = poll_interval
+        self._stop = threading.Event()
         self.dispatcher_id = dispatcher_id or (
             "outbox-"
             + "".join(random.choices(string.ascii_lowercase + string.digits, k=8))
@@ -247,12 +249,22 @@ class OutboxDispatcher:
         finally:
             session.close()
 
+    def request_stop(self) -> None:
+        """请求停机（M9 Task 7：SIGTERM 优雅停机）。不会中断正在送达的事件。"""
+        self._stop.set()
+
     def run_forever(self, *, max_iterations: int | None = None) -> None:
-        """常驻轮询；`max_iterations` 用于冒烟与演练。"""
+        """常驻轮询；`max_iterations` 用于冒烟与演练。
+
+        ⚠️ 空闲等待用 `stop.wait()` 而不是 `time.sleep()`：SIGTERM 后
+        必须在一个轮询间隔内退出，而不是再睡满一整段（编排宽限期通常很短）。
+        """
         iterations = 0
-        while max_iterations is None or iterations < max_iterations:
+        while not self._stop.is_set():
+            if max_iterations is not None and iterations >= max_iterations:
+                return
             if not self.run_once():
-                time.sleep(self._poll_interval)
+                self._stop.wait(self._poll_interval)
             iterations += 1
 
     def _open(self):

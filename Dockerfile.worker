@@ -1,0 +1,24 @@
+# Worker 运行时：与 Dockerfile.api 同一基础与依赖（同一 requirements），
+# 差异只是启动命令 —— 由 compose 的 `command:` 指定。
+# 单独 build 本文件时默认起规则/解析 Worker。
+FROM python:3.11.11-slim-bookworm
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+
+COPY app ./app
+COPY scripts ./scripts
+COPY db ./db
+COPY alembic ./alembic
+COPY alembic.ini ./
+
+RUN useradd --create-home --uid 10001 appuser && chown -R appuser:appuser /app
+USER appuser
+
+CMD ["python", "scripts/run_worker.py"]

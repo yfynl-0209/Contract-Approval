@@ -1,5 +1,14 @@
 # M9 PostgreSQL, Redis, MinIO, and Docker Compose Implementation Plan
 
+> **✅ 已完成（2026-09-16）**：验收 `scripts/verify_m9.py` **8/8，exit=0**。
+> Task 1–8 全部落地：PG 冒烟/迁移往返/结构比对（`tests/postgres/`，13 条）；
+> `SKIP LOCKED` 领取与幂等 SAVEPOINT（两真并发测试钉住）；MinIO 适配器 +
+> 端口流式扩展（`stat`/`open_stream`/`read_range`，双实现同合约 60/60）；
+> Redis 唤醒/锁/缓存（DB 仍是唯一真相，断连自动退回轮询）；三镜像构建通过、
+> `docker compose config` 通过；`/health/dependencies`（脱敏）与 SIGTERM 优雅停机。
+> SQLite 交付路径未受影响：全量 **1441 passed / 0 failed**。
+> 偏差记录：MinIO 镜像经 `quay.io` 拉取（163 镜像源无此 tag）；容器内 pip 用清华源。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Run the application against PostgreSQL 16, Redis, and MinIO with reversible Alembic migrations and a one-command Docker Compose development/prod-like stack.

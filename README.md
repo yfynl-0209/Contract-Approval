@@ -25,6 +25,7 @@
 | **M6** | **结果保存 + 确认摘要 + Outbox + 幂等回写与重试** | ✅ **28/28 验收通过**（`scripts/verify_m6.py`，exit=0） |
 | **M7** | **七工具门面 + 任务/确认/重试/规则管理 + RBAC + 附件下发 + MCP 形态** | ✅ **43/43 验收通过**（`scripts/verify_m7.py`，exit=0）；全量基线 **收集 1339（1336 passed / 3 skipped）** |
 | **M8** | **React 五模块调用端** + 规则管理 / 运行管理入口 | ✅ **完成**：五模块 + `/rules` + `/ops` 可用；验收走查 `scripts/verify_m8.py`（9/9，浏览器回归如实 unmet）；**走查修复 2 个真缺陷**（空 `allowed_types` 判死已解析任务、门禁失败任务卡"正在解析"）；契约形状双向钉住（`apiShapes.json` + `apiShape.test.ts`）；前端 **223 测试**、后端 **1393 passed**；演示脚本 `docs/demo/m8-demo-script.md` |
+| **M9** | **基础设施迁移：PostgreSQL / Alembic / Redis / MinIO / Docker Compose** | ✅ **完成**：验收 `scripts/verify_m9.py` **8/8，exit=0**。SQLite 仍是默认（零配置可跑）；PG/Redis/MinIO 经端口与适配器接入，**业务代码零改动**；Alembic 基线（13 表 / CHECK / 复合外键 / 部分唯一索引）+ 往返与结构比对测试；领取 `SKIP LOCKED`、幂等 SAVEPOINT；`docker compose config` 通过、三镜像构建通过；compose 拓扑（内网 + healthcheck + 一次性 migrate 作业 + SIGTERM 优雅停机） |
 
 **实际规模**：**13 张表** · 40 条规则 · **7 个工具已全部落地**
 （**REST 与 MCP 两种形态，共用同一套门面**） · **测试数以 `pytest` 实际输出为准**。
@@ -85,6 +86,30 @@ cd ..
 # 7) 全部测试
 .\.venv\Scripts\python.exe -m pytest -q
 ```
+
+### 2b. 容器化（M9：PostgreSQL / Redis / MinIO / Compose）
+
+```powershell
+# 前置：Docker Desktop 在跑；compose 会读项目根 .env 里的凭证变量
+#   POSTGRES_PASSWORD / MINIO_ROOT_USER / MINIO_ROOT_PASSWORD / MOCK_APPROVAL_TOKEN
+
+# 一键起全套（内网拓扑 + 一次性 migrate 作业 + healthcheck 依赖）
+docker compose up -d --build
+# 应用库就绪后打开 http://localhost:8080（Nginx → api:8000）
+
+# 本地开发容器（等价于 compose 的依赖三件套，端口见 startguide）
+docker run -d --name m9-pg   -e POSTGRES_USER=m9 -e POSTGRES_PASSWORD=m9 -e POSTGRES_DB=m9 -p 55432:5432 postgres:16-alpine
+docker run -d --name m9-redis -p 56379:6379 redis:7-alpine
+docker run -d --name m9-minio -e MINIO_ROOT_USER=m9admin -e MINIO_ROOT_PASSWORD=m9admin-secret -p 59000:9000 -p 59001:9001 quay.io/minio/minio:latest server /data
+
+# M9 验收（fail-closed，8 条）
+.\.venv\Scripts\python.exe scripts\verify_m9.py
+```
+
+> 切换姿势：`DB_URL` 改成 `postgresql+psycopg://…`（Alembic 管结构）、
+> `REDIS_URL` 配上即启用唤醒加速、`STORAGE_BACKEND=minio` 切对象存储。
+> **业务代码零改动** —— 全部经端口与适配器（组合根 `app/adapters/storage.py`
+> 与 `composition/job_queue.py` 唯一装配）。
 
 > ⚠️ **`PYTHONPATH` 里有 IDE 注进的 `sitecustomize.py` 时，请先清掉它再跑全量测试**：
 > 那个钩子会在解释器退出时对"批量删除"抛 `SystemExit(1)`，表现为若干条

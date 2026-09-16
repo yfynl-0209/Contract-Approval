@@ -254,10 +254,22 @@ def main(argv: Sequence[str] | None = None) -> int:
         f"[worker] 启动（id={worker.worker_id}，领取类型={args.job_types}）",
         flush=True,
     )
+
+    # M9 Task 7：SIGTERM 优雅停机 —— 收到信号**停止领取新作业**，
+    # 当前作业跑完（含续租与提交）后在一个轮询间隔内退出。
+    import signal
+
+    def _graceful(signum, frame):  # noqa: ARG001 - 信号处理签名
+        print(f"\n[worker] 收到信号 {signum}，停止领取新作业…", flush=True)
+        worker.request_stop()
+
+    signal.signal(signal.SIGTERM, _graceful)
+
     try:
         worker.run_forever(max_iterations=args.max_iterations)
     except KeyboardInterrupt:  # pragma: no cover - 交互式中断
         print("\n[worker] 收到中断，退出", flush=True)
+    print("[worker] 已退出", flush=True)
     return 0
 
 

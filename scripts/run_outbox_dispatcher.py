@@ -68,10 +68,21 @@ def main(argv: Sequence[str] | None = None) -> int:
         f"poll_interval={args.poll_interval}s）",
         flush=True,
     )
+
+    # M9 Task 7：SIGTERM 优雅停机 —— 停止领取新事件，当前送达跑完后退出
+    import signal
+
+    def _graceful(signum, frame):  # noqa: ARG001 - 信号处理签名
+        print(f"\n[outbox] 收到信号 {signum}，停止领取新事件…", flush=True)
+        dispatcher.request_stop()
+
+    signal.signal(signal.SIGTERM, _graceful)
+
     try:
         dispatcher.run_forever(max_iterations=args.max_iterations)
     except KeyboardInterrupt:  # pragma: no cover - 交互式中断
         print("\n[outbox] 收到中断，退出", flush=True)
+    print("[outbox] 已退出", flush=True)
     return 0
 
 

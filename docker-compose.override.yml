@@ -1,0 +1,29 @@
+# 开发覆盖（compose 默认叠加）：只做一件事 —— 把调试需要的端口映射到本机。
+# 生产部署不携带本文件（docker compose -f docker-compose.yml）。
+
+services:
+  postgres:
+    ports:
+      - "55432:5432"
+
+  redis:
+    ports:
+      - "56379:6379"
+
+  minio:
+    ports:
+      - "59000:9000"
+      - "59001:9001"
+
+  mock-approval:
+    ports:
+      - "8001:8001"
+
+  api:
+    ports:
+      - "8000:8000"
+
+  frontend:
+    # 开发期通常 `npm run dev` 直跑宿主机；要试容器化前端时放开
+    ports: !override
+      - "8080:8080"

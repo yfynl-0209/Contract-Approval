@@ -252,6 +252,54 @@ def health_live() -> dict:
     return {"status": "alive", "version": __version__}
 
 
+@app.get("/health/dependencies", tags=["系统"], summary="依赖健康明细（脱敏）")
+def health_dependencies() -> dict:
+    """逐个依赖的可用性与延迟（M9 Task 7）。
+
+    ⚠️ **脱敏纪律**：只给 `name → {ok, latency_ms, error_code}`——
+    连接串、主机名、密钥一律不出现在响应里。这是给"人/运维面板"看的：
+    哪个依赖坏了看这里，怎么连的去配置里查（往响应里塞连接串等于
+    把数据库地址贴在免鉴权接口上）。
+
+    | 依赖 | 何时检查 |
+    | --- | --- |
+    | database | 总是（持久依赖，readiness 的依据） |
+    | redis | 仅配置了 `REDIS_URL`（加速设施，缺席不算不健康） |
+    | minio | 仅 `STORAGE_BACKEND=minio`（local 后端没有它） |
+    """
+    import time as time_module
+
+    checks: dict[str, dict[str, Any]] = {}
+
+    def _probe(name: str, fn: Any, *, required: bool) -> None:
+        started = time_module.monotonic()
+        try:
+            fn()
+            checks[name] = {"ok": True, "latency_ms": round((time_module.monotonic() - started) * 1000, 1), "required": required}
+        except Exception as exc:  # noqa: BLE001 - 健康检查不暴露内部异常细节
+            checks[name] = {
+                "ok": False,
+                "latency_ms": round((time_module.monotonic() - started) * 1000, 1),
+                "required": required,
+                "error_code": getattr(exc, "code", None) or type(exc).__name__,
+            }
+
+    def _probe_db_quick() -> None:
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+
+    _probe("database", _probe_db_quick, required=True)
+
+    if settings.redis_url:
+        # ⚠️ 探针实现在组合根（api_deps）—— main.py 不得直接 import 适配器
+        _probe("redis", api_deps.probe_redis, required=False)
+
+    if settings.storage_backend == "minio":
+        _probe("minio", api_deps.probe_storage, required=False)
+
+    return {"version": __version__, "checks": checks}
+
+
 @app.get("/health/ready", tags=["系统"], summary="就绪检查")
 def health_ready(response: Response) -> dict:
     """是否**可以接收流量**（readiness）。
