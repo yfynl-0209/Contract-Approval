@@ -224,6 +224,14 @@ def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parse_args(argv)
 
+    # M9：装配作业唤醒（REDIS_URL 未配置 → 纯轮询兜底）
+    from app.composition.job_queue import (
+        build_job_notifier_from_settings,
+        set_job_notifier,
+    )
+
+    set_job_notifier(build_job_notifier_from_settings())
+
     # ⚠️ `allowed_types` 必须显式传：`make_handler` 的默认空元组在
     # `execute_parse_job` 里表示"不复核类型"，但曾经聚合侧把空集当成
     # "没有任何允许的类型"，解析成功后任务被误判 blocked。

@@ -90,6 +90,11 @@ class Settings(BaseSettings):
     llm_api_key: str = ""
     llm_model: str = ""
     llm_timeout_seconds: int = 30
+
+    # ---- 作业唤醒（M9：Redis 只加速，不改变语义）----
+    # 留空 = 纯 DB 轮询（M9 之前的语义）。Redis 挂掉时自动退回轮询，
+    # workflow_jobs 仍是作业的唯一真相来源。
+    redis_url: str = ""
     #: 单次送进模型的正文上限（字符）。**超限时拒绝判断**，不截断 ——
     #: 截断会让"判断不完整"与"判断为否"在下游变得无法区分（见 app/rules/llm_judge.py）。
     llm_max_input_chars: int = 20_000

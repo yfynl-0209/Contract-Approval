@@ -72,6 +72,13 @@ async def lifespan(application: FastAPI) -> AsyncIterator[None]:
         jwt_issuer=settings.jwt_issuer,
         jwt_audience=settings.jwt_audience,
     )
+    # M9：装配作业唤醒（未配置 REDIS_URL → 纯轮询，行为与 M9 前一致）
+    from app.composition.job_queue import (
+        build_job_notifier_from_settings,
+        set_job_notifier,
+    )
+
+    set_job_notifier(build_job_notifier_from_settings())
     yield
     api_deps.close_adapters(application)
 

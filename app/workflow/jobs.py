@@ -34,6 +34,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.composition.job_queue import get_job_notifier
 from app.context import get_correlation_id
 from app.enums import ErrorCode, JobStatus, JobType, is_retryable
 from app.errors import AppError, IdempotencyConflict
@@ -321,6 +322,11 @@ def create_job(
             ),
             False,
         )
+
+    # M9：唤醒 Worker（通知**可能早于调用方提交** —— 最坏浪费一次空领取；
+    # 提交后的作业仍由轮询兜底，延迟 ≤ poll_interval）。
+    # 通知实现自己吞掉 Redis 故障 —— 通知丢不得丢不起，但丢了也无所谓。
+    get_job_notifier().notify_job_created(job_type_value.value)
 
     return job, True
 

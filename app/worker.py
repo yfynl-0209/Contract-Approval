@@ -59,6 +59,9 @@ from app.context import correlation_scope
 from app.enums import ErrorCode, JobStatus, JobType, LogLevel, LogType
 from app.errors import AppError, LeaseLost
 from app.models import WorkflowJob
+from app.ports.job_notifier import JobNotifier, NullJobNotifier
+from app.composition.job_queue import get_job_notifier
+from app.services.log_service import LogService
 from app.services.log_service import LogService
 from app.workflow.jobs import backoff_seconds, mark_failed, utcnow
 
@@ -450,6 +453,7 @@ class Worker:
         job_types: Sequence[JobType] = tuple(JobType),
         lease_seconds: float = DEFAULT_LEASE_SECONDS,
         poll_interval: float = DEFAULT_POLL_INTERVAL,
+        notifier: JobNotifier | None = None,
     ) -> None:
         self.worker_id = worker_id or f"worker-{uuid.uuid4().hex[:8]}"
         self._session_factory = session_factory
@@ -457,6 +461,8 @@ class Worker:
         self._job_types = tuple(job_types)
         self._lease_seconds = lease_seconds
         self._poll_interval = poll_interval
+        # M9：唤醒通知（可选）。默认取进程级装配（未配置 Redis → 纯轮询）。
+        self._notifier = notifier or get_job_notifier()
         self._stop = threading.Event()
 
     # ---------- 生命周期 ----------
@@ -471,15 +477,38 @@ class Worker:
         ⚠️ 空闲等待用 `stop.wait()` 而不是 `time.sleep()`：
         后者的表现是"收到停机信号后还要等一个完整轮询间隔才退出"，
         而编排系统通常只给几秒 —— 于是每次部署都要等强杀。
+
+        M9：空转一轮后改由 `notifier.wait_for_job()` 等待 ——
+        有新作业则**立即**醒来（Redis 加速），否则等到 `poll_interval`
+        超时照常轮询。**醒来不等于有作业**：仍要照常领取并校验 DB 行。
         """
         iterations = 0
         while not self._stop.is_set():
-            self.run_once()
+            did_work = self.run_once()
             iterations += 1
             if max_iterations is not None and iterations >= max_iterations:
                 return
-            if not self._stop.is_set():
-                self._stop.wait(self._poll_interval)
+            if self._stop.is_set():
+                return
+            if did_work:
+                continue  # 可能还有活，立刻再领
+            self._idle_wait()
+
+    def _idle_wait(self) -> None:
+        """空转等待：可被停机信号打断。
+
+        - Null（未配置 Redis）：`stop.wait(poll_interval)` —— 与 M9 前一致；
+        - Redis：`BLPOP` 带同样的超时 —— 新作业立即唤醒，超时照常轮询。
+          （BLPOP 期间收到停机信号，最迟 `poll_interval` 后感知 ——
+          与编排系统给的宽限期量级相同。）
+        """
+        if isinstance(self._notifier, NullJobNotifier):
+            self._stop.wait(self._poll_interval)
+            return
+        self._notifier.wait_for_job(
+            [job_type.value for job_type in self._job_types],
+            timeout=self._poll_interval,
+        )
 
     # ---------- 单轮 ----------
 
