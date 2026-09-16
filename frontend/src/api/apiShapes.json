@@ -1,0 +1,423 @@
+{
+  "auditRow": {
+    "action": null,
+    "actor_id": null,
+    "actor_name": null,
+    "correlation_id": null,
+    "created_at": null,
+    "detail": {
+      "attempt_id": null,
+      "external_comment_id": null,
+      "replayed": null,
+      "result_id": null
+    },
+    "event_id": null,
+    "target_id": null,
+    "target_type": null,
+    "task_id": null
+  },
+  "documentPage": {
+    "bbox_space": null,
+    "blocks": [
+      {
+        "bbox": [
+          null
+        ],
+        "bbox_precision": null,
+        "block_id": null,
+        "char_end": null,
+        "char_start": null,
+        "chars": [
+          {
+            "bbox": [
+              null
+            ],
+            "char_end": null,
+            "char_start": null,
+            "text": null
+          }
+        ],
+        "text": null,
+        "text_precision": null
+      }
+    ],
+    "char_map": [
+      {
+        "raw_end": null,
+        "raw_start": null
+      }
+    ],
+    "error_code": null,
+    "height": null,
+    "page": null,
+    "page_status": null,
+    "rotation": null,
+    "route_reason": null,
+    "source": null,
+    "text": null,
+    "width": null
+  },
+  "jobRecord": {
+    "attempt_no": null,
+    "correlation_id": null,
+    "job_id": null,
+    "job_status": null,
+    "job_type": null,
+    "last_error_code": null,
+    "last_error_text": null,
+    "max_attempts": null,
+    "next_retry_at": null,
+    "result_ref": {
+      "result_url": null,
+      "run_id": null
+    },
+    "status_url": null,
+    "task_id": null
+  },
+  "logRow": {
+    "correlation_id": null,
+    "created_at": null,
+    "error_code": null,
+    "log_content": null,
+    "log_id": null,
+    "log_level": null,
+    "log_type": null,
+    "task_id": null
+  },
+  "me": {
+    "actor_id": null,
+    "display_name": null,
+    "permissions": [
+      null
+    ],
+    "roles": [
+      null
+    ],
+    "tenant_id": null,
+    "unknown_roles": []
+  },
+  "parseRecord": {
+    "attachment_record_id": null,
+    "basic_info": {
+      "fields": [
+        {
+          "currency": null,
+          "evidence": [
+            {
+              "bbox": [
+                null
+              ],
+              "bbox_precision": null,
+              "block_id": null,
+              "char_end": null,
+              "char_start": null,
+              "page": null,
+              "text": null,
+              "text_precision": null
+            }
+          ],
+          "field_code": null,
+          "reason_code": null,
+          "reason_text": null,
+          "status": null,
+          "value_decimal": null,
+          "value_text": null
+        }
+      ],
+      "schema_version": null
+    },
+    "cache_key": null,
+    "clause_info": {
+      "fields": [
+        {
+          "currency": null,
+          "evidence": [],
+          "field_code": null,
+          "reason_code": null,
+          "reason_text": null,
+          "status": null,
+          "value_decimal": null,
+          "value_text": null
+        }
+      ],
+      "schema_version": null
+    },
+    "parse_error": null,
+    "parse_error_code": null,
+    "parse_id": null,
+    "parse_status": null,
+    "parse_version": null,
+    "parser_name": null,
+    "parser_version": null,
+    "quality": {
+      "ocr_confidence": null,
+      "ocr_pages": null,
+      "text_coverage": null
+    },
+    "task_id": null
+  },
+  "resultRow": {
+    "comment_text": null,
+    "confirmation_valid": null,
+    "confirmed_at": null,
+    "confirmed_by": null,
+    "confirmed_digest": null,
+    "content_digest": null,
+    "created_at": null,
+    "created_by": null,
+    "focus_points": [],
+    "hit_count": null,
+    "is_current_version": null,
+    "manual_confirmed": null,
+    "needs_review_count": null,
+    "not_applicable_count": null,
+    "overall_risk_level": null,
+    "result_id": null,
+    "review_status": null,
+    "run_id": null,
+    "status_url": null,
+    "summary_text": null,
+    "supersedes_result_id": null,
+    "task_id": null,
+    "updated_at": null,
+    "version_no": null
+  },
+  "ruleRow": {
+    "applies_when_json": null,
+    "exclude_text": null,
+    "fallback_match_json": null,
+    "match_mode": null,
+    "match_text": null,
+    "priority": null,
+    "risk_level": null,
+    "rule_category": null,
+    "rule_code": null,
+    "rule_id": null,
+    "rule_name": null,
+    "rule_status": null,
+    "rule_version": null,
+    "suggestion_text": null
+  },
+  "runAggregate": {
+    "counts": {
+      "hit": null,
+      "needs_review": null,
+      "not_applicable": null,
+      "not_hit": null
+    },
+    "focus_points": [
+      {
+        "evidence_text": null,
+        "reason_code": null,
+        "reason_text": null,
+        "risk_level": null,
+        "rule_code": null,
+        "status": null
+      }
+    ],
+    "overall_risk_level": null,
+    "review_status": null,
+    "summary": null
+  },
+  "runDetail": {
+    "aggregate": {
+      "counts": {
+        "hit": null,
+        "needs_review": null,
+        "not_applicable": null,
+        "not_hit": null
+      },
+      "focus_points": [
+        {
+          "evidence_text": null,
+          "reason_code": null,
+          "reason_text": null,
+          "risk_level": null,
+          "rule_code": null,
+          "status": null
+        }
+      ],
+      "overall_risk_level": null,
+      "review_status": null,
+      "summary": null
+    },
+    "config_version": null,
+    "evaluations": [
+      {
+        "evaluation_status": null,
+        "evidence": [
+          {
+            "position": {
+              "bbox": [
+                null
+              ],
+              "bbox_precision": null,
+              "block_id": null,
+              "char_end": null,
+              "char_start": null,
+              "page": null,
+              "text_precision": null
+            },
+            "text": null
+          }
+        ],
+        "hit_detail": {
+          "found": [
+            null
+          ]
+        },
+        "reason_code": null,
+        "reason_text": null,
+        "risk_level": null,
+        "rule_code": null,
+        "rule_name": null
+      }
+    ],
+    "finished_at": null,
+    "model_version": null,
+    "parse_id": null,
+    "prompt_version": null,
+    "ruleset_version": null,
+    "run_id": null,
+    "run_status": null,
+    "started_at": null,
+    "task_id": null,
+    "version_no": null
+  },
+  "runEvaluation": {
+    "evaluation_status": null,
+    "evidence": [
+      {
+        "position": {
+          "bbox": [
+            null
+          ],
+          "bbox_precision": null,
+          "block_id": null,
+          "char_end": null,
+          "char_start": null,
+          "page": null,
+          "text_precision": null
+        },
+        "text": null
+      }
+    ],
+    "hit_detail": {
+      "found": [
+        null
+      ]
+    },
+    "reason_code": null,
+    "reason_text": null,
+    "risk_level": null,
+    "rule_code": null,
+    "rule_name": null
+  },
+  "taskDetail": {
+    "applicant_name": null,
+    "approval_code": null,
+    "approval_title": null,
+    "attachment_count": null,
+    "block_reason": null,
+    "blocked_stage": null,
+    "context_conflict": null,
+    "context_source": null,
+    "context_status": null,
+    "contract_type": null,
+    "correlation_id": null,
+    "created_at": null,
+    "current_result_id": null,
+    "form_data": null,
+    "instance_id": null,
+    "last_error_code": null,
+    "last_error_is_business_fact": null,
+    "latest_parse_id": null,
+    "latest_run_id": null,
+    "our_party_business_role": null,
+    "our_party_contract_label": null,
+    "our_party_name": null,
+    "overall_risk_level": null,
+    "retry_count": null,
+    "status_url": null,
+    "task_id": null,
+    "task_status": null,
+    "updated_at": null,
+    "write_status": null,
+    "writeback": {
+      "latest_attempt_at": null,
+      "latest_attempt_id": null,
+      "latest_attempt_no": null,
+      "latest_attempt_rejected": null,
+      "latest_attempt_status": null,
+      "latest_reason_code": null,
+      "latest_reason_text": null,
+      "status_url": null,
+      "task_write_status": null
+    }
+  },
+  "taskRow": {
+    "applicant_name": null,
+    "approval_code": null,
+    "approval_title": null,
+    "attachment_count": null,
+    "block_reason": null,
+    "blocked_stage": null,
+    "context_conflict": null,
+    "context_source": null,
+    "context_status": null,
+    "contract_type": null,
+    "created_at": null,
+    "instance_id": null,
+    "last_error_code": null,
+    "our_party_business_role": null,
+    "our_party_contract_label": null,
+    "our_party_name": null,
+    "overall_risk_level": null,
+    "retry_count": null,
+    "status_url": null,
+    "task_id": null,
+    "task_status": null,
+    "updated_at": null,
+    "write_status": null,
+    "writeback": {
+      "latest_attempt_at": null,
+      "latest_attempt_id": null,
+      "latest_attempt_no": null,
+      "latest_attempt_rejected": null,
+      "latest_attempt_status": null,
+      "latest_reason_code": null,
+      "latest_reason_text": null,
+      "status_url": null,
+      "task_write_status": null
+    }
+  },
+  "writebackAttempt": {
+    "attempt_id": null,
+    "attempt_no": null,
+    "content_digest": null,
+    "created_at": null,
+    "delivery": {
+      "attempt_no": null,
+      "correlation_id": null,
+      "created_at": null,
+      "delivered_at": null,
+      "event_id": null,
+      "event_status": null,
+      "event_type": null,
+      "last_error_code": null,
+      "last_error_text": null,
+      "max_attempts": null,
+      "next_retry_at": null
+    },
+    "instance_id": null,
+    "operator_name": null,
+    "reason_code": null,
+    "reason_text": null,
+    "result_id": null,
+    "status_url": null,
+    "task_id": null,
+    "task_status": null,
+    "task_write_status": null,
+    "write_status": null
+  }
+}

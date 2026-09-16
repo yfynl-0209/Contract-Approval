@@ -1,0 +1,458 @@
+﻿
+> contract-approval-console@0.1.0 test
+> vitest --run src/features/parse/ParseTab.test.tsx
+
+node.exe : ▲ [WARNING] Duplicate key "env" in object literal [duplicate-object-key]
+所在位置 行:1 字符: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (▲ [WARNING] Dup...ate-object-key]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+    vite.config.ts:53:4:
+      53 │     env: { TZ: 'Asia/Shanghai' },
+         ╵     ~~~
+
+  The original key "env" is here:
+
+    vite.config.ts:43:4:
+      43 │     env: {
+         ╵     ~~~
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/Public/Nwt/cache/recv/xm/Contract approval/contract-approval-system/frontend[39m
+
+ [31m❯[39m src/features/parse/ParseTab.test.tsx [2m([22m[2m24 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1516[2mms[22m[39m
+[31m   [31m×[31m 版本切换[2m > [22m质量指标可见（完整度 / OCR 页数 / 识别可信度）[90m 58[2mms[22m[31m[39m
+[31m     → Unable to find an element with the title: /解析引擎：pymupdf 1\.25\.1/.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"app-shell"[31m
+    [36m>[31m
+      [36m<aside[31m
+        [33mclass[31m=[32m"sidebar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"brand-mark"[31m
+          [36m>[31m
+            [0m审[0m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-name"[31m
+            [36m>[31m
+              [0m合同审批审查系统[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-sub"[31m
+            [36m>[31m
+              [0mContract Review Copilot[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"主导航"[31m
+          [33mclass[31m=[32m"nav"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</div>[31m
+          [36m<a[31m
+            [33mclass[31m=[32m"nav-item"[31m
+            [33mhref[31m=[32m"/tasks"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"15"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"15"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M4 6h16M4 12h16M4 18h10"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [0m待办调用[0m
+          [36m</a>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m系统[0m
+          [36m</div>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actor-card"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actor-stack"[31m
+          [36m>[31m
+            [36m<div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-name"[31m
+                [33mtitle[31m=[32m"admin-1"[31m
+              [36m>[31m
+                [0mAdmin One[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-role actor-card-muted"[31m
+                [33mtitle[31m=[32m"admin-1"[31m
+              [36m>[31m
+                [0madmin-1[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actor-row"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"actor-card-muted"[31m
+              [36m>[31m
+                [0m权限 [0m
+                [0m1[0m
+                [0m 项[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0m退出（换一个身份）[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</aside>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"main"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topbar"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"topbar-crumb"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+            [36m<b>[31m
+              [0m · 任务工作台[0m
+            [36m</b>[31m
+          [36m</span>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"topbar-right"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mstyle[31m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[31m
+            [36m>[31m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"badge b-violet"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"dot"[31m
+              [36m/>[31m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<main[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<section[31m
+            [33maria-labelledby[31m=[32m"workbench-title"[31m
+          [36m>[31m
+            [36m<nav[31m
+              [33maria-label[31m=[32m"面包屑"[31m
+              [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [36m<a[31m
+                [33mclass[31m=[32m"btn btn-sm"[31m
+                [33mhref[31m=[32m"/tasks"[31m
+              [36m>[31m
+                [0m← 返回待办列表[0m
+              [36m</a>[31m
+            [36m</nav>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"wb-head"[31m
+            [36m>[31m
+              [36m<div>[31m
+                [36m<h1[31m
+                  [33mclass[31m=[32m"wb-title"[31m
+                  [33mid[31m=[32m"workbench-title"[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-1);"[31m
+                [36m>[31m
+                  [0m任务 #[0m
+                  [0m7[0m
+                [36m</h1>[31m
+                [36m<div[31m
+                  [33maria-busy[31m=[32m"true"[31m
+                  [33mclass[31m=[32m"wb-meta"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0m正在加载任务信息…[0m
+                  [36m</span>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"wb-chips"[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33maria-label[31m=[32m"任务视角"[31m
+              [33mclass[31m=[32m"tabs"[31m
+              [33mrole[31m=[32m"tablist"[31m
+            [36m>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"false"[31m
+                [33mclass[31m=[32m"tab"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=detail"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m详情[0m
+              [36m</a>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"true"[31m
+                [33mclass[31m=[32m"tab active"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=parse"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m解析结果[0m
+              [36m</a>[31m
+              [...[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[1m[7m Failed Tests 1 [27m[22m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/features/parse/ParseTab.test.tsx[2m > [22m版本切换[2m > [22m质量指标可见（完整度 / OCR 页数 
+/ 识别可信度）
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an element with the title: /解析引擎：pymupdf 1\.25\.1/.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [0m审[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-name"[39m
+            [36m>[39m
+              [0m合同审批审查系统[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-sub"[39m
+            [36m>[39m
+              [0mContract Review Copilot[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"主导航"[39m
+          [33mclass[39m=[32m"nav"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</div>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"nav-item"[39m
+            [33mhref[39m=[32m"/tasks"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"15"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"15"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 6h16M4 12h16M4 18h10"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m待办调用[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m系统[0m
+          [36m</div>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actor-card"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actor-stack"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-name"[39m
+                [33mtitle[39m=[32m"admin-1"[39m
+              [36m>[39m
+                [0mAdmin One[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-role actor-card-muted"[39m
+                [33mtitle[39m=[32m"admin-1"[39m
+              [36m>[39m
+                [0madmin-1[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actor-row"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"actor-card-muted"[39m
+              [36m>[39m
+                [0m权限 [0m
+                [0m1[0m
+                [0m 项[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m退出（换一个身份）[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"main"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topbar"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"topbar-crumb"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+            [36m<b>[39m
+              [0m · 任务工作台[0m
+            [36m</b>[39m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"topbar-right"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mstyle[39m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[39m
+            [36m>[39m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"badge b-violet"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"dot"[39m
+              [36m/>[39m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"workbench-title"[39m
+          [36m>[39m
+            [36m<nav[39m
+              [33maria-label[39m=[32m"面包屑"[39m
+              [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+            [36m>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"btn btn-sm"[39m
+                [33mhref[39m=[32m"/tasks"[39m
+              [36m>[39m
+                [0m← 返回待办列表[0m
+              [36m</a>[39m
+            [36m</nav>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"wb-head"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<h1[39m
+                  [33mclass[39m=[32m"wb-title"[39m
+                  [33mid[39m=[32m"workbench-title"[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-1);"[39m
+                [36m>[39m
+                  [0m任务 #[0m
+                  [0m7[0m
+                [36m</h1>[39m
+                [36m<div[39m
+                  [33maria-busy[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"wb-meta"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0m正在加载任务信息…[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"wb-chips"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"任务视角"[39m
+              [33mclass[39m=[32m"tabs"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"tab"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=detail"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m详情[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"tab active"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=parse"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m解析结果[0m
+              [36m</a>[39m
+              [...
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/parse/ParseTab.test.tsx:[2m491:27[22m[39m
+    [90m489| [39m    [90m// ⚠️ 引擎的**版本长编号**（pymupdf-1.25.1+pipe-v1）不直排进正文：[39m
+    [90m490| [39m    [90m// 它是排障信息，收进悬停提示 —— 断言它在 title 属性里[39m
+    [90m491| [39m    [35mconst[39m engine [33m=[39m screen[33m.[39m[34mgetByTitle[39m([36m/解析引擎：pymupdf 1\.2
+5\.1/[39m)
+    [90m   | [39m                          [31m^[39m
+    [90m492| [39m    [34mexpect[39m(engine)[33m.[39m[34mtoBeInTheDocument[39m()
+    [90m493| [39m  })
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m23 passed[39m[22m[90m (24)[39m
+[2m   Start at [22m 02:10:36
+[2m   Duration [22m 4.90s[2m (transform 661ms, setup 270ms, collect 1.16s, tests 1.52s, environment 1.10s, prepare 260ms)[22m
+

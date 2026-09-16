@@ -1,0 +1,25 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.0
+sqlalchemy==2.0.36
+python-dotenv==1.0.1
+httpx==0.28.1
+jinja2==3.1.5
+python-multipart==0.0.20
+pymupdf==1.25.1
+rapidocr-onnxruntime==1.4.4
+openai==1.59.6
+tenacity==9.0.0
+# M7 的 MCP 形态需要 `streamable-http` 传输（MCP 2025-03-26 规范）。
+# ⚠️ 1.2.0 **没有**这个传输 —— 它只有 stdio / sse / websocket。
+# 原计划按 `mcp==1.2.0` 写，实施时才发现；升级到 1.9.4 是把它做出来的前提。
+# 升级本身风险很低：`mcp` 此前**没有任何调用方**（M7 才开始接），
+# 且 1.9.4 的依赖（pydantic>=2.7.2 / starlette>=0.27 / httpx>=0.27）都与现有
+# 版本相容 —— 实测只替换了 mcp 一个包，其余未动。
+mcp==1.9.4
+# M7 生产身份：JWT 验签。带 [crypto] 才会拉进 `cryptography`，
+# 而 RS256/ES256 的验签**必须**由它完成 —— 只装 pyjwt 时能解 HS256，
+# 拿到非对称签名的令牌会直接抛错。
+pyjwt[crypto]==2.14.0
+pytest==8.3.4

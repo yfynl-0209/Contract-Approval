@@ -1,0 +1,2612 @@
+﻿
+> contract-approval-console@0.1.0 test
+> vitest --run src/app/AuthProvider.test.tsx
+
+node.exe : ▲ [WARNING] Duplicate key "env" in object literal [duplicate-object-key]
+所在位置 行:1 字符: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (▲ [WARNING] Dup...ate-object-key]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+    vite.config.ts:53:4:
+      53 │     env: { TZ: 'Asia/Shanghai' },
+         ╵     ~~~
+
+  The original key "env" is here:
+
+    vite.config.ts:43:4:
+      43 │     env: {
+         ╵     ~~~
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/Public/Nwt/cache/recv/xm/Contract approval/contract-approval-system/frontend[39m
+
+ [31m❯[39m src/app/AuthProvider.test.tsx [2m([22m[2m11 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[33m 2438[2mms[22m[39m
+[31m   [31m×[31m 身份解析[2m > [22m没有本地身份时**不请求 /api/me**，界面提示去提供身份[33m 1073[2mms[22m[31m[39m
+[31m     → Unable to find an element with the text: 尚未提供身份. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"app-shell"[31m
+    [36m>[31m
+      [36m<aside[31m
+        [33mclass[31m=[32m"sidebar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"brand-mark"[31m
+          [36m>[31m
+            [0m审[0m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-name"[31m
+            [36m>[31m
+              [0m合同审批审查系统[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-sub"[31m
+            [36m>[31m
+              [0mContract Review Copilot[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"主导航"[31m
+          [33mclass[31m=[32m"nav"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</div>[31m
+          [36m<a[31m
+            [33maria-current[31m=[32m"page"[31m
+            [33mclass[31m=[32m"nav-item active"[31m
+            [33mhref[31m=[32m"/tasks"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"15"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"15"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M4 6h16M4 12h16M4 18h10"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [0m待办调用[0m
+          [36m</a>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m系统[0m
+          [36m</div>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actor-card"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actor-stack"[31m
+          [36m>[31m
+            [36m<div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-name"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mAuditor One[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-role actor-card-muted"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mauditor-1[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actor-row"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"actor-card-muted"[31m
+              [36m>[31m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0m退出（换一个身份）[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</aside>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"main"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topbar"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"topbar-crumb"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</span>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"topbar-right"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mstyle[31m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[31m
+            [36m>[31m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"badge b-violet"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"dot"[31m
+              [36m/>[31m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<main[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<section[31m
+            [33maria-labelledby[31m=[32m"task-list-title"[31m
+          [36m>[31m
+            [36m<h1[31m
+              [33mid[31m=[32m"task-list-title"[31m
+              [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [0m待办调用[0m
+            [36m</h1>[31m
+            [36m<div[31m
+              [33maria-label[31m=[32m"任务汇总"[31m
+              [33mclass[31m=[32m"summary-grid"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--accent);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m待处理[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-violet);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mtitle[31m=[32m"解析中 0 · 审查中 0"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m审查中[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-warn);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m需人工[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-ok);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m已完成[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-danger);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m回写失败[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--text-3);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mstyle[31m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m共（全部状态）[0m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-2);"[31m
+              [36m>[31m
+                [0m状态[0m
+                [36m<select>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m""[31m
+                  [36m>[31m
+                    [0m全部[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"pending"[31m
+                  [36m>[31m
+                    [0m待处理[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"parsing"[31m
+                  [36m>[31m
+                    [0m解析中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"reviewing"[31m
+                  [36m>[31m
+                    [0m审查中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"blocked"[31m
+                  [36m>[31m
+                    [0m阻塞[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"done"[31m
+                  [36m>[31m
+                    [0m已完成[0m
+                  [36m</option>[31m
+                [36m</select>[31m
+              [36m</label>[31m
+              [36m<button[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0m刷新[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"empty"[31m
+            [36m>[31m
+              [36m<p[31m
+                [33mclass[31m=[32m"big"[31m
+              [36m>[31m
+                [0m暂无待办[0m
+              [36m</p>[31m
+              [36m<p>[31m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[31m
+            [36m</div>[31m
+          [36m</section>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"footer-note"[31m
+          [36m>[31m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[31m
+        [36m</main>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"app-shell"[31m
+    [36m>[31m
+      [36m<aside[31m
+        [33mclass[31m=[32m"sidebar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"brand-mark"[31m
+          [36m>[31m
+            [0m审[0m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-name"[31m
+            [36m>[31m
+              [0m合同审批审查系统[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-sub"[31m
+            [36m>[31m
+              [0mContract Review Copilot[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"主导航"[31m
+          [33mclass[31m=[32m"nav"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</div>[31m
+          [36m<a[31m
+            [33maria-current[31m=[32m"page"[31m
+            [33mclass[31m=[32m"nav-item active"[31m
+            [33mhref[31m=[32m"/tasks"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"15"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"15"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M4 6h16M4 12h16M4 18h10"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [0m待办调用[0m
+          [36m</a>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m系统[0m
+          [36m</div>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actor-card"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actor-stack"[31m
+          [36m>[31m
+            [36m<div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-name"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mAuditor One[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-role actor-card-muted"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mauditor-1[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actor-row"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"actor-card-muted"[31m
+              [36m>[31m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0m退出（换一个身份）[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</aside>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"main"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topbar"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"topbar-crumb"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</span>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"topbar-right"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mstyle[31m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[31m
+            [36m>[31m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"badge b-violet"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"dot"[31m
+              [36m/>[31m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<main[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<section[31m
+            [33maria-labelledby[31m=[32m"task-list-title"[31m
+          [36m>[31m
+            [36m<h1[31m
+              [33mid[31m=[32m"task-list-title"[31m
+              [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [0m待办调用[0m
+            [36m</h1>[31m
+            [36m<div[31m
+              [33maria-label[31m=[32m"任务汇总"[31m
+              [33mclass[31m=[32m"summary-grid"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--accent);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m待处理[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-violet);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mtitle[31m=[32m"解析中 0 · 审查中 0"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m审查中[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-warn);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m需人工[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-ok);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m已完成[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-danger);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m回写失败[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--text-3);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mstyle[31m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m共（全部状态）[0m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-2);"[31m
+              [36m>[31m
+                [0m状态[0m
+                [36m<select>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m""[31m
+                  [36m>[31m
+                    [0m全部[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"pending"[31m
+                  [36m>[31m
+                    [0m待处理[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"parsing"[31m
+                  [36m>[31m
+                    [0m解析中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"reviewing"[31m
+                  [36m>[31m
+                    [0m审查中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"blocked"[31m
+                  [36m>[31m
+                    [0m阻塞[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"done"[31m
+                  [36m>[31m
+                    [0m已完成[0m
+                  [36m</option>[31m
+                [36m</select>[31m
+              [36m</label>[31m
+              [36m<button[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0m刷新[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"empty"[31m
+            [36m>[31m
+              [36m<p[31m
+                [33mclass[31m=[32m"big"[31m
+              [36m>[31m
+                [0m暂无待办[0m
+              [36m</p>[31m
+              [36m<p>[31m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[31m
+            [36m</div>[31m
+          [36m</section>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"footer-note"[31m
+          [36m>[31m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[31m
+        [36m</main>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[31m   [31m×[31m 身份解析[2m > [22m有本地身份时请求 /api/me 并带上身份头[90m 50[2mms[22m[31m[39m
+[31m     → expected undefined to be 'li-hua' // Object.is equality[39m
+[31m   [31m×[31m 身份头[2m > [22m填表后立即以该身份请求，并可退出（退出后回到表单）[33m 1022[2mms[22m[31m[39m
+[31m     → Unable to find a label with the text of: actor_id
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"app-shell"[31m
+    [36m>[31m
+      [36m<aside[31m
+        [33mclass[31m=[32m"sidebar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"brand-mark"[31m
+          [36m>[31m
+            [0m审[0m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-name"[31m
+            [36m>[31m
+              [0m合同审批审查系统[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-sub"[31m
+            [36m>[31m
+              [0mContract Review Copilot[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"主导航"[31m
+          [33mclass[31m=[32m"nav"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</div>[31m
+          [36m<a[31m
+            [33maria-current[31m=[32m"page"[31m
+            [33mclass[31m=[32m"nav-item active"[31m
+            [33mhref[31m=[32m"/tasks"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"15"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"15"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M4 6h16M4 12h16M4 18h10"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [0m待办调用[0m
+          [36m</a>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m系统[0m
+          [36m</div>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actor-card"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actor-stack"[31m
+          [36m>[31m
+            [36m<div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-name"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mAuditor One[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-role actor-card-muted"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mauditor-1[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actor-row"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"actor-card-muted"[31m
+              [36m>[31m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0m退出（换一个身份）[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</aside>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"main"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topbar"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"topbar-crumb"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</span>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"topbar-right"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mstyle[31m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[31m
+            [36m>[31m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"badge b-violet"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"dot"[31m
+              [36m/>[31m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<main[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<section[31m
+            [33maria-labelledby[31m=[32m"task-list-title"[31m
+          [36m>[31m
+            [36m<h1[31m
+              [33mid[31m=[32m"task-list-title"[31m
+              [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [0m待办调用[0m
+            [36m</h1>[31m
+            [36m<div[31m
+              [33maria-label[31m=[32m"任务汇总"[31m
+              [33mclass[31m=[32m"summary-grid"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--accent);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m待处理[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-violet);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mtitle[31m=[32m"解析中 0 · 审查中 0"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m审查中[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-warn);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m需人工[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-ok);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m已完成[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-danger);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m回写失败[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--text-3);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mstyle[31m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m共（全部状态）[0m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-2);"[31m
+              [36m>[31m
+                [0m状态[0m
+                [36m<select>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m""[31m
+                  [36m>[31m
+                    [0m全部[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"pending"[31m
+                  [36m>[31m
+                    [0m待处理[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"parsing"[31m
+                  [36m>[31m
+                    [0m解析中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"reviewing"[31m
+                  [36m>[31m
+                    [0m审查中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"blocked"[31m
+                  [36m>[31m
+                    [0m阻塞[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"done"[31m
+                  [36m>[31m
+                    [0m已完成[0m
+                  [36m</option>[31m
+                [36m</select>[31m
+              [36m</label>[31m
+              [36m<button[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0m刷新[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"empty"[31m
+            [36m>[31m
+              [36m<p[31m
+                [33mclass[31m=[32m"big"[31m
+              [36m>[31m
+                [0m暂无待办[0m
+              [36m</p>[31m
+              [36m<p>[31m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[31m
+            [36m</div>[31m
+          [36m</section>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"footer-note"[31m
+          [36m>[31m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[31m
+        [36m</main>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"app-shell"[31m
+    [36m>[31m
+      [36m<aside[31m
+        [33mclass[31m=[32m"sidebar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"brand-mark"[31m
+          [36m>[31m
+            [0m审[0m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-name"[31m
+            [36m>[31m
+              [0m合同审批审查系统[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-sub"[31m
+            [36m>[31m
+              [0mContract Review Copilot[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"主导航"[31m
+          [33mclass[31m=[32m"nav"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</div>[31m
+          [36m<a[31m
+            [33maria-current[31m=[32m"page"[31m
+            [33mclass[31m=[32m"nav-item active"[31m
+            [33mhref[31m=[32m"/tasks"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"15"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"15"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M4 6h16M4 12h16M4 18h10"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [0m待办调用[0m
+          [36m</a>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m系统[0m
+          [36m</div>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actor-card"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actor-stack"[31m
+          [36m>[31m
+            [36m<div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-name"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mAuditor One[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-role actor-card-muted"[31m
+                [33mtitle[31m=[32m"auditor-1"[31m
+              [36m>[31m
+                [0mauditor-1[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actor-row"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"actor-card-muted"[31m
+              [36m>[31m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0m退出（换一个身份）[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</aside>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"main"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topbar"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"topbar-crumb"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</span>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"topbar-right"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mstyle[31m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[31m
+            [36m>[31m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"badge b-violet"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"dot"[31m
+              [36m/>[31m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<main[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<section[31m
+            [33maria-labelledby[31m=[32m"task-list-title"[31m
+          [36m>[31m
+            [36m<h1[31m
+              [33mid[31m=[32m"task-list-title"[31m
+              [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [0m待办调用[0m
+            [36m</h1>[31m
+            [36m<div[31m
+              [33maria-label[31m=[32m"任务汇总"[31m
+              [33mclass[31m=[32m"summary-grid"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--accent);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m待处理[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-violet);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mtitle[31m=[32m"解析中 0 · 审查中 0"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m审查中[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-warn);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m需人工[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-ok);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m已完成[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--status-danger);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m回写失败[0m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"metric"[31m
+                [33mstyle[31m=[32m"--mc: var(--text-3);"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-num"[31m
+                  [33mstyle[31m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</div>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"metric-label"[31m
+                [36m>[31m
+                  [0m共（全部状态）[0m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mstyle[31m=[32m"display: flex; align-items: center; gap: var(--space-2);"[31m
+              [36m>[31m
+                [0m状态[0m
+                [36m<select>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m""[31m
+                  [36m>[31m
+                    [0m全部[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"pending"[31m
+                  [36m>[31m
+                    [0m待处理[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"parsing"[31m
+                  [36m>[31m
+                    [0m解析中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"reviewing"[31m
+                  [36m>[31m
+                    [0m审查中[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"blocked"[31m
+                  [36m>[31m
+                    [0m阻塞[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"done"[31m
+                  [36m>[31m
+                    [0m已完成[0m
+                  [36m</option>[31m
+                [36m</select>[31m
+              [36m</label>[31m
+              [36m<button[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0m刷新[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"empty"[31m
+            [36m>[31m
+              [36m<p[31m
+                [33mclass[31m=[32m"big"[31m
+              [36m>[31m
+                [0m暂无待办[0m
+              [36m</p>[31m
+              [36m<p>[31m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[31m
+            [36m</div>[31m
+          [36m</section>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"footer-note"[31m
+          [36m>[31m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[31m
+        [36m</main>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[1m[7m Failed Tests 3 [27m[22m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/app/AuthProvider.test.tsx[2m > [22m身份解析[2m > [22m没有本地身份时**不请求 /api/me**，界面提示
+去提供身份
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an element with the text: 尚未提供身份. This could be because t
+he text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your 
+matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [0m审[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-name"[39m
+            [36m>[39m
+              [0m合同审批审查系统[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-sub"[39m
+            [36m>[39m
+              [0mContract Review Copilot[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"主导航"[39m
+          [33mclass[39m=[32m"nav"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</div>[39m
+          [36m<a[39m
+            [33maria-current[39m=[32m"page"[39m
+            [33mclass[39m=[32m"nav-item active"[39m
+            [33mhref[39m=[32m"/tasks"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"15"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"15"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 6h16M4 12h16M4 18h10"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m待办调用[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m系统[0m
+          [36m</div>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actor-card"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actor-stack"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-name"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mAuditor One[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-role actor-card-muted"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mauditor-1[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actor-row"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"actor-card-muted"[39m
+              [36m>[39m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m退出（换一个身份）[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"main"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topbar"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"topbar-crumb"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"topbar-right"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mstyle[39m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[39m
+            [36m>[39m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"badge b-violet"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"dot"[39m
+              [36m/>[39m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"task-list-title"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mid[39m=[32m"task-list-title"[39m
+              [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+            [36m>[39m
+              [0m待办调用[0m
+            [36m</h1>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"任务汇总"[39m
+              [33mclass[39m=[32m"summary-grid"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--accent);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m待处理[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-violet);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mtitle[39m=[32m"解析中 0 · 审查中 0"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m审查中[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-warn);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m需人工[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-ok);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m已完成[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-danger);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m回写失败[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--text-3);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mstyle[39m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m共（全部状态）[0m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space
+-3);"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-2);"[39m
+              [36m>[39m
+                [0m状态[0m
+                [36m<select>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0m全部[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"pending"[39m
+                  [36m>[39m
+                    [0m待处理[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"parsing"[39m
+                  [36m>[39m
+                    [0m解析中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"reviewing"[39m
+                  [36m>[39m
+                    [0m审查中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"blocked"[39m
+                  [36m>[39m
+                    [0m阻塞[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"done"[39m
+                  [36m>[39m
+                    [0m已完成[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</label>[39m
+              [36m<button[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m刷新[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"empty"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"big"[39m
+              [36m>[39m
+                [0m暂无待办[0m
+              [36m</p>[39m
+              [36m<p>[39m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"footer-note"[39m
+          [36m>[39m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [0m审[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-name"[39m
+            [36m>[39m
+              [0m合同审批审查系统[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-sub"[39m
+            [36m>[39m
+              [0mContract Review Copilot[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"主导航"[39m
+          [33mclass[39m=[32m"nav"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</div>[39m
+          [36m<a[39m
+            [33maria-current[39m=[32m"page"[39m
+            [33mclass[39m=[32m"nav-item active"[39m
+            [33mhref[39m=[32m"/tasks"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"15"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"15"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 6h16M4 12h16M4 18h10"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m待办调用[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m系统[0m
+          [36m</div>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actor-card"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actor-stack"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-name"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mAuditor One[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-role actor-card-muted"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mauditor-1[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actor-row"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"actor-card-muted"[39m
+              [36m>[39m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m退出（换一个身份）[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"main"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topbar"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"topbar-crumb"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"topbar-right"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mstyle[39m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[39m
+            [36m>[39m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"badge b-violet"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"dot"[39m
+              [36m/>[39m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"task-list-title"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mid[39m=[32m"task-list-title"[39m
+              [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+            [36m>[39m
+              [0m待办调用[0m
+            [36m</h1>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"任务汇总"[39m
+              [33mclass[39m=[32m"summary-grid"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--accent);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m待处理[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-violet);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mtitle[39m=[32m"解析中 0 · 审查中 0"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m审查中[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-warn);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m需人工[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-ok);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m已完成[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-danger);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m回写失败[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--text-3);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mstyle[39m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m共（全部状态）[0m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space
+-3);"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-2);"[39m
+              [36m>[39m
+                [0m状态[0m
+                [36m<select>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0m全部[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"pending"[39m
+                  [36m>[39m
+                    [0m待处理[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"parsing"[39m
+                  [36m>[39m
+                    [0m解析中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"reviewing"[39m
+                  [36m>[39m
+                    [0m审查中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"blocked"[39m
+                  [36m>[39m
+                    [0m阻塞[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"done"[39m
+                  [36m>[39m
+                    [0m已完成[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</label>[39m
+              [36m<button[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m刷新[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"empty"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"big"[39m
+              [36m>[39m
+                [0m暂无待办[0m
+              [36m</p>[39m
+              [36m<p>[39m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"footer-note"[39m
+          [36m>[39m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m86:33[22m[39m
+[36m [2m❯[22m src/app/AuthProvider.test.tsx:[2m121:25[22m[39m
+    [90m119| [39m    [34mrenderApp[39m([32m'/tasks'[39m)
+    [90m120| [39m
+    [90m121| [39m    [34mexpect[39m([35mawait[39m screen[33m.[39m[34mfindByText[39m([32m'尚未提供身份'[39m))[33m
+.[39m[34mtoBeInTheDocument[39m()
+    [90m   | [39m                        [31m^[39m
+    [90m122| [39m    [90m// 没有身份时请求 /api/me 必然 401（`AUTH_MODE=dev`），[39m
+    [90m123| [39m    [90m// 那只会让界面在"未登录"与"错误"之间闪一下。[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/app/AuthProvider.test.tsx[2m > [22m身份解析[2m > [22m有本地身份时请求 /api/me 并带上身份头
+[31m[1mAssertionError[22m: expected undefined to be 'li-hua' // Object.is equality[39m
+
+[32m- Expected:[39m 
+"li-hua"
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/app/AuthProvider.test.tsx:[2m159:43[22m[39m
+    [90m157| [39m    [35mconst[39m meCall [33m=[39m seen[33m.[39m[34mfind[39m((call) [33m=>[39m call[33m.
+[39murl[33m.[39m[34mstartsWith[39m([32m'/api/me'[39m))
+    [90m158| [39m    [34mexpect[39m(meCall)[33m.[39m[34mtoBeDefined[39m()
+    [90m159| [39m    [34mexpect[39m(meCall[33m?.[39mheaders[[32m'X-Actor-Id'[39m])[33m.[39m[34mtoBe[39m([3
+2m'li-hua'[39m)
+    [90m   | [39m                                          [31m^[39m
+    [90m160| [39m    [34mexpect[39m(meCall[33m?.[39mheaders[[32m'X-Actor-Roles'[39m])[33m.[39m[34mtoBe[39m(
+[32m'legal_reviewer'[39m)
+    [90m161| [39m  })
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/app/AuthProvider.test.tsx[2m > [22m身份头[2m > [22m填表后立即以该身份请求，并可退出（退出后回到表单）
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find a label with the text of: actor_id
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [0m审[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-name"[39m
+            [36m>[39m
+              [0m合同审批审查系统[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-sub"[39m
+            [36m>[39m
+              [0mContract Review Copilot[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"主导航"[39m
+          [33mclass[39m=[32m"nav"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</div>[39m
+          [36m<a[39m
+            [33maria-current[39m=[32m"page"[39m
+            [33mclass[39m=[32m"nav-item active"[39m
+            [33mhref[39m=[32m"/tasks"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"15"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"15"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 6h16M4 12h16M4 18h10"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m待办调用[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m系统[0m
+          [36m</div>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actor-card"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actor-stack"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-name"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mAuditor One[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-role actor-card-muted"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mauditor-1[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actor-row"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"actor-card-muted"[39m
+              [36m>[39m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m退出（换一个身份）[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"main"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topbar"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"topbar-crumb"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"topbar-right"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mstyle[39m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[39m
+            [36m>[39m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"badge b-violet"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"dot"[39m
+              [36m/>[39m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"task-list-title"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mid[39m=[32m"task-list-title"[39m
+              [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+            [36m>[39m
+              [0m待办调用[0m
+            [36m</h1>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"任务汇总"[39m
+              [33mclass[39m=[32m"summary-grid"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--accent);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m待处理[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-violet);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mtitle[39m=[32m"解析中 0 · 审查中 0"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m审查中[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-warn);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m需人工[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-ok);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m已完成[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-danger);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m回写失败[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--text-3);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mstyle[39m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m共（全部状态）[0m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space
+-3);"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-2);"[39m
+              [36m>[39m
+                [0m状态[0m
+                [36m<select>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0m全部[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"pending"[39m
+                  [36m>[39m
+                    [0m待处理[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"parsing"[39m
+                  [36m>[39m
+                    [0m解析中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"reviewing"[39m
+                  [36m>[39m
+                    [0m审查中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"blocked"[39m
+                  [36m>[39m
+                    [0m阻塞[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"done"[39m
+                  [36m>[39m
+                    [0m已完成[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</label>[39m
+              [36m<button[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m刷新[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"empty"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"big"[39m
+              [36m>[39m
+                [0m暂无待办[0m
+              [36m</p>[39m
+              [36m<p>[39m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"footer-note"[39m
+          [36m>[39m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [0m审[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-name"[39m
+            [36m>[39m
+              [0m合同审批审查系统[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-sub"[39m
+            [36m>[39m
+              [0mContract Review Copilot[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"主导航"[39m
+          [33mclass[39m=[32m"nav"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</div>[39m
+          [36m<a[39m
+            [33maria-current[39m=[32m"page"[39m
+            [33mclass[39m=[32m"nav-item active"[39m
+            [33mhref[39m=[32m"/tasks"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"15"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"15"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 6h16M4 12h16M4 18h10"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m待办调用[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m系统[0m
+          [36m</div>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actor-card"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actor-stack"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-name"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mAuditor One[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-role actor-card-muted"[39m
+                [33mtitle[39m=[32m"auditor-1"[39m
+              [36m>[39m
+                [0mauditor-1[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actor-row"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"actor-card-muted"[39m
+              [36m>[39m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m退出（换一个身份）[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"main"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topbar"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"topbar-crumb"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"topbar-right"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mstyle[39m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[39m
+            [36m>[39m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"badge b-violet"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"dot"[39m
+              [36m/>[39m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"task-list-title"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mid[39m=[32m"task-list-title"[39m
+              [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+            [36m>[39m
+              [0m待办调用[0m
+            [36m</h1>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"任务汇总"[39m
+              [33mclass[39m=[32m"summary-grid"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--accent);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m待处理[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-violet);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mtitle[39m=[32m"解析中 0 · 审查中 0"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m审查中[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-warn);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m需人工[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-ok);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m已完成[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--status-danger);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m回写失败[0m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric"[39m
+                [33mstyle[39m=[32m"--mc: var(--text-3);"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-num"[39m
+                  [33mstyle[39m=[32m"font-size: var(--font-size-lg); padding-top: 4px;"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"metric-label"[39m
+                [36m>[39m
+                  [0m共（全部状态）[0m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space
+-3);"[39m
+            [36m>[39m
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m8 passed[39m[22m[90m (11)[39m
+[2m   Start at [22m 00:36:17
+[2m   Duration [22m 4.75s[2m (transform 496ms, setup 198ms, collect 919ms, tests 2.44s, environment 607ms, prepare 132ms)[22m
+              [36m<label[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: var(--space-2);"[39m
+              [36m>[39m
+                [0m状态[0m
+                [36m<select>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0m全部[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"pending"[39m
+                  [36m>[39m
+                    [0m待处理[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"parsing"[39m
+                  [36m>[39m
+                    [0m解析中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"reviewing"[39m
+                  [36m>[39m
+                    [0m审查中[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"blocked"[39m
+                  [36m>[39m
+                    [0m阻塞[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"done"[39m
+                  [36m>[39m
+                    [0m已完成[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</label>[39m
+              [36m<button[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m刷新[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"empty"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"big"[39m
+              [36m>[39m
+                [0m暂无待办[0m
+              [36m</p>[39m
+              [36m<p>[39m
+                [0m从审批系统同步待办由定时任务或外部调用方触发（工具 1）；本页只读已同步的任务。[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"footer-note"[39m
+          [36m>[39m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m86:33[22m[39m
+[36m [2m❯[22m src/app/AuthProvider.test.tsx:[2m330:34[22m[39m
+    [90m328| [39m    [34mrenderApp[39m([32m'/tasks'[39m)
+    [90m329| [39m
+    [90m330| [39m    [35mawait[39m user[33m.[39m[34mtype[39m([35mawait[39m screen[33m.[39m[34mfindByLabelT
+ext[39m([32m'actor_id'[39m)[33m,[39m [32m'auditor[39m…
+    [90m   | [39m                                 [31m^[39m
+    [90m331| [39m    [35mawait[39m user[33m.[39m[34mclick[39m(screen[33m.[39m[34mgetByRole[39m([32m'button
+'[39m[33m,[39m { name[33m:[39m [32m'使用该身份'[39m }…
+    [90m332| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+

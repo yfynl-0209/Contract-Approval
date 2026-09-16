@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>合同审批审查系统 · 前端重设计原型</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ============ 侧边栏 ============ -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">审</div>
+        <div>
+          <div class="brand-name">合同审批审查系统</div>
+          <div class="brand-sub">Contract Review Copilot</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <div class="nav-section">审查工作台</div>
+        <button class="nav-item active" data-nav="tasks">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          待办调用
+          <span class="nav-badge" id="navPending">6</span>
+        </button>
+        <button class="nav-item" data-nav="rules">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+          规则管理
+        </button>
+        <div class="nav-section">系统</div>
+        <button class="nav-item" data-nav="ops">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 1-.1 1.2l2 1.6-2 3.4-2.4-1a7 7 0 0 1-2 1.2L14 21h-4l-.5-2.6a7 7 0 0 1-2-1.2l-2.4 1-2-3.4 2-1.6A7 7 0 0 1 5 12a7 7 0 0 1 .1-1.2l-2-1.6 2-3.4 2.4 1a7 7 0 0 1 2-1.2L10 3h4l.5 2.6a7 7 0 0 1 2 1.2l2.4-1 2 3.4-2 1.6c.07.4.1.8.1 1.2z"/></svg>
+          运行管理
+        </button>
+      </nav>
+      <div class="actor-card">
+        <div class="actor-name">王敏</div>
+        <div class="actor-role">法务审核人 · legal_reviewer</div>
+      </div>
+    </aside>
+
+    <!-- ============ 主区域 ============ -->
+    <div class="main">
+      <header class="topbar">
+        <span class="topbar-crumb" id="crumb">待办调用</span>
+        <div class="topbar-right">
+          <span class="env-tag">local · Mock 审批系统</span>
+          <span class="badge b-neutral"><span class="dot"></span>租户 default</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- 模块 1：待办调用 -->
+        <section class="view active" id="view-tasks"></section>
+
+        <!-- 任务工作台（模块 2–5） -->
+        <section class="view" id="view-workbench"></section>
+
+        <!-- 扩展：规则管理 -->
+        <section class="view" id="view-rules"></section>
+
+        <!-- 扩展：运行管理 -->
+        <section class="view" id="view-ops"></section>
+
+        <div class="footer-note">
+          前端重设计静态原型 · 数据为演示数据 · 所有统计口径以后端聚合为准（本原型仅作展示）
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

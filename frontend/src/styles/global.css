@@ -1,0 +1,153 @@
+@import './tokens.css';
+@import './shell.css';
+
+/*
+ * 全局基础样式（M8 Task 1）。
+ *
+ * 只做三件事：重置、排版基线、可见焦点。**不做**组件样式 ——
+ * 组件的类名与令牌一起放在各自目录下，避免这里变成第二个"什么都往里塞"的文件。
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: var(--line-height-tight);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--font-size-xl);
+}
+h2 {
+  font-size: var(--font-size-lg);
+}
+h3 {
+  font-size: var(--font-size-base);
+}
+
+p {
+  margin: 0 0 var(--space-2);
+}
+
+a {
+  color: var(--accent);
+}
+
+code,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+}
+
+/*
+ * 表单控件基线：不靠每个页面自己写边框圆角。
+ * 没有这一段时，版本下拉、筛选器、规则表单、运行管理的输入框
+ * 各自裸奔成浏览器默认样式——"看起来粗糙"的最大单一来源。
+ * （`.comment-editor` 等有类名的控件会在自己的类里覆盖这里。）
+ */
+input,
+select,
+textarea {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  background: var(--surface-0);
+  color: var(--text-1);
+  font-size: var(--font-size-sm);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+}
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background: var(--surface-sunken);
+  color: var(--text-2);
+}
+
+button {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-0);
+  color: var(--text-2);
+  padding: 6px 13px;
+  font-size: var(--font-size-sm);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+button.btn-primary,
+button.btn {
+  /* 有 .btn 类的按钮用类自己的形状，这里只保证颜色层级一致 */
+}
+
+/*
+ * ⚠️ 焦点环**必须可见**，且不能只在鼠标点击时出现：
+ * 键盘用户是需求里的硬性验收项（材料 §Global Constraints：
+ * "Keyboard access, focus management … are acceptance requirements"）。
+ * 用 `:focus-visible` 而不是 `:focus`：后者会让鼠标点过的按钮一直亮着，
+ * 于是"谁有焦点"这件事在视觉上失去意义 —— 而那是键盘用户唯一的导航线索。
+ */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* 屏幕阅读器专用（状态文字与颜色配对时用） */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 尊重系统的"减少动效"设置 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

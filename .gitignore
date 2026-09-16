@@ -1,0 +1,44 @@
+# 虚拟环境与缓存（提交时"不带依赖"）
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# 运行时产物
+data/app.db
+data/app.db.*.bak
+storage/
+*.log
+
+# 验收脚本的临时现场（`scripts/verify_m3.py` 正常结束会自清理；
+# 中断时留下的是**真实**的 DB 与对象文件，不能进仓库）
+verify-m3-*/
+
+# 测试临时目录（pytest 默认临时目录在部分 Windows 环境无权限，改为项目内）
+.pytest_tmp/
+
+# 本地配置与密钥（*.local：各开发者的本地默认身份等，永不入库）
+.env
+.env.local
+.env.*.local
+
+# ---------- 前端（M8 起有 frontend/）----------
+# ⚠️ 这两条不是"惯例"：缺了它们时 `git add -A` 会把**几百兆**依赖与构建产物
+# 一起提交进去，而 .gitignore 补上之前的那次提交是撤不掉的（历史里会一直有）。
+node_modules/
+dist/
+# 测试与构建的缓存
+coverage/
+.vite/
+# 编辑器/操作系统的杂项
+.DS_Store
+Thumbs.db
+
+# CodeBuddy 的本地工作数据（不入库）
+.codebuddy/
+
+# Playwright 将来的产出（e2e 截图与报告）
+playwright-report/
+test-results/

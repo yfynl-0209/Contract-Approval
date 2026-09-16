@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      ⚠️ `referrer` 刻意收紧：附件内容接口的 URL 里带 attachment_id，
+      而 referrer 会把它带进第三方请求。控制台不加载任何第三方脚本，
+      这条是"以后有人加了统计脚本"时的兜底。
+    -->
+    <meta name="referrer" content="same-origin" />
+    <!-- 控制台只应被内部网络访问；`noindex` 避免被搜索引擎收录 -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>合同审查控制台</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

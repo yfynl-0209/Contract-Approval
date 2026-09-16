@@ -1,0 +1,100 @@
+/*
+ * 设计令牌 —— 前端重设计（对齐 `frontend-redesign/` 静态原型的色板）。
+ *
+ * 一条总原则先写在这里，因为它决定下面每个颜色的用法：
+ *
+ *   **颜色永远不是唯一的信息载体。**
+ *
+ * 因此每个语义色都配一个弱底（`--*-soft` / `--*-weak`）与一个**必须同时出现的**
+ * 文字/图标标记；令牌只提供颜色，配对关系由组件保证（`StatusBadge` 等）。
+ *
+ * ⚠️ 与原型的一处**有意偏离**：原型的 `--text-3: #8593a8` 对白底只有 ~3.0:1，
+ * 而"时间、序号"恰恰是 12px 小字 —— 对比度不足叠加字号小是双重惩罚，
+ * 且 a11y/contrast.test.ts 会红。这里保持 #5d6878（白底 5.6:1），
+ * 其余色板全部采用原型取值。
+ */
+
+:root {
+  /* ---------- 页面底与表面（原型：#f3f5f9 底 + 白卡） ---------- */
+  --bg: #f3f5f9;
+  --surface-0: #ffffff;
+  --surface-1: #f8fafc; /* 卡片 */
+  --surface-2: #f1f5f9; /* 次级块 / 表头 */
+  --surface-sunken: #f1f5f9; /* 只读字段 */
+  --border-strong: #cbd5e1;
+  --border: #e3e8f0;
+  --border-subtle: #eceef2;
+
+  /* ---------- 文字（slate 系） ---------- */
+  --text-1: #0f172a; /* 正文与标题 */
+  --text-2: #475569; /* 次要说明 */
+  --text-3: #5d6878; /* 辅助（时间、序号）—— 见文件头"有意偏离" */
+
+  /* ---------- 交互（原型主色：靛蓝 #2f54eb） ---------- */
+  --accent: #2f54eb;
+  --accent-strong: #1d39c4;
+  --accent-soft: #eef2ff;
+  --focus-ring: #2f54eb;
+  --focus-ring-width: 2px;
+
+  /* ---------- 扩展语义色（原型新增） ---------- */
+  --info: #0958d9;
+  --info-weak: #e8f1ff;
+  --violet: #6941c6;
+  --violet-weak: #f4f0ff;
+  --ok-weak: #e7f6ee;
+  --warn-weak: #fef4e5;
+  --danger-weak: #fff1f0;
+  --neutral-weak: #f1f5f9;
+
+  /* ---------- 风险等级（与后端 `RiskLevel` 取值域一一对应；原型 ok/warn/danger） ---------- */
+  --risk-high: #cf1322;
+  --risk-high-soft: #fff1f0;
+  --risk-medium: #b54708;
+  --risk-medium-soft: #fef4e5;
+  --risk-low: #067647;
+  --risk-low-soft: #e7f6ee;
+
+  /* ---------- 业务状态（与后端 `TaskStatus` / 四态评价对应） ---------- */
+  --status-ok: #067647;
+  --status-warn: #b54708;
+  --status-danger: #cf1322;
+  --status-info: #0958d9;
+  --status-violet: #6941c6;
+  --status-neutral: #475569;
+  --status-blocked-soft: #fef4e5;
+
+  /* ---------- 侧边栏（深海军蓝，独立于亮色令牌体系） ---------- */
+  --sidebar-bg: #0e1a38;
+  --sidebar-text: #c6d2ea;
+  --sidebar-text-dim: #7f90b6;
+  --sidebar-hover: rgba(255, 255, 255, 0.07);
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+
+  /* ---------- 排版：密而可读（法律文本要逐行读） ---------- */
+  --font-sans:
+    -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'Cascadia Mono', 'Consolas', 'SFMono-Regular', monospace;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --line-height-tight: 1.35;
+  --line-height-base: 1.6;
+
+  /* ---------- 间距与圆角（原型：10px 卡片 / 7px 控件） ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --radius-sm: 7px;
+  --radius: 10px;
+
+  /* ---------- 层级 ---------- */
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 4%), 0 4px 14px rgb(15 23 42 / 5%);
+  --shadow-pop: 0 8px 30px rgb(15 23 42 / 12%);
+}

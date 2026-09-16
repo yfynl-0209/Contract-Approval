@@ -1,0 +1,176 @@
+{
+  "_comment": [
+    "mock 审批系统的待办数据。它模拟的是【外部业务系统】，因此这里的数据是",
+    "权威业务事实（我方是谁、我方是什么角色、什么合同类型），不是从合同文本推断出来的。",
+    "",
+    "四字段说明（对应 approval_tasks 的权威审查上下文）：",
+    "  our_party_name           我方企业全称",
+    "  our_party_contract_label 我方在合同正文中的形式标签（party_a / party_b）",
+    "  our_party_business_role  我方在交易中的实际身份（buyer / seller / service_provider ...）",
+    "  contract_type            合同业务分类（procurement / software_service ...）",
+    "",
+    "六条待办各自承担的验证职责：",
+    "  HT-2026-0001  常规采购合同，条款齐全          → 低风险基线",
+    "  HT-2026-0002  预付款 60%，我方为采购方        → 方向敏感规则命中（高风险）",
+    "  HT-2026-0003  软件开发合同，无知识产权条款    → IP_MISSING 适用并命中",
+    "  HT-2026-0004  标准品采购合同，无知识产权条款  → IP_MISSING 应为 not_applicable（防误报）",
+    "  HT-2026-0005  服务合同（扫描件）+ 一个不可用附件 → OCR 路径 + 附件缺失进 blocked",
+    "  HT-2026-0006  审批单声明我方为乙方，但附件是我方为甲方的合同 → 立场冲突（需人工确认）",
+    "",
+    "content_kind 取值：text_pdf（有文本层）/ scan_pdf（无文本层，走 OCR）/ missing（附件不可用）"
+  ],
+  "instances": [
+    {
+      "approval_code": "HT-2026-0001",
+      "approval_title": "办公设备采购合同审批",
+      "applicant_name": "王采购",
+      "apply_time": "2026-09-08T09:12:00",
+      "our_party_name": "示例科技有限公司",
+      "our_party_contract_label": "party_a",
+      "our_party_business_role": "buyer",
+      "contract_type": "procurement",
+      "form_data": {
+        "预算部门": "信息中心",
+        "合同金额": "1200000",
+        "币种": "CNY",
+        "付款方式": "验收后付款"
+      },
+      "attachments": [
+        {
+          "attachment_id": "A-1001",
+          "file_name": "contract_01_clean.pdf",
+          "file_type": "pdf",
+          "content_kind": "text_pdf"
+        }
+      ]
+    },
+    {
+      "approval_code": "HT-2026-0002",
+      "approval_title": "原材料采购合同审批",
+      "applicant_name": "李采购",
+      "apply_time": "2026-09-08T14:30:00",
+      "our_party_name": "示例科技有限公司",
+      "our_party_contract_label": "party_a",
+      "our_party_business_role": "buyer",
+      "contract_type": "procurement",
+      "form_data": {
+        "预算部门": "生产中心",
+        "合同金额": "3600000",
+        "币种": "CNY",
+        "付款方式": "预付 60%"
+      },
+      "attachments": [
+        {
+          "attachment_id": "A-1002",
+          "file_name": "contract_02_prepay.pdf",
+          "file_type": "pdf",
+          "content_kind": "text_pdf"
+        }
+      ]
+    },
+    {
+      "approval_code": "HT-2026-0003",
+      "approval_title": "客户管理系统开发合同审批",
+      "applicant_name": "赵项目经理",
+      "apply_time": "2026-09-09T10:05:00",
+      "our_party_name": "示例科技有限公司",
+      "our_party_contract_label": "party_b",
+      "our_party_business_role": "service_provider",
+      "contract_type": "software_service",
+      "form_data": {
+        "预算部门": "研发中心",
+        "合同金额": "800000",
+        "币种": "CNY",
+        "交付内容": "定制开发 + 一年运维"
+      },
+      "attachments": [
+        {
+          "attachment_id": "A-1003",
+          "file_name": "contract_03_dev_no_ip.pdf",
+          "file_type": "pdf",
+          "content_kind": "text_pdf"
+        }
+      ]
+    },
+    {
+      "approval_code": "HT-2026-0004",
+      "approval_title": "标准办公耗材采购合同审批",
+      "applicant_name": "钱行政",
+      "apply_time": "2026-09-09T15:40:00",
+      "our_party_name": "示例科技有限公司",
+      "our_party_contract_label": "party_a",
+      "our_party_business_role": "buyer",
+      "contract_type": "procurement",
+      "form_data": {
+        "预算部门": "行政部",
+        "合同金额": "90000",
+        "币种": "CNY",
+        "备注": "标准品，无定制开发内容"
+      },
+      "attachments": [
+        {
+          "attachment_id": "A-1004",
+          "file_name": "contract_04_standard_goods.pdf",
+          "file_type": "pdf",
+          "content_kind": "text_pdf"
+        }
+      ]
+    },
+    {
+      "approval_code": "HT-2026-0005",
+      "approval_title": "业务系统运维服务合同审批（扫描件）",
+      "applicant_name": "孙运维",
+      "apply_time": "2026-09-10T08:55:00",
+      "our_party_name": "示例科技有限公司",
+      "our_party_contract_label": "party_b",
+      "our_party_business_role": "service_provider",
+      "contract_type": "software_service",
+      "form_data": {
+        "预算部门": "信息中心",
+        "合同金额": "800000",
+        "币种": "CNY",
+        "件形式": "扫描件"
+      },
+      "attachments": [
+        {
+          "attachment_id": "A-1005",
+          "file_name": "contract_05_scan.pdf",
+          "file_type": "pdf",
+          "content_kind": "scan_pdf"
+        },
+        {
+          "attachment_id": "A-5002",
+          "file_name": "contract_05_appendix_missing.pdf",
+          "file_type": "pdf",
+          "content_kind": "missing",
+          "_comment": "该附件在审批系统中已被删除，下载必然失败 → 用于演示 blocked 与人工重试"
+        }
+      ]
+    },
+    {
+      "approval_code": "HT-2026-0006",
+      "approval_title": "仓储服务合同审批（立场待确认）",
+      "applicant_name": "周法务",
+      "apply_time": "2026-09-11T11:20:00",
+      "our_party_name": "示例科技有限公司",
+      "our_party_contract_label": "party_b",
+      "our_party_business_role": "seller",
+      "contract_type": "outsourcing",
+      "form_data": {
+        "预算部门": "供应链中心",
+        "合同金额": "260000",
+        "币种": "CNY",
+        "备注": "申请人填写的合同角色待法务确认"
+      },
+      "attachments": [
+        {
+          "attachment_id": "A-1006",
+          "file_name": "contract_06_conflict.pdf",
+          "file_type": "pdf",
+          "content_kind": "text_pdf",
+          "_comment": "正文签约主体显示示例科技有限公司为甲方，与审批单声明的 party_b 冲突 → 用于演示立场冲突"
+        }
+      ]
+    }
+  ]
+}

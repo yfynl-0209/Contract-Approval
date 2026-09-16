@@ -1,0 +1,2988 @@
+﻿
+> contract-approval-console@0.1.0 test
+> vitest --run
+
+node.exe : ▲ [WARNING] Duplicate key "env" in object literal [duplicate-object-key]
+所在位置 行:1 字符: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (▲ [WARNING] Dup...ate-object-key]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+    vite.config.ts:53:4:
+      53 │     env: { TZ: 'Asia/Shanghai' },
+         ╵     ~~~
+
+  The original key "env" is here:
+
+    vite.config.ts:43:4:
+      43 │     env: {
+         ╵     ~~~
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/Public/Nwt/cache/recv/xm/Contract approval/contract-approval-system/frontend[39m
+
+ [32m✓[39m src/app/AuthProvider.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 1687[2mms[22m[39m
+   [33m[2m✓[22m[39m 身份解析[2m > [22m服务端故障时给出可操作提示（不是一句"失败了"） [33m352[2mms[22m[39m
+   [33m[2m✓[22m[39m 身份头[2m > [22m填表后立即以该身份请求，并可退出（退出后回到表单） [33m468[2mms[22m[39m
+ [32m✓[39m src/features/tasks/TaskListPage.test.tsx [2m([22m[2m18 tests[22m[2m)[22m[33m 2228[2mms[22m[39m
+   [33m[2m✓[22m[39m 加载 / 空 / 错[2m > [22m加载中保留表头，避免布局跳动 [33m504[2mms[22m[39m
+ [32m✓[39m src/features/detail/DetailTab.test.tsx [2m([22m[2m18 tests[22m[2m)[22m[33m 3000[2mms[22m[39m
+   [33m[2m✓[22m[39m 权威审查上下文[2m > [22m`complete`：标明来自审批系统，并给出确认与修正两个动作 [33m613[2mms[22m[39m
+   [33m[2m✓[22m[39m 人工修正提交[2m > [22m提交时带上**四条**业务事实（后端要求齐全） [33m574[2mms[22m[39m
+ [32m✓[39m src/features/parse/ParseTab.test.tsx [2m([22m[2m24 tests[22m[2m)[22m[33m 3495[2mms[22m[39m
+   [33m[2m✓[22m[39m 字段四态[2m > [22m⚠️ 四态**分别**呈现，且 `not_found` 与 `failed` 不会被合并 [33m373[2mms[22m[39m
+   [33m[2m✓[22m[39m 证据与定位[2m > [22m每条证据给出**页码**与**精度**（文本精度与几何精度都说） [33m377[2mms[22m[39m
+   [33m[2m✓[22m[39m 证据与定位[2m > [22m点字段 → 选中并高亮（`aria-pressed` + 框的 `data-selected`） [33m317[2mms[22m[39m
+   [33m[2m✓[22m[39m 证据与定位[2m > [22m⚠️ 双向：点 PDF 上的证据框 → 选中对应字段 [33m333[2mms[22m[39m
+ [31m❯[39m src/features/result/ResultTab.test.tsx [2m([22m[2m23 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3603[2mms[22m[39m
+[31m   [31m×[31m 风险与完整性[2m > [22m⚠️ 两个值**各自照实显示**，前端不重算、不互相理顺[33m 423[2mms[22m[31m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  总风险：高[31m
+Received:
+[31m  高[31m[39m
+   [33m[2m✓[22m[39m 结果版本[2m > [22m默认显示**当前版本**，并可切到历史版本（切了要说明） [33m402[2mms[22m[39m
+   [33m[2m✓[22m[39m 修改正文[2m > [22m保存只传 `comment_text`，并说明会生成新版本 [33m399[2mms[22m[39m
+   [33m[2m✓[22m[39m 修改正文[2m > [22m同一份正文被复用时不谎称"生成了新版本" [33m381[2mms[22m[39m
+ [31m❯[39m src/features/rules/RuleTab.test.tsx [2m([22m[2m18 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3615[2mms[22m[39m
+   [33m[2m✓[22m[39m 四态分组与排序[2m > [22m⚠️ 四组都在，且 `needs_review` **排在 `hit` 之前** [33m527[2mms[22m[39m
+[31m   [31m×[31m 计算过程与证据[2m > [22m给出可复核的计算过程（op 映射成数学符号）[33m 1038[2mms[22m[31m[39m
+[31m     → Unable to find an element with the text: 0.6 > 0.3. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"app-shell"[31m
+    [36m>[31m
+      [36m<aside[31m
+        [33mclass[31m=[32m"sidebar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"brand-mark"[31m
+          [36m>[31m
+            [0m审[0m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-name"[31m
+            [36m>[31m
+              [0m合同审批审查系统[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-sub"[31m
+            [36m>[31m
+              [0mContract Review Copilot[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"主导航"[31m
+          [33mclass[31m=[32m"nav"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</div>[31m
+          [36m<a[31m
+            [33mclass[31m=[32m"nav-item"[31m
+            [33mhref[31m=[32m"/tasks"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"15"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"15"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M4 6h16M4 12h16M4 18h10"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [0m待办调用[0m
+          [36m</a>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m系统[0m
+          [36m</div>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actor-card"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actor-stack"[31m
+          [36m>[31m
+            [36m<div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-name"[31m
+                [33mtitle[31m=[32m"reviewer-1"[31m
+              [36m>[31m
+                [0mReviewer One[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-role actor-card-muted"[31m
+                [33mtitle[31m=[32m"reviewer-1"[31m
+              [36m>[31m
+                [0mreviewer-1[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actor-row"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"actor-card-muted"[31m
+              [36m>[31m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0m退出（换一个身份）[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</aside>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"main"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topbar"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"topbar-crumb"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+            [36m<b>[31m
+              [0m · 任务工作台[0m
+            [36m</b>[31m
+          [36m</span>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"topbar-right"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mstyle[31m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[31m
+            [36m>[31m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"badge b-violet"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"dot"[31m
+              [36m/>[31m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<main[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<section[31m
+            [33maria-labelledby[31m=[32m"workbench-title"[31m
+          [36m>[31m
+            [36m<nav[31m
+              [33maria-label[31m=[32m"面包屑"[31m
+              [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [36m<a[31m
+                [33mclass[31m=[32m"btn btn-sm"[31m
+                [33mhref[31m=[32m"/tasks"[31m
+              [36m>[31m
+                [0m← 返回待办列表[0m
+              [36m</a>[31m
+            [36m</nav>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"wb-head"[31m
+            [36m>[31m
+              [36m<div>[31m
+                [36m<h1[31m
+                  [33mclass[31m=[32m"wb-title"[31m
+                  [33mid[31m=[32m"workbench-title"[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-1);"[31m
+                [36m>[31m
+                  [0m任务 #[0m
+                  [0m7[0m
+                [36m</h1>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"wb-meta"[31m
+                [36m>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"mono"[31m
+                  [36m/>[31m
+                  [36m<span />[31m
+                  [36m<span>[31m
+                    [0m申请人：[0m
+                  [36m</span>[31m
+                  [36m<span>[31m
+                    [0m更新于 [0m
+                  [36m</span>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"wb-chips"[31m
+              [36m>[31m
+                [36m<div>[31m
+                  [36m<span[31m
+                    [33mstyle[31m=[32m"color: var(--text-1); font-weight: 400;"[31m
+                  [36m>[31m
+                    [0m审查中[0m
+                  [36m</span>[31m
+                [36m</div>[31m
+                [36m<span[31m
+                  [33maria-label[31m=[32m"总风险：尚未审查出结果"[31m
+                  [33mstyle[31m=[32m"color: var(--text-3);"[31m
+                  [33mtitle[31m=[32m"尚未审查出结果"[31m
+                [36m>[31m
+                  [0m—[0m
+                [36m</span>[31m
+                [36m<div>[31m
+                  [36m<span>[31m
+                    [0m未回写[0m
+                  [36m</span>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33maria-label[31m=[32m"任务视角"[31m
+              [33mclass[31m=[32m"tabs"[31m
+              [33mrole[31m=[32m"tablist"[31m
+            [36m>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"false"[31m
+                [33mclass[31m=[32m"tab"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=detail"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m详情[0m
+              [36m</a>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"false"[31m
+                [33mclass[31m=[32m"tab"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=parse"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m解析结果[0m
+              [36m</a>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"true"[31m
+                [33mclass[31m=[32m"tab active"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=rules"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m规则命中[0m
+              [36m</a>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"false"[31m
+                [33mclass[31m=[32m"tab"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=result"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m结果处理[0m
+              [36m</a>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mrole[31m=[32m"tabpanel"[31m
+              [33mstyle[31m=[32m"padding-top: var(--space-2);"[31m
+            [36m>[31m
+              [36m<div>[31m
+                [36m<header[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<div[31m
+                    [33mstyle[31m=[32m"display: flex; gap: var(--space-2); align-items: baseline; flex-wrap: wrap;"[31m
+                  [36m>[31m
+                    [36m<strong>[31m
+                      [0m批次 #[0m
+                      [0m21[0m
+                    [36m</strong>[31m
+                    [36m<span[31m
+                      [33mstyle[31m=[32m"color: var(--text-2); font-size: var(--font-size-sm);"[31m
+                    [36m>[31m
+                      [0mv[0m
+                      [0m3[0m
+                      [0m · [0m
+                      [0m已完成[0m
+                      [0m · 2026-09-15 10:00[0m
+                    [36m</span>[31m
+                  [36m</div>[31m
+                  [36m<div[31m
+                    [33mdata-testid[31m=[32m"run-counts"[31m
+                    [33mstyle[31m=[32m"font-size: var(--font-size-sm); margin-top: var(--space-1);"[31m
+                  [36m>[31m
+                    [0m命中 [0m
+                    [0m2[0m
+                    [0m · 待判断 [0m
+                    [0m1[0m
+                    [0m · 未命中 [0m
+                    [0m1[0m
+                    [0m · 不适用[0m
+                    [0m [0m
+                    [0m1[0m
+                    [0m（共 [0m
+                    [0m5[0m
+                    [0m 条规则）[0m
+                  [36m</div>[31m
+                  [36m<div[31m
+                    [33mstyle[31m=[32m"color: var(--text-2); font-size: var(--font-size-xs); margin-top: var(--space-1);"[31m
+                  [36m>[31m
+                    [0m总风险 [0m
+                    [0m高[0m
+                    [0m · 结论完整性 [0m
+                    [0m需人工判断[0m
+                    [0m · 规则集 rs-3f9a[0m
+                  [36m</div>[31m
+                [36m</header>[31m
+                [36m<div[31m
+                  [33mstyle[31m=[32m"display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-bottom: var(--space-3); font-size: var(--font-size-sm);"[31m
+                [36m>[31m
+                  [36m<label[31m
+                    [33mstyle[31m=[32m"display: flex; gap: var(--space-1); align-items: center;"[31m
+                  [36m>[31m
+                    [36m<input[31m
+                      [33mtype[31m=[32m"checkbox"[31m
+                    [36m/>[31m
+                    [0m只看需处理（待判断 + 命中）[0m
+                  [36m</label>[31m
+                  [36m<label[31m
+                    [33mstyle[31m=[32m"display: flex; gap: var(--space-1); align-items: center;"[31m
+                  [36m>[31m
+                    [0m规则码[0m
+                    [36m<input[31m
+                      [33mplaceholder[31m=[32m"按规则码搜索"[31m
+                      [33mtype[31m=[32m"search"[31m
+                      [33mvalue[31m=[32m""[31m
+                    [36m/>[31m
+                  [36m</label>[31m
+                  [36m<span[31m
+                    [33mstyle[31m=[32m"margin-left: auto; color: var(--text-3); font-size: var(--font-size-xs);"[31m
+                  [36m>[31m
+                    [0m已加载 [0m
+                    [0m5[0m
+                    [0m / 共 [0m
+                    [0m5[0m
+                    [0m 条[0m
+                  [36m</span>[31m
+                [36m</div>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"needs_review"[31m
+                  [33mopen[31m=[32m""[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m需人工判断[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                    [36m<span[31m
+                      [33mstyle[31m=[32m"font-weight: 400; color: var(--text-2);"[31m
+                    [36m>[31m
+                      [0m—— 结论需要你来做[0m
+                    [36m</span>[31m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"PAY_PREPAY_RATIO_HIGH_FOR_BUYER"[31m
+                      [33mdata-status[31m=[32m"needs_review"[31m
+                      [33mstyle[31m=[32m"--rc: var(--border-strong);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mPAY_PREPAY_RATIO_HIGH_FOR_BUYER[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONTEXT_MISSING[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<p[31m
+                        [33mclass[31m=[32m"rule-reason"[31m
+                      [36m>[31m
+                        [0m我方立场未知，方向敏感的规则判不了[0m
+                      [36m</p>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"hit"[31m
+                  [33mopen[31m=[32m""[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m命中[0m
+                    [0m（[0m
+                    [0m2[0m
+                    [0m）[0m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"PREPAY_RATIO_OVER_30"[31m
+                      [33mdata-status[31m=[32m"hit"[31m
+                      [33mstyle[31m=[32m"--rc: var(--status-danger);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mPREPAY_RATIO_OVER_30[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"badge b-neutral"[31m
+                          [33mstyle[31m=[32m"color: var(--status-danger);"[31m
+                        [36m>[31m
+                          [0m高[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<p[31m
+                        [33mdata-testid[31m=[32m"calculation"[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0;"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-calc"[31m
+                        [36m>[31m
+                          [0m计算：[0m
+                          [0m0.6 &gt; 0.3[0m
+                        [36m</span>[31m
+                      [36m</p>[31m
+                      [36m<ul[31m
+                        [33mclass[31m=[32m"rule-evidence"[31m
+                        [33mdata-testid[31m=[32m"rule-evidence"[31m
+                      [36m>[31m
+                        [36m<li>[31m
+                          [36m<q>[31m
+                            [0m「[0m
+                            [0m合同签订后 60 日内支付预付款[0m
+                            [0m」[0m
+                          [36m</q>[31m
+                          [0m [0m
+                          [36m<a[31m
+                            [33mhref[31m=[32m"/tasks/7?tab=parse&page=2&block=p2-b1"[31m
+                          [36m>[31m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[31m
+                        [36m</li>[31m
+                        [36m<li>[31m
+                          [36m<q>[31m
+                            [0m「[0m
+                            [0m预付款比例为 60%[0m
+                            [0m」[0m
+                          [36m</q>[31m
+                          [0m [0m
+                          [36m<a[31m
+                            [33mhref[31m=[32m"/tasks/7?tab=parse&page=2&block=p2-b2"[31m
+                          [36m>[31m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[31m
+                        [36m</li>[31m
+                      [36m</ul>[31m
+                    [36m</li>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"IP_CLAUSE_ABSENT"[31m
+                      [33mdata-status[31m=[32m"hit"[31m
+                      [33mstyle[31m=[32m"--rc: var(--status-warn);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mIP_CLAUSE_ABSENT[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"badge b-neutral"[31m
+                          [33mstyle[31m=[32m"color: var(--status-warn);"[31m
+                        [36m>[31m
+                          [0m中[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<ul[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0; padding-left: 1.2em; font-size: var(--font-size-xs);"[31m
+                      [36m>[31m
+                        [36m<li>[31m
+                          [0m字段状态[0m
+                          [0m：[0m
+                          [0mnot_found[0m
+                        [36m</li>[31m
+                        [36m<li>[31m
+                          [0mop[0m
+                          [0m：[0m
+                          [0mis_null[0m
+                        [36m</li>[31m
+                      [36m</ul>[31m
+                      [36m<p[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0; font-size: var(--font-size-xs); color: var(--text-2);"[31m
+                      [36m>[31m
+                        [0m这条命中没有原文片段：结论是「全文都没有」，依据见上方的计算明细。[0m
+                      [36m</p>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"not_hit"[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m未命中[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"PAY_DAYS_OVER_60"[31m
+                      [33mdata-status[31m=[32m"not_hit"[31m
+                      [33mstyle[31m=[32m"--rc: var(--border-strong);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mPAY_DAYS_OVER_60[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_NOT_MATCHED[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<p[31m
+                        [33mdata-testid[31m=[32m"calculation"[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0;"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-calc"[31m
+                        [36m>[31m
+                          [0m计算：[0m
+                          [0m30 &gt; 60[0m
+                        [36m</span>[31m
+                      [36m</p>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"not_applicable"[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m不适用[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"AUTO_RENEW_ABSENT"[31m
+                      [33mdata-status[31m=[32m"not_applicable"[31m
+                      [33mstyle[31m=[32m"--rc: var(--border-strong);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mAUTO_RENEW_ABSENT[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_NOT_APPLICABLE[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</section>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"footer-note"[31m
+          [36m>[31m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[31m
+        [36m</main>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"app-shell"[31m
+    [36m>[31m
+      [36m<aside[31m
+        [33mclass[31m=[32m"sidebar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"brand-mark"[31m
+          [36m>[31m
+            [0m审[0m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-name"[31m
+            [36m>[31m
+              [0m合同审批审查系统[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brand-sub"[31m
+            [36m>[31m
+              [0mContract Review Copilot[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"主导航"[31m
+          [33mclass[31m=[32m"nav"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+          [36m</div>[31m
+          [36m<a[31m
+            [33mclass[31m=[32m"nav-item"[31m
+            [33mhref[31m=[32m"/tasks"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"15"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"15"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M4 6h16M4 12h16M4 18h10"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [0m待办调用[0m
+          [36m</a>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"nav-section"[31m
+          [36m>[31m
+            [0m系统[0m
+          [36m</div>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actor-card"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actor-stack"[31m
+          [36m>[31m
+            [36m<div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-name"[31m
+                [33mtitle[31m=[32m"reviewer-1"[31m
+              [36m>[31m
+                [0mReviewer One[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"actor-role actor-card-muted"[31m
+                [33mtitle[31m=[32m"reviewer-1"[31m
+              [36m>[31m
+                [0mreviewer-1[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actor-row"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"actor-card-muted"[31m
+              [36m>[31m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0m退出（换一个身份）[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</aside>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"main"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topbar"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"topbar-crumb"[31m
+          [36m>[31m
+            [0m审查工作台[0m
+            [36m<b>[31m
+              [0m · 任务工作台[0m
+            [36m</b>[31m
+          [36m</span>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"topbar-right"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mstyle[31m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[31m
+            [36m>[31m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"badge b-violet"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"dot"[31m
+              [36m/>[31m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<main[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<section[31m
+            [33maria-labelledby[31m=[32m"workbench-title"[31m
+          [36m>[31m
+            [36m<nav[31m
+              [33maria-label[31m=[32m"面包屑"[31m
+              [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+            [36m>[31m
+              [36m<a[31m
+                [33mclass[31m=[32m"btn btn-sm"[31m
+                [33mhref[31m=[32m"/tasks"[31m
+              [36m>[31m
+                [0m← 返回待办列表[0m
+              [36m</a>[31m
+            [36m</nav>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"wb-head"[31m
+            [36m>[31m
+              [36m<div>[31m
+                [36m<h1[31m
+                  [33mclass[31m=[32m"wb-title"[31m
+                  [33mid[31m=[32m"workbench-title"[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-1);"[31m
+                [36m>[31m
+                  [0m任务 #[0m
+                  [0m7[0m
+                [36m</h1>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"wb-meta"[31m
+                [36m>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"mono"[31m
+                  [36m/>[31m
+                  [36m<span />[31m
+                  [36m<span>[31m
+                    [0m申请人：[0m
+                  [36m</span>[31m
+                  [36m<span>[31m
+                    [0m更新于 [0m
+                  [36m</span>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"wb-chips"[31m
+              [36m>[31m
+                [36m<div>[31m
+                  [36m<span[31m
+                    [33mstyle[31m=[32m"color: var(--text-1); font-weight: 400;"[31m
+                  [36m>[31m
+                    [0m审查中[0m
+                  [36m</span>[31m
+                [36m</div>[31m
+                [36m<span[31m
+                  [33maria-label[31m=[32m"总风险：尚未审查出结果"[31m
+                  [33mstyle[31m=[32m"color: var(--text-3);"[31m
+                  [33mtitle[31m=[32m"尚未审查出结果"[31m
+                [36m>[31m
+                  [0m—[0m
+                [36m</span>[31m
+                [36m<div>[31m
+                  [36m<span>[31m
+                    [0m未回写[0m
+                  [36m</span>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33maria-label[31m=[32m"任务视角"[31m
+              [33mclass[31m=[32m"tabs"[31m
+              [33mrole[31m=[32m"tablist"[31m
+            [36m>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"false"[31m
+                [33mclass[31m=[32m"tab"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=detail"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m详情[0m
+              [36m</a>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"false"[31m
+                [33mclass[31m=[32m"tab"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=parse"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m解析结果[0m
+              [36m</a>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"true"[31m
+                [33mclass[31m=[32m"tab active"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=rules"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m规则命中[0m
+              [36m</a>[31m
+              [36m<a[31m
+                [33maria-selected[31m=[32m"false"[31m
+                [33mclass[31m=[32m"tab"[31m
+                [33mhref[31m=[32m"/tasks/7?tab=result"[31m
+                [33mrole[31m=[32m"tab"[31m
+              [36m>[31m
+                [0m结果处理[0m
+              [36m</a>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mrole[31m=[32m"tabpanel"[31m
+              [33mstyle[31m=[32m"padding-top: var(--space-2);"[31m
+            [36m>[31m
+              [36m<div>[31m
+                [36m<header[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<div[31m
+                    [33mstyle[31m=[32m"display: flex; gap: var(--space-2); align-items: baseline; flex-wrap: wrap;"[31m
+                  [36m>[31m
+                    [36m<strong>[31m
+                      [0m批次 #[0m
+                      [0m21[0m
+                    [36m</strong>[31m
+                    [36m<span[31m
+                      [33mstyle[31m=[32m"color: var(--text-2); font-size: var(--font-size-sm);"[31m
+                    [36m>[31m
+                      [0mv[0m
+                      [0m3[0m
+                      [0m · [0m
+                      [0m已完成[0m
+                      [0m · 2026-09-15 10:00[0m
+                    [36m</span>[31m
+                  [36m</div>[31m
+                  [36m<div[31m
+                    [33mdata-testid[31m=[32m"run-counts"[31m
+                    [33mstyle[31m=[32m"font-size: var(--font-size-sm); margin-top: var(--space-1);"[31m
+                  [36m>[31m
+                    [0m命中 [0m
+                    [0m2[0m
+                    [0m · 待判断 [0m
+                    [0m1[0m
+                    [0m · 未命中 [0m
+                    [0m1[0m
+                    [0m · 不适用[0m
+                    [0m [0m
+                    [0m1[0m
+                    [0m（共 [0m
+                    [0m5[0m
+                    [0m 条规则）[0m
+                  [36m</div>[31m
+                  [36m<div[31m
+                    [33mstyle[31m=[32m"color: var(--text-2); font-size: var(--font-size-xs); margin-top: var(--space-1);"[31m
+                  [36m>[31m
+                    [0m总风险 [0m
+                    [0m高[0m
+                    [0m · 结论完整性 [0m
+                    [0m需人工判断[0m
+                    [0m · 规则集 rs-3f9a[0m
+                  [36m</div>[31m
+                [36m</header>[31m
+                [36m<div[31m
+                  [33mstyle[31m=[32m"display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-bottom: var(--space-3); font-size: var(--font-size-sm);"[31m
+                [36m>[31m
+                  [36m<label[31m
+                    [33mstyle[31m=[32m"display: flex; gap: var(--space-1); align-items: center;"[31m
+                  [36m>[31m
+                    [36m<input[31m
+                      [33mtype[31m=[32m"checkbox"[31m
+                    [36m/>[31m
+                    [0m只看需处理（待判断 + 命中）[0m
+                  [36m</label>[31m
+                  [36m<label[31m
+                    [33mstyle[31m=[32m"display: flex; gap: var(--space-1); align-items: center;"[31m
+                  [36m>[31m
+                    [0m规则码[0m
+                    [36m<input[31m
+                      [33mplaceholder[31m=[32m"按规则码搜索"[31m
+                      [33mtype[31m=[32m"search"[31m
+                      [33mvalue[31m=[32m""[31m
+                    [36m/>[31m
+                  [36m</label>[31m
+                  [36m<span[31m
+                    [33mstyle[31m=[32m"margin-left: auto; color: var(--text-3); font-size: var(--font-size-xs);"[31m
+                  [36m>[31m
+                    [0m已加载 [0m
+                    [0m5[0m
+                    [0m / 共 [0m
+                    [0m5[0m
+                    [0m 条[0m
+                  [36m</span>[31m
+                [36m</div>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"needs_review"[31m
+                  [33mopen[31m=[32m""[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m需人工判断[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                    [36m<span[31m
+                      [33mstyle[31m=[32m"font-weight: 400; color: var(--text-2);"[31m
+                    [36m>[31m
+                      [0m—— 结论需要你来做[0m
+                    [36m</span>[31m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"PAY_PREPAY_RATIO_HIGH_FOR_BUYER"[31m
+                      [33mdata-status[31m=[32m"needs_review"[31m
+                      [33mstyle[31m=[32m"--rc: var(--border-strong);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mPAY_PREPAY_RATIO_HIGH_FOR_BUYER[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONTEXT_MISSING[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<p[31m
+                        [33mclass[31m=[32m"rule-reason"[31m
+                      [36m>[31m
+                        [0m我方立场未知，方向敏感的规则判不了[0m
+                      [36m</p>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"hit"[31m
+                  [33mopen[31m=[32m""[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m命中[0m
+                    [0m（[0m
+                    [0m2[0m
+                    [0m）[0m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"PREPAY_RATIO_OVER_30"[31m
+                      [33mdata-status[31m=[32m"hit"[31m
+                      [33mstyle[31m=[32m"--rc: var(--status-danger);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mPREPAY_RATIO_OVER_30[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"badge b-neutral"[31m
+                          [33mstyle[31m=[32m"color: var(--status-danger);"[31m
+                        [36m>[31m
+                          [0m高[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<p[31m
+                        [33mdata-testid[31m=[32m"calculation"[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0;"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-calc"[31m
+                        [36m>[31m
+                          [0m计算：[0m
+                          [0m0.6 &gt; 0.3[0m
+                        [36m</span>[31m
+                      [36m</p>[31m
+                      [36m<ul[31m
+                        [33mclass[31m=[32m"rule-evidence"[31m
+                        [33mdata-testid[31m=[32m"rule-evidence"[31m
+                      [36m>[31m
+                        [36m<li>[31m
+                          [36m<q>[31m
+                            [0m「[0m
+                            [0m合同签订后 60 日内支付预付款[0m
+                            [0m」[0m
+                          [36m</q>[31m
+                          [0m [0m
+                          [36m<a[31m
+                            [33mhref[31m=[32m"/tasks/7?tab=parse&page=2&block=p2-b1"[31m
+                          [36m>[31m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[31m
+                        [36m</li>[31m
+                        [36m<li>[31m
+                          [36m<q>[31m
+                            [0m「[0m
+                            [0m预付款比例为 60%[0m
+                            [0m」[0m
+                          [36m</q>[31m
+                          [0m [0m
+                          [36m<a[31m
+                            [33mhref[31m=[32m"/tasks/7?tab=parse&page=2&block=p2-b2"[31m
+                          [36m>[31m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[31m
+                        [36m</li>[31m
+                      [36m</ul>[31m
+                    [36m</li>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"IP_CLAUSE_ABSENT"[31m
+                      [33mdata-status[31m=[32m"hit"[31m
+                      [33mstyle[31m=[32m"--rc: var(--status-warn);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mIP_CLAUSE_ABSENT[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"badge b-neutral"[31m
+                          [33mstyle[31m=[32m"color: var(--status-warn);"[31m
+                        [36m>[31m
+                          [0m中[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<ul[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0; padding-left: 1.2em; font-size: var(--font-size-xs);"[31m
+                      [36m>[31m
+                        [36m<li>[31m
+                          [0m字段状态[0m
+                          [0m：[0m
+                          [0mnot_found[0m
+                        [36m</li>[31m
+                        [36m<li>[31m
+                          [0mop[0m
+                          [0m：[0m
+                          [0mis_null[0m
+                        [36m</li>[31m
+                      [36m</ul>[31m
+                      [36m<p[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0; font-size: var(--font-size-xs); color: var(--text-2);"[31m
+                      [36m>[31m
+                        [0m这条命中没有原文片段：结论是「全文都没有」，依据见上方的计算明细。[0m
+                      [36m</p>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"not_hit"[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m未命中[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"PAY_DAYS_OVER_60"[31m
+                      [33mdata-status[31m=[32m"not_hit"[31m
+                      [33mstyle[31m=[32m"--rc: var(--border-strong);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mPAY_DAYS_OVER_60[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_NOT_MATCHED[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                      [36m<p[31m
+                        [33mdata-testid[31m=[32m"calculation"[31m
+                        [33mstyle[31m=[32m"margin: var(--space-2) 0 0;"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-calc"[31m
+                        [36m>[31m
+                          [0m计算：[0m
+                          [0m30 &gt; 60[0m
+                        [36m</span>[31m
+                      [36m</p>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+                [36m<details[31m
+                  [33mdata-status[31m=[32m"not_applicable"[31m
+                  [33mstyle[31m=[32m"margin-bottom: var(--space-3);"[31m
+                [36m>[31m
+                  [36m<summary[31m
+                    [33mstyle[31m=[32m"cursor: pointer; font-weight: 600;"[31m
+                  [36m>[31m
+                    [0m不适用[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[31m
+                  [36m<ul[31m
+                    [33mstyle[31m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[31m
+                  [36m>[31m
+                    [36m<li[31m
+                      [33mclass[31m=[32m"rule-item"[31m
+                      [33mdata-rule-code[31m=[32m"AUTO_RENEW_ABSENT"[31m
+                      [33mdata-status[31m=[32m"not_applicable"[31m
+                      [33mstyle[31m=[32m"--rc: var(--border-strong);"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"rule-item-head"[31m
+                      [36m>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"name"[31m
+                        [36m>[31m
+                          [0mAUTO_RENEW_ABSENT[0m
+                        [36m</span>[31m
+                        [36m<span[31m
+                          [33mclass[31m=[32m"rule-reason"[31m
+                          [33mstyle[31m=[32m"margin: 0px;"[31m
+                        [36m>[31m
+                          [36m<code>[31m
+                            [0mCONDITION_NOT_APPLICABLE[0m
+                          [36m</code>[31m
+                        [36m</span>[31m
+                      [36m</div>[31m
+                    [36m</li>[31m
+                  [36m</ul>[31m
+                [36m</details>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</section>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"footer-note"[31m
+          [36m>[31m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[31m
+        [36m</main>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+   [33m[2m✓[22m[39m 筛选与空态[2m > [22m按规则码搜索 [33m313[2mms[22m[39m
+ [32m✓[39m src/features/ruleAdmin/RuleAdminPage.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 3876[2mms[22m[39m
+   [33m[2m✓[22m[39m 权限[2m > [22m⚠️ 无 `rule:manage` 时给**解释页**，而不是一张空表 [33m417[2mms[22m[39m
+   [33m[2m✓[22m[39m 列表[2m > [22m筛选参数进请求（后端按白名单校验，拼错是 400 不是空列表） [33m325[2mms[22m[39m
+   [33m[2m✓[22m[39m 列表[2m > [22m搜索只作用于已加载的条目，并且要说明这一点 [33m348[2mms[22m[39m
+   [33m[2m✓[22m[39m 修改规则[2m > [22m⚠️ 改判定语义而不升版本 → 保存前提示"可能被拒，请升版本" [33m307[2mms[22m[39m
+   [33m[2m✓[22m[39m 修改规则[2m > [22m升了版本就不再提示，PATCH 只带改过的字段 [33m387[2mms[22m[39m
+   [33m[2m✓[22m[39m 新建规则[2m > [22mPOST 带上 rule_code 与必填项；可选项为空时不发送 [33m792[2mms[22m[39m
+   [33m[2m✓[22m[39m 新建规则[2m > [22m重复的 rule_code → 显示"请改用修改"（rule_code 是稳定标识） [33m646[2mms[22m[39m
+ [32m✓[39m src/features/pdf/coordinateTransform.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+ [32m✓[39m src/api/apiShape.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+ [32m✓[39m src/api/client.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 47[2mms[22m[39m
+ [32m✓[39m src/a11y/contrast.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32m✓[39m src/app/router.test.tsx [2m([22m[2m17 tests[22m[2m)[22m[33m 1084[2mms[22m[39m
+   [33m[2m✓[22m[39m 应用外壳[2m > [22m把根路径重定向到待办列表 [33m336[2mms[22m[39m
+ [32m✓[39m src/features/ops/OpsPage.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[33m 2743[2mms[22m[39m
+   [33m[2m✓[22m[39m 检查点重试[2m > [22m⚠️ 原因未填时按钮禁用（原因要进审计账） [33m907[2mms[22m[39m
+   [33m[2m✓[22m[39m 检查点重试[2m > [22m成功：显示后端给的 action 与作业号（不从 blocked_stage 反推） [33m613[2mms[22m[39m
+   [33m[2m✓[22m[39m 检查点重试[2m > [22m⚠️ `RETRY_NOT_SUPPORTED` → 解释"去重跑哪个工具"（不是"再试一次"） [33m323[2mms[22m[39m
+ [32m✓[39m src/features/pdf/boundedPages.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 1175[2mms[22m[39m
+   [33m[2m✓[22m[39m 100 页文档的有界渲染[2m > [22m⚠️ DOM 里的页数恒为 1（不随文档页数增长） [33m611[2mms[22m[39m
+   [33m[2m✓[22m[39m 100 页文档的有界渲染[2m > [22m翻页后 DOM 仍是 1 页，且旧页的内容被替换（不累积） [33m345[2mms[22m[39m
+[90mstderr[2m | src/app/session.test.tsx[2m > [22m[2m回写轮询的清理[2m > [22m[2m⚠️ 卸载后轮询**停止**（离开页面不再打后端）
+[22m[39mWarning: An update to WorkbenchHeader inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at WorkbenchHeader (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\featu
+res\workbench\TaskWorkbench.tsx:98:28)
+    at section
+    at TaskWorkbench (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\feature
+s\workbench\TaskWorkbench.tsx:24:44)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Outlet (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1182:28)
+    at Suspense
+    at main
+    at div
+    at div
+    at AppLayout (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppLayo
+ut.tsx:82:49)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Routes (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1269:7)
+    at AppRoutes
+    at Router (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1203:17)
+    at MemoryRouter (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules
+\react-router\dist\umd\react-router.development.js:1097:7)
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+Warning: An update to ResultTab inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at ResultTab (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\features\re
+sult\ResultTab.tsx:28:44)
+    at Suspense
+    at div
+    at section
+    at TaskWorkbench (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\feature
+s\workbench\TaskWorkbench.tsx:24:44)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Outlet (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1182:28)
+    at Suspense
+    at main
+    at div
+    at div
+    at AppLayout (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppLayo
+ut.tsx:82:49)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Routes (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1269:7)
+    at AppRoutes
+    at Router (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1203:17)
+    at MemoryRouter (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules
+\react-router\dist\umd\react-router.development.js:1097:7)
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+Warning: An update to ResultTab inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at ResultTab (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\features\re
+sult\ResultTab.tsx:28:44)
+    at Suspense
+    at div
+    at section
+    at TaskWorkbench (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\feature
+s\workbench\TaskWorkbench.tsx:24:44)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Outlet (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1182:28)
+    at Suspense
+    at main
+    at div
+    at div
+    at AppLayout (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppLayo
+ut.tsx:82:49)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Routes (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1269:7)
+    at AppRoutes
+    at Router (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1203:17)
+    at MemoryRouter (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules
+\react-router\dist\umd\react-router.development.js:1097:7)
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+Warning: An update to AuthProvider inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+Warning: An update to ResultTab inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at ResultTab (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\features\re
+sult\ResultTab.tsx:28:44)
+    at Suspense
+    at div
+    at section
+    at TaskWorkbench (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\feature
+s\workbench\TaskWorkbench.tsx:24:44)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Outlet (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1182:28)
+    at Suspense
+    at main
+    at div
+    at div
+    at AppLayout (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppLayo
+ut.tsx:82:49)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Routes (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1269:7)
+    at AppRoutes
+    at Router (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1203:17)
+    at MemoryRouter (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules
+\react-router\dist\umd\react-router.development.js:1097:7)
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+
+[90mstderr[2m | src/app/session.test.tsx[2m > [22m[2m回写轮询的清理[2m > [22m[2m⚠️ 卸载后轮询**停止**（离开页面不再打后端）
+[22m[39mWarning: An update to ResultTab inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at ResultTab (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\features\re
+sult\ResultTab.tsx:28:44)
+    at Suspense
+    at div
+    at section
+    at TaskWorkbench (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\feature
+s\workbench\TaskWorkbench.tsx:24:44)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Outlet (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1182:28)
+    at Suspense
+    at main
+    at div
+    at div
+    at AppLayout (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppLayo
+ut.tsx:82:49)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Routes (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1269:7)
+    at AppRoutes
+    at Router (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1203:17)
+    at MemoryRouter (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules
+\react-router\dist\umd\react-router.development.js:1097:7)
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+Warning: An update to ResultTab inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at ResultTab (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\features\re
+sult\ResultTab.tsx:28:44)
+    at Suspense
+    at div
+    at section
+    at TaskWorkbench (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\feature
+s\workbench\TaskWorkbench.tsx:24:44)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Outlet (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1182:28)
+    at Suspense
+    at main
+    at div
+    at div
+    at AppLayout (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppLayo
+ut.tsx:82:49)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Routes (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1269:7)
+    at AppRoutes
+    at Router (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1203:17)
+    at MemoryRouter (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules
+\react-router\dist\umd\react-router.development.js:1097:7)
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+ [32m✓[39m src/app/session.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 562[2mms[22m[39m
+   [33m[2m✓[22m[39m 会话过期（401）[2m > [22m⚠️ 401 不是故障：界面切到**登录表单**，而不是红色错误页 [33m394[2mms[22m[39m
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+
+[90mstderr[2m | src/app/session.test.tsx[2m > [22m[2m回写轮询的清理[2m > [22m[2m⚠️ 卸载后轮询**停止**（离开页面不再打后端）
+[22m[39mWarning: An update to ResultTab inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link
+/wrap-tests-with-act
+    at ResultTab (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\features\re
+sult\ResultTab.tsx:28:44)
+    at Suspense
+    at div
+    at section
+    at TaskWorkbench (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\feature
+s\workbench\TaskWorkbench.tsx:24:44)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Outlet (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1182:28)
+    at Suspense
+    at main
+    at div
+    at div
+    at AppLayout (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppLayo
+ut.tsx:82:49)
+    at RenderedRoute (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_module
+s\react-router\dist\umd\react-router.development.js:535:7)
+    at Routes (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1269:7)
+    at AppRoutes
+    at Router (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules\react
+-router\dist\umd\react-router.development.js:1203:17)
+    at MemoryRouter (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\node_modules
+\react-router\dist\umd\react-router.development.js:1097:7)
+    at AuthProvider (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Auth
+Provider.tsx:15:25)
+    at QueryClientProvider (file:///C:/Users/Public/Nwt/cache/recv/xm/Contract%20approval/contract-approval-system/fron
+tend/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:12:32)
+    at AppProviders (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\AppP
+roviders.tsx:10:3)
+    at ErrorBoundary (C:\Users\Public\Nwt\cache\recv\xm\Contract approval\contract-approval-system\frontend\src\app\Err
+orBoundary.tsx:6:1)
+
+ [32m✓[39m src/a11y/a11y.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 513[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[1m[7m Failed Tests 2 [27m[22m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/features/result/ResultTab.test.tsx[2m > [22m风险与完整性[2m > [22m⚠️ 两个值**各自照实显示**
+，前端不重算、不互相理顺
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  总风险：高[31m
+Received:
+[31m  高[31m[39m
+[36m [2m❯[22m src/features/result/ResultTab.test.tsx:[2m212:55[22m[39m
+    [90m210| [39m    [34mrenderApp[39m([32m'/tasks/7?tab=result'[39m)
+    [90m211| [39m
+    [90m212| [39m    [34mexpect[39m([35mawait[39m screen[33m.[39m[34mfindByTestId[39m([32m'overall-risk'[39
+m))[33m.[39m[34mtoHaveTextConten[39m…
+    [90m   | [39m                                                      [31m^[39m
+    [90m213| [39m    [34mexpect[39m(screen[33m.[39m[34mgetByTestId[39m([32m'review-status'[39m))[33m.[39m[
+34mtoHaveTextContent[39m([32m'完[39m…
+    [90m214| [39m    [34mexpect[39m(screen[33m.[39m[34mgetByTestId[39m([32m'review-status'[39m))[33m.[39mno
+t[33m.[39m[34mtoHaveTextContent[39m(…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/features/rules/RuleTab.test.tsx[2m > [22m计算过程与证据[2m > [22m给出可复核的计算过程（op 映射成数
+学符号）
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an element with the text: 0.6 > 0.3. This could be becaus
+e the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make yo
+ur matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [0m审[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-name"[39m
+            [36m>[39m
+              [0m合同审批审查系统[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-sub"[39m
+            [36m>[39m
+              [0mContract Review Copilot[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"主导航"[39m
+          [33mclass[39m=[32m"nav"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</div>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"nav-item"[39m
+            [33mhref[39m=[32m"/tasks"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"15"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"15"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 6h16M4 12h16M4 18h10"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m待办调用[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m系统[0m
+          [36m</div>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actor-card"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actor-stack"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-name"[39m
+                [33mtitle[39m=[32m"reviewer-1"[39m
+              [36m>[39m
+                [0mReviewer One[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-role actor-card-muted"[39m
+                [33mtitle[39m=[32m"reviewer-1"[39m
+              [36m>[39m
+                [0mreviewer-1[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actor-row"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"actor-card-muted"[39m
+              [36m>[39m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m退出（换一个身份）[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"main"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topbar"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"topbar-crumb"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+            [36m<b>[39m
+              [0m · 任务工作台[0m
+            [36m</b>[39m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"topbar-right"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mstyle[39m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[39m
+            [36m>[39m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"badge b-violet"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"dot"[39m
+              [36m/>[39m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"workbench-title"[39m
+          [36m>[39m
+            [36m<nav[39m
+              [33maria-label[39m=[32m"面包屑"[39m
+              [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+            [36m>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"btn btn-sm"[39m
+                [33mhref[39m=[32m"/tasks"[39m
+              [36m>[39m
+                [0m← 返回待办列表[0m
+              [36m</a>[39m
+            [36m</nav>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"wb-head"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<h1[39m
+                  [33mclass[39m=[32m"wb-title"[39m
+                  [33mid[39m=[32m"workbench-title"[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-1);"[39m
+                [36m>[39m
+                  [0m任务 #[0m
+                  [0m7[0m
+                [36m</h1>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"wb-meta"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"mono"[39m
+                  [36m/>[39m
+                  [36m<span />[39m
+                  [36m<span>[39m
+                    [0m申请人：[0m
+                  [36m</span>[39m
+                  [36m<span>[39m
+                    [0m更新于 [0m
+                  [36m</span>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"wb-chips"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<span[39m
+                    [33mstyle[39m=[32m"color: var(--text-1); font-weight: 400;"[39m
+                  [36m>[39m
+                    [0m审查中[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"总风险：尚未审查出结果"[39m
+                  [33mstyle[39m=[32m"color: var(--text-3);"[39m
+                  [33mtitle[39m=[32m"尚未审查出结果"[39m
+                [36m>[39m
+                  [0m—[0m
+                [36m</span>[39m
+                [36m<div>[39m
+                  [36m<span>[39m
+                    [0m未回写[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"任务视角"[39m
+              [33mclass[39m=[32m"tabs"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"tab"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=detail"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m详情[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"tab"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=parse"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m解析结果[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"tab active"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=rules"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m规则命中[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"tab"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=result"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m结果处理[0m
+              [36m</a>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mrole[39m=[32m"tabpanel"[39m
+              [33mstyle[39m=[32m"padding-top: var(--space-2);"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<header[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"display: flex; gap: var(--space-2); align-items: baseline; flex-wrap: wrap;"
+[39m
+                  [36m>[39m
+                    [36m<strong>[39m
+                      [0m批次 #[0m
+                      [0m21[0m
+                    [36m</strong>[39m
+                    [36m<span[39m
+                      [33mstyle[39m=[32m"color: var(--text-2); font-size: var(--font-size-sm);"[39m
+                    [36m>[39m
+                      [0mv[0m
+                      [0m3[0m
+                      [0m · [0m
+                      [0m已完成[0m
+                      [0m · 2026-09-15 10:00[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mdata-testid[39m=[32m"run-counts"[39m
+                    [33mstyle[39m=[32m"font-size: var(--font-size-sm); margin-top: var(--space-1);"[39m
+                  [36m>[39m
+                    [0m命中 [0m
+                    [0m2[0m
+                    [0m · 待判断 [0m
+                    [0m1[0m
+                    [0m · 未命中 [0m
+                    [0m1[0m
+                    [0m · 不适用[0m
+                    [0m [0m
+                    [0m1[0m
+                    [0m（共 [0m
+                    [0m5[0m
+                    [0m 条规则）[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"color: var(--text-2); font-size: var(--font-size-xs); margin-top: var(--space
+-1);"[39m
+                  [36m>[39m
+                    [0m总风险 [0m
+                    [0m高[0m
+                    [0m · 结论完整性 [0m
+                    [0m需人工判断[0m
+                    [0m · 规则集 rs-3f9a[0m
+                  [36m</div>[39m
+                [36m</header>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margi
+n-bottom: var(--space-3); font-size: var(--font-size-sm);"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mstyle[39m=[32m"display: flex; gap: var(--space-1); align-items: center;"[39m
+                  [36m>[39m
+                    [36m<input[39m
+                      [33mtype[39m=[32m"checkbox"[39m
+                    [36m/>[39m
+                    [0m只看需处理（待判断 + 命中）[0m
+                  [36m</label>[39m
+                  [36m<label[39m
+                    [33mstyle[39m=[32m"display: flex; gap: var(--space-1); align-items: center;"[39m
+                  [36m>[39m
+                    [0m规则码[0m
+                    [36m<input[39m
+                      [33mplaceholder[39m=[32m"按规则码搜索"[39m
+                      [33mtype[39m=[32m"search"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                  [36m</label>[39m
+                  [36m<span[39m
+                    [33mstyle[39m=[32m"margin-left: auto; color: var(--text-3); font-size: var(--font-size-xs);"[39
+m
+                  [36m>[39m
+                    [0m已加载 [0m
+                    [0m5[0m
+                    [0m / 共 [0m
+                    [0m5[0m
+                    [0m 条[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"needs_review"[39m
+                  [33mopen[39m=[32m""[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m需人工判断[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                    [36m<span[39m
+                      [33mstyle[39m=[32m"font-weight: 400; color: var(--text-2);"[39m
+                    [36m>[39m
+                      [0m—— 结论需要你来做[0m
+                    [36m</span>[39m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"PAY_PREPAY_RATIO_HIGH_FOR_BUYER"[39m
+                      [33mdata-status[39m=[32m"needs_review"[39m
+                      [33mstyle[39m=[32m"--rc: var(--border-strong);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mPAY_PREPAY_RATIO_HIGH_FOR_BUYER[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONTEXT_MISSING[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<p[39m
+                        [33mclass[39m=[32m"rule-reason"[39m
+                      [36m>[39m
+                        [0m我方立场未知，方向敏感的规则判不了[0m
+                      [36m</p>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"hit"[39m
+                  [33mopen[39m=[32m""[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m命中[0m
+                    [0m（[0m
+                    [0m2[0m
+                    [0m）[0m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"PREPAY_RATIO_OVER_30"[39m
+                      [33mdata-status[39m=[32m"hit"[39m
+                      [33mstyle[39m=[32m"--rc: var(--status-danger);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mPREPAY_RATIO_OVER_30[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"badge b-neutral"[39m
+                          [33mstyle[39m=[32m"color: var(--status-danger);"[39m
+                        [36m>[39m
+                          [0m高[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<p[39m
+                        [33mdata-testid[39m=[32m"calculation"[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0;"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-calc"[39m
+                        [36m>[39m
+                          [0m计算：[0m
+                          [0m0.6 &gt; 0.3[0m
+                        [36m</span>[39m
+                      [36m</p>[39m
+                      [36m<ul[39m
+                        [33mclass[39m=[32m"rule-evidence"[39m
+                        [33mdata-testid[39m=[32m"rule-evidence"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [36m<q>[39m
+                            [0m「[0m
+                            [0m合同签订后 60 日内支付预付款[0m
+                            [0m」[0m
+                          [36m</q>[39m
+                          [0m [0m
+                          [36m<a[39m
+                            [33mhref[39m=[32m"/tasks/7?tab=parse&page=2&block=p2-b1"[39m
+                          [36m>[39m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[39m
+                        [36m</li>[39m
+                        [36m<li>[39m
+                          [36m<q>[39m
+                            [0m「[0m
+                            [0m预付款比例为 60%[0m
+                            [0m」[0m
+                          [36m</q>[39m
+                          [0m [0m
+                          [36m<a[39m
+                            [33mhref[39m=[32m"/tasks/7?tab=parse&page=2&block=p2-b2"[39m
+                          [36m>[39m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[39m
+                        [36m</li>[39m
+                      [36m</ul>[39m
+                    [36m</li>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"IP_CLAUSE_ABSENT"[39m
+                      [33mdata-status[39m=[32m"hit"[39m
+                      [33mstyle[39m=[32m"--rc: var(--status-warn);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mIP_CLAUSE_ABSENT[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"badge b-neutral"[39m
+                          [33mstyle[39m=[32m"color: var(--status-warn);"[39m
+                        [36m>[39m
+                          [0m中[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<ul[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0; padding-left: 1.2em; font-size: var(--font-si
+ze-xs);"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [0m字段状态[0m
+                          [0m：[0m
+                          [0mnot_found[0m
+                        [36m</li>[39m
+                        [36m<li>[39m
+                          [0mop[0m
+                          [0m：[0m
+                          [0mis_null[0m
+                        [36m</li>[39m
+                      [36m</ul>[39m
+                      [36m<p[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0; font-size: var(--font-size-xs); color: var(--
+text-2);"[39m
+                      [36m>[39m
+                        [0m这条命中没有原文片段：结论是「全文都没有」，依据见上方的计算明细。[0m
+                      [36m</p>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"not_hit"[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m未命中[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"PAY_DAYS_OVER_60"[39m
+                      [33mdata-status[39m=[32m"not_hit"[39m
+                      [33mstyle[39m=[32m"--rc: var(--border-strong);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mPAY_DAYS_OVER_60[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_NOT_MATCHED[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<p[39m
+                        [33mdata-testid[39m=[32m"calculation"[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0;"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-calc"[39m
+                        [36m>[39m
+                          [0m计算：[0m
+                          [0m30 &gt; 60[0m
+                        [36m</span>[39m
+                      [36m</p>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"not_applicable"[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m不适用[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"AUTO_RENEW_ABSENT"[39m
+                      [33mdata-status[39m=[32m"not_applicable"[39m
+                      [33mstyle[39m=[32m"--rc: var(--border-strong);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mAUTO_RENEW_ABSENT[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_NOT_APPLICABLE[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"footer-note"[39m
+          [36m>[39m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [0m审[0m
+          [36m</div>[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-name"[39m
+            [36m>[39m
+              [0m合同审批审查系统[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brand-sub"[39m
+            [36m>[39m
+              [0mContract Review Copilot[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"主导航"[39m
+          [33mclass[39m=[32m"nav"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+          [36m</div>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"nav-item"[39m
+            [33mhref[39m=[32m"/tasks"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"15"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"15"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 6h16M4 12h16M4 18h10"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m待办调用[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-section"[39m
+          [36m>[39m
+            [0m系统[0m
+          [36m</div>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actor-card"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actor-stack"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-name"[39m
+                [33mtitle[39m=[32m"reviewer-1"[39m
+              [36m>[39m
+                [0mReviewer One[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actor-role actor-card-muted"[39m
+                [33mtitle[39m=[32m"reviewer-1"[39m
+              [36m>[39m
+                [0mreviewer-1[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actor-row"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"actor-card-muted"[39m
+              [36m>[39m
+                [0m权限 [0m
+                [0m2[0m
+                [0m 项[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m退出（换一个身份）[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"main"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topbar"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"topbar-crumb"[39m
+          [36m>[39m
+            [0m审查工作台[0m
+            [36m<b>[39m
+              [0m · 任务工作台[0m
+            [36m</b>[39m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"topbar-right"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mstyle[39m=[32m"color: var(--text-3); font-size: var(--font-size-xs);"[39m
+            [36m>[39m
+              [0m仅生成审查意见，审批结论由人作出[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"badge b-violet"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"dot"[39m
+              [36m/>[39m
+              [0mlocal · Mock 审批系统[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"workbench-title"[39m
+          [36m>[39m
+            [36m<nav[39m
+              [33maria-label[39m=[32m"面包屑"[39m
+              [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+            [36m>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"btn btn-sm"[39m
+                [33mhref[39m=[32m"/tasks"[39m
+              [36m>[39m
+                [0m← 返回待办列表[0m
+              [36m</a>[39m
+            [36m</nav>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"wb-head"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<h1[39m
+                  [33mclass[39m=[32m"wb-title"[39m
+                  [33mid[39m=[32m"workbench-title"[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-1);"[39m
+                [36m>[39m
+                  [0m任务 #[0m
+                  [0m7[0m
+                [36m</h1>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"wb-meta"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"mono"[39m
+                  [36m/>[39m
+                  [36m<span />[39m
+                  [36m<span>[39m
+                    [0m申请人：[0m
+                  [36m</span>[39m
+                  [36m<span>[39m
+                    [0m更新于 [0m
+                  [36m</span>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"wb-chips"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<span[39m
+                    [33mstyle[39m=[32m"color: var(--text-1); font-weight: 400;"[39m
+                  [36m>[39m
+                    [0m审查中[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"总风险：尚未审查出结果"[39m
+                  [33mstyle[39m=[32m"color: var(--text-3);"[39m
+                  [33mtitle[39m=[32m"尚未审查出结果"[39m
+                [36m>[39m
+                  [0m—[0m
+                [36m</span>[39m
+                [36m<div>[39m
+                  [36m<span>[39m
+                    [0m未回写[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"任务视角"[39m
+              [33mclass[39m=[32m"tabs"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"tab"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=detail"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m详情[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"tab"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=parse"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m解析结果[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"tab active"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=rules"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m规则命中[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"tab"[39m
+                [33mhref[39m=[32m"/tasks/7?tab=result"[39m
+                [33mrole[39m=[32m"tab"[39m
+              [36m>[39m
+                [0m结果处理[0m
+              [36m</a>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mrole[39m=[32m"tabpanel"[39m
+              [33mstyle[39m=[32m"padding-top: var(--space-2);"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<header[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"display: flex; gap: var(--space-2); align-items: baseline; flex-wrap: wrap;"
+[39m
+                  [36m>[39m
+                    [36m<strong>[39m
+                      [0m批次 #[0m
+                      [0m21[0m
+                    [36m</strong>[39m
+                    [36m<span[39m
+                      [33mstyle[39m=[32m"color: var(--text-2); font-size: var(--font-size-sm);"[39m
+                    [36m>[39m
+                      [0mv[0m
+                      [0m3[0m
+                      [0m · [0m
+                      [0m已完成[0m
+                      [0m · 2026-09-15 10:00[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mdata-testid[39m=[32m"run-counts"[39m
+                    [33mstyle[39m=[32m"font-size: var(--font-size-sm); margin-top: var(--space-1);"[39m
+                  [36m>[39m
+                    [0m命中 [0m
+                    [0m2[0m
+                    [0m · 待判断 [0m
+                    [0m1[0m
+                    [0m · 未命中 [0m
+                    [0m1[0m
+                    [0m · 不适用[0m
+                    [0m [0m
+                    [0m1[0m
+                    [0m（共 [0m
+                    [0m5[0m
+                    [0m 条规则）[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"color: var(--text-2); font-size: var(--font-size-xs); margin-top: var(--space
+-1);"[39m
+                  [36m>[39m
+                    [0m总风险 [0m
+                    [0m高[0m
+                    [0m · 结论完整性 [0m
+                    [0m需人工判断[0m
+                    [0m · 规则集 rs-3f9a[0m
+                  [36m</div>[39m
+                [36m</header>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margi
+n-bottom: var(--space-3); font-size: var(--font-size-sm);"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mstyle[39m=[32m"display: flex; gap: var(--space-1); align-items: center;"[39m
+                  [36m>[39m
+                    [36m<input[39m
+                      [33mtype[39m=[32m"checkbox"[39m
+                    [36m/>[39m
+                    [0m只看需处理（待判断 + 命中）[0m
+                  [36m</label>[39m
+                  [36m<label[39m
+                    [33mstyle[39m=[32m"display: flex; gap: var(--space-1); align-items: center;"[39m
+                  [36m>[39m
+                    [0m规则码[0m
+                    [36m<input[39m
+                      [33mplaceholder[39m=[32m"按规则码搜索"[39m
+                      [33mtype[39m=[32m"search"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                  [36m</label>[39m
+                  [36m<span[39m
+                    [33mstyle[39m=[32m"margin-left: auto; color: var(--text-3); font-size: var(--font-size-xs);"[39
+m
+                  [36m>[39m
+                    [0m已加载 [0m
+                    [0m5[0m
+                    [0m / 共 [0m
+                    [0m5[0m
+                    [0m 条[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"needs_review"[39m
+                  [33mopen[39m=[32m""[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m需人工判断[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                    [36m<span[39m
+                      [33mstyle[39m=[32m"font-weight: 400; color: var(--text-2);"[39m
+                    [36m>[39m
+                      [0m—— 结论需要你来做[0m
+                    [36m</span>[39m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"PAY_PREPAY_RATIO_HIGH_FOR_BUYER"[39m
+                      [33mdata-status[39m=[32m"needs_review"[39m
+                      [33mstyle[39m=[32m"--rc: var(--border-strong);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mPAY_PREPAY_RATIO_HIGH_FOR_BUYER[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONTEXT_MISSING[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<p[39m
+                        [33mclass[39m=[32m"rule-reason"[39m
+                      [36m>[39m
+                        [0m我方立场未知，方向敏感的规则判不了[0m
+                      [36m</p>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"hit"[39m
+                  [33mopen[39m=[32m""[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m命中[0m
+                    [0m（[0m
+                    [0m2[0m
+                    [0m）[0m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"PREPAY_RATIO_OVER_30"[39m
+                      [33mdata-status[39m=[32m"hit"[39m
+                      [33mstyle[39m=[32m"--rc: var(--status-danger);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mPREPAY_RATIO_OVER_30[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"badge b-neutral"[39m
+                          [33mstyle[39m=[32m"color: var(--status-danger);"[39m
+                        [36m>[39m
+                          [0m高[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<p[39m
+                        [33mdata-testid[39m=[32m"calculation"[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0;"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-calc"[39m
+                        [36m>[39m
+                          [0m计算：[0m
+                          [0m0.6 &gt; 0.3[0m
+                        [36m</span>[39m
+                      [36m</p>[39m
+                      [36m<ul[39m
+                        [33mclass[39m=[32m"rule-evidence"[39m
+                        [33mdata-testid[39m=[32m"rule-evidence"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [36m<q>[39m
+                            [0m「[0m
+                            [0m合同签订后 60 日内支付预付款[0m
+                            [0m」[0m
+                          [36m</q>[39m
+                          [0m [0m
+                          [36m<a[39m
+                            [33mhref[39m=[32m"/tasks/7?tab=parse&page=2&block=p2-b1"[39m
+                          [36m>[39m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[39m
+                        [36m</li>[39m
+                        [36m<li>[39m
+                          [36m<q>[39m
+                            [0m「[0m
+                            [0m预付款比例为 60%[0m
+                            [0m」[0m
+                          [36m</q>[39m
+                          [0m [0m
+                          [36m<a[39m
+                            [33mhref[39m=[32m"/tasks/7?tab=parse&page=2&block=p2-b2"[39m
+                          [36m>[39m
+                            [0m查看原文 → 第 [0m
+                            [0m2[0m
+                            [0m 页[0m
+                          [36m</a>[39m
+                        [36m</li>[39m
+                      [36m</ul>[39m
+                    [36m</li>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"IP_CLAUSE_ABSENT"[39m
+                      [33mdata-status[39m=[32m"hit"[39m
+                      [33mstyle[39m=[32m"--rc: var(--status-warn);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mIP_CLAUSE_ABSENT[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"badge b-neutral"[39m
+                          [33mstyle[39m=[32m"color: var(--status-warn);"[39m
+                        [36m>[39m
+                          [0m中[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_MATCHED[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<ul[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0; padding-left: 1.2em; font-size: var(--font-si
+ze-xs);"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [0m字段状态[0m
+                          [0m：[0m
+                          [0mnot_found[0m
+                        [36m</li>[39m
+                        [36m<li>[39m
+                          [0mop[0m
+                          [0m：[0m
+                          [0mis_null[0m
+                        [36m</li>[39m
+                      [36m</ul>[39m
+                      [36m<p[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0; font-size: var(--font-size-xs); color: var(--
+text-2);"[39m
+                      [36m>[39m
+                        [0m这条命中没有原文片段：结论是「全文都没有」，依据见上方的计算明细。[0m
+                      [36m</p>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"not_hit"[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m未命中[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"PAY_DAYS_OVER_60"[39m
+                      [33mdata-status[39m=[32m"not_hit"[39m
+                      [33mstyle[39m=[32m"--rc: var(--border-strong);"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mPAY_DAYS_OVER_60[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_NOT_MATCHED[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<p[39m
+                        [33mdata-testid[39m=[32m"calculation"[39m
+                        [33mstyle[39m=[32m"margin: var(--space-2) 0 0;"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-calc"[39m
+                        [36m>[39m
+                          [0m计算：[0m
+                          [0m30 &gt; 60[0m
+                        [36m</span>[39m
+                      [36m</p>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+                [36m<details[39m
+                  [33mdata-status[39m=[32m"not_applicable"[39m
+                  [33mstyle[39m=[32m"margin-bottom: var(--space-3);"[39m
+                [36m>[39m
+                  [36m<summary[39m
+                    [33mstyle[39m=[32m"cursor: pointer; font-weight: 600;"[39m
+                  [36m>[39m
+                    [0m不适用[0m
+                    [0m（[0m
+                    [0m1[0m
+                    [0m）[0m
+                  [36m</summary>[39m
+                  [36m<ul[39m
+                    [33mstyle[39m=[32m"list-style: none; padding: 0px; margin: var(--space-2) 0 0;"[39m
+                  [36m>[39m
+                    [36m<li[39m
+                      [33mclass[39m=[32m"rule-item"[39m
+                      [33mdata-rule-code[39m=[32m"AUTO_RENEW_ABSENT"[39m
+                      [33mdata-status[39m=[32m"not_applicable"[39m
+                      [33mstyle[39m=[32m"--rc: var(--border-strong);"[39m
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m14 passed[39m[22m[90m (16)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m221 passed[39m[22m[90m (223)[39m
+[2m   Start at [22m 01:52:14
+[2m   Duration [22m 16.17s[2m (transform 3.57s, setup 9.03s, collect 21.58s, tests 27.68s, environment 30.06s, prepare 5.26s)[22m
+
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"rule-item-head"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"name"[39m
+                        [36m>[39m
+                          [0mAUTO_RENEW_ABSENT[0m
+                        [36m</span>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"rule-reason"[39m
+                          [33mstyle[39m=[32m"margin: 0px;"[39m
+                        [36m>[39m
+                          [36m<code>[39m
+                            [0mCONDITION_NOT_APPLICABLE[0m
+                          [36m</code>[39m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</details>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"footer-note"[39m
+          [36m>[39m
+            [0m仅生成审查意见 · 所有统计口径以后端聚合为准 · 合同正文与敏感值不写入 URL / console[0m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m86:33[22m[39m
+[36m [2m❯[22m src/features/rules/RuleTab.test.tsx:[2m274:25[22m[39m
+    [90m272| [39m    [34mrenderApp[39m([32m'/tasks/7?tab=rules'[39m)
+    [90m273| [39m
+    [90m274| [39m    [34mexpect[39m([35mawait[39m screen[33m.[39m[34mfindByText[39m([32m'0.6 > 0.3'[39m))[
+33m.[39m[34mtoBeInTheDocument[39m()
+    [90m   | [39m                        [31m^[39m
+    [90m275| [39m    [90m// 未命中项的 `30 > 60` 也要能看到（它是"为什么没报警"）[39m
+    [90m276| [39m    [34mexpect[39m(screen[33m.[39m[34mgetByText[39m([32m'30 > 60'[39m))[33m.[39m[34mtoBeI
+nTheDocument[39m()
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
