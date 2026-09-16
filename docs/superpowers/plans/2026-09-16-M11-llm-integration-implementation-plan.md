@@ -1,5 +1,16 @@
 # M11 LLM Integration and Model Qualification Implementation Plan
 
+> **✅ Task 1–5 已完成（2026-09-16）**：组合根 `app/composition/llm_pipeline.py`
+> （模型标识与判定钩子唯一来源）、`NONE_MODEL_ID`/`model_version_of()` 收口
+> `rule_service.DEFAULT_MODEL_VERSION`、Worker 接线 `llm_judge` + 派发前
+> `_ensure_model_matches_run` 一致性校验、REST（`get_llm` + `close_adapters`）
+> 与 MCP 两条路径注入、`scripts/check_llm_qualification.py`（退出码 0/1/2，三条
+> 阈值 + 假阴性清单）。
+> **Task 6 未做（按计划依赖 M10 的部署底座）**：自建 GPU 推理 / `--preflight` /
+> 断连恢复演练。本地 OpenAI 兼容端点（Ollama / vLLM / LM Studio）填 `.env`
+> 三项即可直接走 Task 1–5 的接线与合格性脚本（README §2b）。
+> 未接模型时行为与 M11 前逐字一致（`none:fallback`，纯规则模式）。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 让 9 条 `llm` 规则真正调用模型，并把「这个模型合不合格」变成一个可执行、有退出码的判定。

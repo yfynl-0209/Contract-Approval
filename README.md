@@ -87,7 +87,32 @@ cd ..
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-### 2b. 容器化（M9：PostgreSQL / Redis / MinIO / Compose）
+### 2b. 接入本地模型 API（M11：9 条 `llm` 规则真正调用模型）
+
+任何 **OpenAI 兼容端点**都能接（vLLM / Ollama / LM Studio / 云 API 均可），
+在 `.env` 填三项即可，**留空则自动退回纯规则模式**（行为与 M11 前逐字一致）：
+
+```env
+# 例：Ollama 本地跑 qwen2.5（Ollama 的兼容端点带 /v1）
+LLM_BASE_URL=http://127.0.0.1:11434/v1
+LLM_API_KEY=ollama
+LLM_MODEL=qwen2.5:7b
+# 例：vLLM（LLM_MODEL 必须逐字等于 --served-model-name，它参与批次幂等）
+# LLM_BASE_URL=http://127.0.0.1:8000/v1
+# LLM_API_KEY=EMPTY
+# LLM_MODEL=qwen3-8b
+```
+
+```powershell
+# 模型合格性实测（有退出码）：逐字摘录能力 / 可判定比例 / 假阴性
+.\.venv\Scripts\python.exe scripts\check_llm_qualification.py
+```
+
+判据（全满足 → 退出码 0）：`MODEL_UNAVAILABLE` = 0；证据引用被作废 ≤ 1；
+明确结论比例 ≥ 85%；样本里**确实存在**的风险条款必须判出。
+报告里的"合计耗时"= 一份合同 9 条 llm 规则的最坏批处理时间。
+
+### 2c. 容器化（M9：PostgreSQL / Redis / MinIO / Compose）
 
 ```powershell
 # 前置：Docker Desktop 在跑；compose 会读项目根 .env 里的凭证变量
