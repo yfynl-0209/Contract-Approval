@@ -17,7 +17,7 @@ from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import FastAPI, Request, Response, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from sqlalchemy import inspect, text
 
 from app import __version__
@@ -239,6 +239,12 @@ def _probe_db() -> tuple[bool, list[str]]:
     except Exception:  # noqa: BLE001
         # 健康检查必须吞掉所有异常：连不上库是"要报告的状态"，不是"要抛出的错误"
         return False, []
+
+
+@app.get("/", include_in_schema=False)
+def root_redirect() -> Response:
+    """根路径 → API 文档。直接访问 8000 端口的人要找的就是它。"""
+    return RedirectResponse(url="/docs", status_code=status.HTTP_302_FOUND)
 
 
 @app.get("/health/live", tags=["系统"], summary="存活检查")

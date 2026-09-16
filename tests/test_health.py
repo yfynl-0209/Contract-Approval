@@ -99,7 +99,10 @@ def test_health_diagnostics_returns_200_with_table_list() -> None:
     assert "rule_hits" in body["tables"]  # M5
     assert "outbox_events" in body["tables"]  # M6
     assert "audit_events" in body["tables"]  # M7
-    assert body["llm_enabled"] is False
+    # M11：llm_enabled 跟随配置（.env 填了模型三项后为 True），不再写死 False
+    from app.config import settings as _settings
+
+    assert body["llm_enabled"] is _settings.llm_enabled
 
 
 def test_health_diagnostics_stays_200_even_when_database_unavailable(
