@@ -225,6 +225,11 @@ const DETAIL_LABELS: Readonly<Record<string, string>> = {
   raw_value: '未解析的阈值',
   evidence_truncated: '证据被截断',
   evidence_limit: '证据条目上限',
+  // M11：llm 规则的判定过程（app/rules/llm_judge.py 写入 hit_detail）
+  claimed_quote: '模型给出的引用',
+  judged_by: '判定来源',
+  prompt_version: '提示词版本',
+  verdict_discarded: '结论作废原因',
 }
 
 /** `status` 键的取值 → 中文（关键字匹配的查找结论）。 */
@@ -232,6 +237,17 @@ const DETAIL_VALUE_LABELS: Readonly<Record<string, string>> = {
   not_found: '未找到',
   found: '已找到',
   ambiguous: '存在多个候选',
+}
+
+/** `judged_by` 的取值 → 中文（这条结论是谁判的）。 */
+const JUDGED_BY_LABELS: Readonly<Record<string, string>> = {
+  llm: '模型',
+}
+
+/** `verdict_discarded` 的取值 → 中文（模型的结论为什么被作废）。 */
+const DISCARD_REASON_LABELS: Readonly<Record<string, string>> = {
+  evidence_not_found: '给出的引用不在合同正文里',
+  matched_without_evidence: '判了命中但没有给出依据',
 }
 
 /**
@@ -282,7 +298,9 @@ export function readCalculation(hitDetail: JsonValue): Calculation {
 
   /**
    * 已知键的**值**也翻译成人话：`op: gte` → `比较方式：≥`、
-   * `status: not_found` → `字段状态：未找到`、`present: false` → `是否存在：否`。
+   * `status: not_found` → `字段状态：未找到`、`present: false` → `是否存在：否`、
+   * `judged_by: llm` → `判定来源：模型`、`verdict_discarded: evidence_not_found`
+   * → `结论作废原因：给出的引用不在合同正文里`。
    * 未登记的键/值原样保留（与标签表同一条"不撒谎"纪律）。
    */
   function formatFactValue(key: string, value: unknown): string | null {
@@ -291,6 +309,12 @@ export function readCalculation(hitDetail: JsonValue): Calculation {
     }
     if (key === 'status' && typeof value === 'string') {
       return DETAIL_VALUE_LABELS[value] ?? value
+    }
+    if (key === 'judged_by' && typeof value === 'string') {
+      return JUDGED_BY_LABELS[value] ?? value
+    }
+    if (key === 'verdict_discarded' && typeof value === 'string') {
+      return DISCARD_REASON_LABELS[value] ?? value
     }
     if (key === 'present' && typeof value === 'boolean') {
       return value ? '是' : '否'
