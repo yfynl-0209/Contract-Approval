@@ -65,7 +65,7 @@ from app.adapters.auth.dev_header_identity import (  # noqa: E402
     HEADER_TENANT_ID,
 )
 from app.adapters.parse.pymupdf_extractor import ENGINE_VERSION  # noqa: E402
-from app.adapters.storage.local_file_storage import LocalFileStorage  # noqa: E402
+from app.adapters.storage import build_storage  # noqa: E402
 from app.api.deps import build_identity_provider  # noqa: E402
 from app.auth import Actor, AuthConfigurationError  # noqa: E402
 from app.config import settings  # noqa: E402
@@ -178,7 +178,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     provider = build_identity_provider()
     gateway = MockApprovalGateway()
-    storage = LocalFileStorage()
+    storage = build_storage()
 
     try:
         if args.transport == "stdio":

@@ -268,3 +268,94 @@ class ObjectStorageContract:
         """`expires_in <= 0` 是调用方错误，属于编程缺陷，直接抛 `ValueError`。"""
         with pytest.raises(ValueError):
             contract_storage.presign_get(key_for(b"x"), expires_in=0)
+
+    # ------------------------------------------------------------------
+    # 5. M9 扩展：stat / open_stream / read_range
+    # ------------------------------------------------------------------
+
+    def test_stat_reports_size_without_reading_content(
+        self, contract_storage: ObjectStorage
+    ) -> None:
+        """`stat` 只取元数据：大小正确、摘要来自**键内嵌**（内容寻址键）。"""
+        data = b"stat me without reading"
+        key = key_for(data)
+        contract_storage.put(key, data, content_type="application/pdf")
+
+        ref = contract_storage.stat(key)
+
+        assert ref.key == key
+        assert ref.size == len(data)
+        assert ref.sha256 == digest_of(data), "内容寻址键的 stat 摘要 = 键内嵌摘要"
+        assert ref.content_type == "application/pdf"
+
+    def test_stat_of_non_content_addressed_key_has_empty_sha256(
+        self, contract_storage: ObjectStorage
+    ) -> None:
+        """非内容寻址键：实现**拿不到**真摘要（MinIO ETag 是 MD5）——
+        返回空串是诚实的；编一个值出来才是事故。"""
+        contract_storage.put("exports/report.csv", b"a,b", content_type="text/csv")
+
+        ref = contract_storage.stat("exports/report.csv")
+
+        assert ref.sha256 == ""
+        assert ref.size == 3
+
+    def test_read_range_returns_inclusive_slice(
+        self, contract_storage: ObjectStorage
+    ) -> None:
+        """`read_range(start, end)` 闭区间两端含 —— 与 HTTP Range 语义对齐。"""
+        data = b"0123456789"
+        key = key_for(data)
+        contract_storage.put(key, data, content_type="application/pdf")
+
+        assert contract_storage.read_range(key, 0, 3) == b"0123"
+        assert contract_storage.read_range(key, 8, 9) == b"89"
+        assert contract_storage.read_range(key, 4, 4) == b"4"  # 单字节区间
+
+    def test_read_range_out_of_bounds_is_value_error(
+        self, contract_storage: ObjectStorage
+    ) -> None:
+        """越界是**调用方编程错误**（API 层已按 RFC 收敛边界），ValueError 而非端口错误。"""
+        data = b"0123456789"
+        key = key_for(data)
+        contract_storage.put(key, data, content_type="application/pdf")
+
+        with pytest.raises(ValueError):
+            contract_storage.read_range(key, 0, 10)  # end >= size
+        with pytest.raises(ValueError):
+            contract_storage.read_range(key, 5, 2)  # start > end
+        with pytest.raises(ValueError):
+            contract_storage.read_range(key, -1, 3)
+
+    def test_open_stream_yields_the_whole_object(
+        self, contract_storage: ObjectStorage
+    ) -> None:
+        """流式分片拼回应与整读逐字节一致 —— 分片是实现细节，不是语义。"""
+        data = bytes(range(256)) * 700  # ~176KB，跨多个 64KiB 分片
+        key = key_for(data)
+        contract_storage.put(key, data, content_type="application/pdf")
+
+        chunks = list(contract_storage.open_stream(key))
+
+        assert b"".join(chunks) == data
+        assert len(chunks) > 1, "应真正分片，而不是一次读完"
+
+    def test_open_stream_missing_object_raises_on_first_next(
+        self, contract_storage: ObjectStorage
+    ) -> None:
+        """缺失对象：拿到迭代器**不炸**，首次 next() 才抛 —— 与端口文档一致。"""
+        iterator = contract_storage.open_stream(key_for(b"never written"))
+
+        with pytest.raises(PermanentStorageError) as excinfo:
+            next(iterator)
+
+        assert excinfo.value.code == ErrorCode.OBJECT_NOT_FOUND
+
+    def test_read_range_missing_object_reports_object_not_found(
+        self, contract_storage: ObjectStorage
+    ) -> None:
+        """`read_range` 的缺失语义与 `get` 相同：独立的 OBJECT_NOT_FOUND。"""
+        with pytest.raises(PermanentStorageError) as excinfo:
+            contract_storage.read_range(key_for(b"never written"), 0, 1)
+
+        assert excinfo.value.code == ErrorCode.OBJECT_NOT_FOUND

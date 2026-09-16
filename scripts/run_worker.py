@@ -56,7 +56,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from app.adapters.storage.local_file_storage import LocalFileStorage  # noqa: E402
+from app.adapters.storage import build_storage  # noqa: E402
 from app.config import settings  # noqa: E402
 from app.db import SessionLocal  # noqa: E402
 from app.enums import ErrorCode, JobType  # noqa: E402
@@ -236,7 +236,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     worker = Worker(
         SessionLocal,
-        make_handler(LocalFileStorage(), allowed_types=allowed_types),
+        make_handler(build_storage(), allowed_types=allowed_types),
         worker_id=args.worker_id,
         job_types=[JobType(value) for value in args.job_types],
         poll_interval=args.poll_interval,

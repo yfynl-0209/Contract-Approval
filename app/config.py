@@ -68,6 +68,15 @@ class Settings(BaseSettings):
 
     # ---- 对象存储（M3 用 local；M9 增 minio，端口语义不变）----
     storage_backend: str = "local"
+    # MinIO / S3 兼容端点（storage_backend=minio 时必填）。
+    # ⚠️ endpoint 只写 host[:port]，不带 scheme —— scheme 由 `minio_secure` 决定
+    minio_endpoint: str = "127.0.0.1:59000"
+    minio_access_key: str = ""
+    minio_secret_key: str = ""
+    minio_bucket: str = "contract-objects"
+    minio_secure: bool = False
+    # presign 的有效期（秒）。给短不给长：泄露的签名 URL 在过期前是免鉴权通道
+    presign_expires_seconds: int = 600
 
     # ---- 规则评价（M5）----
     #: 本项目运行币种。金额类字段的数值比较**只有在该币种下才有意义**

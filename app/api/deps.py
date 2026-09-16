@@ -158,10 +158,12 @@ def get_gateway(request: Request) -> ApprovalReadGateway:
 
 
 def get_storage(request: Request) -> ObjectStorage:
-    """按应用生命周期复用的对象存储。"""
+    """按应用生命周期复用的对象存储（M9：按 `storage_backend` 装配实现）。"""
     storage = getattr(request.app.state, "object_storage", None)
     if storage is None:
-        storage = LocalFileStorage()
+        from app.adapters.storage import build_storage
+
+        storage = build_storage()
         request.app.state.object_storage = storage
     return storage
 

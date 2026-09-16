@@ -19,28 +19,20 @@
 下发它们会让调用端依赖具体的存储布局，于是 M9 换 MinIO 变成破坏性变更；
 更直接的是，一个可预测的路径等于一条绕过鉴权的读取通道。
 
-## Range 支持到哪一步
+## Range 与流式（M9 已落）
 
 支持单区间（`bytes=0-99` / `bytes=100-` / `bytes=-100`）。**多区间不支持**：
 `bytes=0-9,20-29` 按 RFC 9110 §14.2 允许服务端忽略 `Range` 并返回完整实体，
 这里就返回 **200 + 完整正文**（而不是自作主张只给第一段 —— 那会让调用端
 以为自己拿全了）。
 
-## 当前实现是"限制大小后**整份读取**并分片响应"
-
-⚠️ **不要把这个实现描述成"从 `ObjectStorage` 流式读取"——它不是。**
-
-`ObjectStorage` 端口目前只有 `get(key) -> bytes`，本模块的做法是：整份读进内存，
-再按 `Range` 切出要发的那一段。**真正的对象存储流式 / Range 读取延后至 M9
-的 MinIO 适配器实现**，届时由它扩展端口能力（如 `stat()` / `open_stream()` /
-`read_range()`），而不是让 API 层先把整份字节下载到进程内存里再切。
-
-当前这么做是可接受的，因为 `attachment_max_bytes`（默认 20MB）已经限定了上界：
-一次请求最多占用一份附件大小的内存。但**这个上界是配置，不是架构**——
-调大它不会报错，只会让内存占用跟着涨。
-
-> **技术债（已登记到 M9 Task 4）**：M9 换 MinIO 时必须一并扩展端口，
-> 否则"换成对象存储"只换了字节的存放位置，读取路径仍然是全量下载。
+M9 起 `ObjectStorage` 端口具备 `stat()` / `open_stream()` / `read_range()`，
+本模块的附件字节路径随之改为：`stat` 拿大小 → `read_range` 供区间 →
+`open_stream` 流式供整份 —— **附件字节不再整份进进程内存**。
+核验口径相应变化（键内嵌摘要 ↔ 库记录，见 `_assert_key_matches_record`）：
+内容寻址键的"内容 == 键"由写入端 `put` 强制 + 不可变存储保证。
+标准文档工件（JSON，体积小）仍走 `_read_object` 整份核验 ——
+它必须先完整过校验才能进入结构化解析。
 """
 
 from __future__ import annotations
@@ -52,6 +44,7 @@ from typing import Any
 from urllib.parse import quote
 
 from fastapi import APIRouter, Depends, Query, Request, Response, status
+from starlette.responses import StreamingResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -61,7 +54,7 @@ from app.auth import Actor, Permission
 from app.enums import DownloadStatus, ErrorCode
 from app.errors import PermanentError, PermanentStorageError
 from app.models import ApprovalAttachment, ContractParse, ParseArtifact
-from app.ports.object_storage import ObjectStorage
+from app.ports.object_storage import ObjectStorage, embedded_digest_of
 from app.ports.parse_document import StandardDocument
 from app.services import query_service
 
@@ -172,26 +165,41 @@ def _assert_task_visible(
     )
 
 
+def _assert_key_matches_record(attachment: ApprovalAttachment) -> None:
+    """库记录 ↔ 对象键的**一致性核验**（M9：以键内嵌摘要替代整份读核验）。
+
+    M9 起，附件下发改为流式 / 按区间读 —— **整份字节不再进进程内存**，
+    因此"取回后逐字节算摘要"的核验方式在内容寻址路径上被下述两级保证替代：
+
+    1. **写入时**：`put` 对内容寻址键强制"键内嵌摘要 == 内容摘要"，
+       不符即拒绝 —— 键是内容的承诺；
+    2. **读取时**（本函数）：库记录的摘要必须等于键内嵌摘要 ——
+       "这条 DB 记录指向的确实是那份内容"。
+
+    两级加起来，"下发字节与 ETag 不符"仍然需要**同时**篡改不可变存储
+    与键本身才可能发生 —— 与旧实现（每次全量读）相比，代价是"绕过 put
+    直接改写存储内容"在区间请求上不可见；收益是 20MB 上界不再等于内存上界。
+    非内容寻址键（无内嵌摘要）不参与此核验。
+    """
+    if not attachment.file_checksum:
+        return
+    embedded = embedded_digest_of(attachment.object_key)
+    if embedded and embedded != attachment.file_checksum.lower():
+        raise PermanentError(
+            f"库记录的摘要（{attachment.file_checksum[:12]}…）与对象键内嵌的摘要"
+            f"（{embedded[:12]}…）不一致：这条记录指向的证据已经不可信，拒绝下发",
+            code=ErrorCode.CHECKSUM_MISMATCH,
+        )
+
+
 def _read_object(
     storage: ObjectStorage, *, key: str, expected_sha256: str | None
 ) -> tuple[bytes, str]:
     """取回**整份**对象并核验摘要，返回 `(字节, 实际摘要)`。
 
-    ⚠️ **这是全量读取，不是流式**（理由见模块 docstring 的"技术债"一节）。
-    `Range` 是在拿到整份字节之后才切的。M9 扩展了端口的 `read_range()` 之后，
-    这里应该是唯一需要改动的调用点。
-
-    ⚠️ 核验不是可选的。ETag 用的是这个摘要，而调用端会拿它做缓存判据 ——
-    磁盘上的字节若与记录不符（损坏、被外部进程改写），
-    不核验就会下发一份**与 ETag 不符**的内容，且双方都不知道。
-    "证据可核验"这条承诺正是在这里兑现的。
-
-    ⚠️ 区间请求也核验**整份**：只核验被请求的那一段时，
-    "磁盘上的文件被换成另一份等长的内容"在这条路径上完全看不出来 ——
-    而 ETag 说的仍是旧摘要。
-
-    Raises:
-        PermanentStorageError: `CHECKSUM_MISMATCH` —— 取回的字节与记录的摘要不符。
+    ⚠️ M9 之后本函数**只服务标准文档工件**（JSON，体积小，且必须整份
+    校验后才能进入结构化解析）—— 附件字节路径已改为
+    `stat` + `open_stream` / `read_range`（见 `get_attachment_content`）。
     """
     data = storage.get(key)
     digest = hashlib.sha256(data).hexdigest()
@@ -264,11 +272,17 @@ def get_attachment_content(
             code=ErrorCode.OBJECT_NOT_FOUND,
         )
 
-    data, digest = _read_object(
-        storage, key=attachment.object_key, expected_sha256=attachment.file_checksum
-    )
-    return _bytes_response(
-        data=data,
+    # M9：stat 拿大小（不读内容），键↔记录一致性核验，然后按需
+    # `open_stream`（整份，流式）或 `read_range`（区间）——
+    # 附件字节不再整份进进程内存
+    _assert_key_matches_record(attachment)
+    ref = storage.stat(attachment.object_key)
+    digest = attachment.file_checksum or ref.sha256
+
+    return _content_response(
+        storage=storage,
+        key=attachment.object_key,
+        size=ref.size,
         digest=digest,
         content_type=attachment.content_type or "application/octet-stream",
         file_name=attachment.file_name,
@@ -276,17 +290,23 @@ def get_attachment_content(
     )
 
 
-def _bytes_response(
+def _content_response(
     *,
-    data: bytes,
+    storage: ObjectStorage,
+    key: str,
+    size: int,
     digest: str,
     content_type: str,
     file_name: str | None,
     range_header: str | None,
 ) -> Response:
-    """把字节装成响应（含 Range 与缓存头）。"""
-    size = len(data)
+    """把对象装成响应（M9：流式 / 按区间，不再整份进内存）。
 
+    ⚠️ ETag 用**记录的摘要**（与键内嵌摘要已被 `_assert_key_matches_record`
+    核验一致）—— 字节与 ETag 的对应关系由"put 时核验 + 不可变存储"保证。
+    将来若在发送路径插入任何转换 / 脱敏 / 重新编码，**必须重新设计摘要口径**：
+    流式发送后无法再"算完再发"，沿用的 ETag 会无声失效。
+    """
     headers: dict[str, str] = {
         "Accept-Ranges": "bytes",
         # `nosniff` 必须给：附件类型来自外部系统的声明，
@@ -295,12 +315,6 @@ def _bytes_response(
         "X-Content-Type-Options": "nosniff",
         # 摘要用引号包起来（RFC 9110 §8.8.3 的 entity-tag 语法）。
         # 不传 `W/`：这是内容摘要而不是弱校验，字节变了 ETag 就必须变。
-        #
-        # ⚠️ `digest` 是**实际发出的那些字节**的摘要（`_read_object` 取回后算的），
-        # 因此这里成立的前提是：`data` 之后**没有被再加工过**。
-        # 将来若在中间插入任何转换 / 脱敏 / 重新编码（例如图片转码、加水印），
-        # **必须重新计算摘要** —— 沿用原文摘要时缓存与校验全部失效，
-        # 而且失效方式无声：调用端拿到的 ETag 对应的是它**没有**收到的那些字节。
         "ETag": f'"{digest}"',
         "Content-Disposition": _content_disposition(file_name),
     }
@@ -315,9 +329,13 @@ def _bytes_response(
 
     if span is None:
         headers["Content-Length"] = str(size)
-        return Response(content=data, media_type=content_type, headers=headers)
+        return StreamingResponse(
+            storage.open_stream(key),
+            media_type=content_type,
+            headers=headers,
+        )
 
-    chunk = data[span.start : span.end + 1]
+    chunk = storage.read_range(key, span.start, span.end)
     headers["Content-Range"] = f"bytes {span.start}-{span.end}/{size}"
     headers["Content-Length"] = str(len(chunk))
     return Response(
