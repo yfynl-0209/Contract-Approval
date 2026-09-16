@@ -60,7 +60,10 @@ def test_health_ready_returns_200_when_database_available() -> None:
     body = response.json()
     assert body["status"] == "ready"
     assert body["checks"]["database"] is True
-    assert body["checks"]["table_count"] == 11
+    # 表数写死是有意的（见下方诊断接口的说明）：M5 加 rule_hits/review_runs、
+    # M6 加 review_results/outbox_events、M7 加 audit_events/comment_logs/task_logs
+    # 后到达 13；M9 新增**业务表**时必须再次显式更新
+    assert body["checks"]["table_count"] == 13
 
 
 def test_health_ready_returns_503_when_database_unavailable(monkeypatch) -> None:
@@ -88,11 +91,14 @@ def test_health_diagnostics_returns_200_with_table_list() -> None:
 
     body = response.json()
     assert body["db_ok"] is True
-    assert body["table_count"] == 11
+    assert body["table_count"] == 13
     assert "workflow_jobs" in body["tables"]
     # M4 新增的工件表也必须被探到 —— 表数写死是有意的：
     # 新增表必须显式改这条断言，而不是悄悄多出一张没人记得的表。
     assert "parse_artifacts" in body["tables"]
+    assert "rule_hits" in body["tables"]  # M5
+    assert "outbox_events" in body["tables"]  # M6
+    assert "audit_events" in body["tables"]  # M7
     assert body["llm_enabled"] is False
 
 

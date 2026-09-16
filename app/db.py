@@ -48,7 +48,15 @@ _IS_SQLITE = DB_URL.startswith("sqlite")
 # SQLite 需要关闭同线程检查；换成 PostgreSQL 时不适用，故按 DB_URL 动态决定
 _connect_args = {"check_same_thread": False} if _IS_SQLITE else {}
 
-engine = create_engine(DB_URL, connect_args=_connect_args, future=True)
+# ⚠️ PostgreSQL 必须 pre-ping：连接池里的连接可能已被服务端/防火墙断开，
+# 不检查的话表现为"偶发 500 + server closed the connection unexpectedly"。
+# SQLite 是进程内文件，不存在这个问题（也不支持 ping 语义的开销考量）。
+engine = create_engine(
+    DB_URL,
+    connect_args=_connect_args,
+    future=True,
+    pool_pre_ping=not _IS_SQLITE,
+)
 
 
 if _IS_SQLITE:

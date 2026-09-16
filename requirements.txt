@@ -23,3 +23,16 @@ mcp==1.9.4
 # 拿到非对称签名的令牌会直接抛错。
 pyjwt[crypto]==2.14.0
 pytest==8.3.4
+
+# ---- M9 基础设施迁移：PostgreSQL / Alembic / Redis / MinIO ----
+# PostgreSQL 驱动（SQLAlchemy URL: postgresql+psycopg://）。带 [binary] 免编译。
+# SQLite 仍是测试与零配置运行的默认 —— 换库只改 DB_URL，不改业务代码。
+psycopg[binary]==3.2.3
+# 数据库迁移：真相来源仍是 db/schema.sql（SQLite 初始化路径），
+# Alembic 基线从 ORM 元数据手工编码（不信任 autogenerate），两者做结构一致性比对。
+alembic==1.14.0
+# Redis 只做加速（唤醒 / 锁 / 有界缓存）：workflow_jobs 永远是作业的唯一真相来源，
+# Redis 丢失不得影响任何已提交的业务状态。
+redis==5.2.1
+# MinIO S3 客户端。实现既有 ObjectStorage 端口；本机开发用 local，不受影响。
+minio==7.2.12
