@@ -57,12 +57,15 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.adapters.storage import build_storage  # noqa: E402
+from app.composition.llm_pipeline import build_llm_gateway, build_llm_judge  # noqa: E402
 from app.config import settings  # noqa: E402
 from app.db import SessionLocal  # noqa: E402
 from app.enums import ErrorCode, JobType  # noqa: E402
 from app.errors import PermanentError  # noqa: E402
-from app.models import WorkflowJob  # noqa: E402
+from app.models import ReviewRun, WorkflowJob  # noqa: E402
+from app.ports.llm_gateway import NONE_MODEL_ID, model_version_of  # noqa: E402
 from app.ports.object_storage import ObjectStorage  # noqa: E402
+from app.rules.evaluator import LlmJudge  # noqa: E402
 from app.services.rule_service import run_rule_job  # noqa: E402
 from app.worker import Handler, JobRun, Worker  # noqa: E402
 
@@ -93,10 +96,48 @@ def _job_input(run: JobRun) -> dict:
     return payload if isinstance(payload, dict) else {}
 
 
+def _ensure_model_matches_run(
+    session: Session, *, run_id: int, current_model_version: str
+) -> None:
+    """批次的 `model_version` 与实际可用的模型**必须一致**（M11 Task 4）。
+
+    批次的模型版本在**入队时冻结**（M5 决策 ①）。执行时不一致意味着两种
+    不可能同时为真的说法之一：批次声称用了 `qwen-plus` 而实际走了确定性
+    fallback，或者反过来。两者都会让 `review_runs.model_version` 失去意义
+    —— 而那一列正是统计"模型答得怎么样"的分组键。
+
+    ⚠️ **不得**改成"按当前配置继续跑"：那会让同一份输入在两次执行之间
+    得出不同的结论，而报告上两批都写着同一个 `run_id`。
+    """
+    row = session.get(ReviewRun, run_id)
+    if row is None:
+        raise PermanentError(
+            f"批次 {run_id} 不存在", code=ErrorCode.RESOURCE_NOT_FOUND
+        )
+    if row.model_version != current_model_version:
+        raise PermanentError(
+            f"批次 {run_id} 声明的模型是 {row.model_version!r}，"
+            f"而当前执行环境提供的模型是 {current_model_version!r} —— "
+            "无法按批次声明的模型执行，也不会改用另一个模型重算"
+            "（请以同一配置重新入队，而不是复用旧批次）",
+            code=ErrorCode.UNEXPECTED_ERROR,
+        )
+
+
 def make_handler(
-    storage: ObjectStorage, allowed_types: tuple[str, ...] = ()
+    storage: ObjectStorage,
+    allowed_types: tuple[str, ...] = (),
+    *,
+    llm_judge: LlmJudge | None = None,
+    model_version: str = NONE_MODEL_ID,
 ) -> Handler:
-    """按 `job_type` 分派的处理器。**未注册的类型抛错**（见模块 docstring）。"""
+    """按 `job_type` 分派的处理器。**未注册的类型抛错**（见模块 docstring）。
+
+    M11：
+    - `llm_judge`：`llm` 规则的判定钩子（`None` = 没接模型 = 纯规则模式）；
+    - `model_version`：当前执行环境的模型标识（`model_version_of(gateway)`）——
+      RULE 分支用它做"批次声明 vs 实际执行"的一致性校验（见下）。
+    """
 
     def handler(run: JobRun) -> None:
         job_type = run.job.job_type
@@ -109,8 +150,19 @@ def make_handler(
                     "作业必须指向入队时建好的那个批次，不能在做作业时才决定",
                     code=ErrorCode.UNEXPECTED_ERROR,
                 )
+            # 批次声明的模型与实际可用的模型必须一致（M11 Task 4）——
+            # 不一致就显式失败，绝不静默换 fallback 重算（那会让
+            # `review_runs.model_version` 变成一句谎话，而库里两处都不报错）。
+            _ensure_model_matches_run(
+                run.session, run_id=run_id, current_model_version=model_version
+            )
             # 批次与规则集都在入队时冻结，这里只负责执行它（见 run_rule_job）
-            run_rule_job(run.session, run_id=run_id, storage=storage)
+            run_rule_job(
+                run.session,
+                run_id=run_id,
+                storage=storage,
+                llm_judge=llm_judge,
+            )
             return
 
         if job_type == JobType.PARSE.value:
@@ -242,9 +294,20 @@ def main(argv: Sequence[str] | None = None) -> int:
         for item in settings.attachment_allowed_types.split(",")
         if item.strip()
     )
+    # M11：判定钩子与模型标识出自同一个组合根 —— 两边分叉时，批次会
+    # 声明一个它并没有使用的模型。打印的是 model_version（配置快照），不是 Key。
+    gateway = build_llm_gateway(settings)
+    llm_judge = build_llm_judge(settings)
+    print(f"[worker] RULE 作业使用的模型：{model_version_of(gateway)}", flush=True)
+
     worker = Worker(
         SessionLocal,
-        make_handler(build_storage(), allowed_types=allowed_types),
+        make_handler(
+            build_storage(),
+            allowed_types=allowed_types,
+            llm_judge=llm_judge,
+            model_version=model_version_of(gateway),
+        ),
         worker_id=args.worker_id,
         job_types=[JobType(value) for value in args.job_types],
         poll_interval=args.poll_interval,
