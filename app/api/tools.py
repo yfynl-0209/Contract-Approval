@@ -44,12 +44,14 @@ from app import tool_facade
 from app.api.deps import (
     get_db,
     get_gateway,
+    get_llm,
     get_parser_engine_version,
     get_storage,
     require_permissions,
 )
 from app.auth import Actor, Permission
 from app.ports.approval_gateway import ApprovalReadGateway
+from app.ports.llm_gateway import LLMGateway
 from app.ports.object_storage import ObjectStorage
 from app.schemas import (
     DownloadAttachmentRequest,
@@ -224,9 +226,14 @@ def run_contract_rules(
     payload: RunContractRulesRequest,
     session: Session = Depends(get_db),
     actor: Actor = Depends(require_permissions(Permission.REVIEW_EXECUTE)),
+    llm: LLMGateway | None = Depends(get_llm),
 ) -> dict[str, Any]:
     return tool_facade.run_contract_rules(
-        str(payload.parse_id), session=session, actor=actor, force=payload.force
+        str(payload.parse_id),
+        session=session,
+        actor=actor,
+        force=payload.force,
+        llm=llm,
     )
 
 

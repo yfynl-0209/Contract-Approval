@@ -104,6 +104,7 @@ from app.auth import Actor, Permission, require
 from app.errors import AppError, BUSINESS_FACT_CODES
 from app.models import ApprovalTask
 from app.ports.approval_gateway import ApprovalReadGateway
+from app.ports.llm_gateway import LLMGateway, model_version_of
 from app.ports.object_storage import ObjectStorage
 from app.rules.llm_judge import PROMPT_VERSION
 from app.schemas import ParseOptions
@@ -424,12 +425,17 @@ def run_contract_rules(
     session: Session,
     actor: Actor,
     force: bool = False,
+    llm: LLMGateway | None = None,
 ) -> dict[str, Any]:
     """入队一次规则审查，返回可查询的批次引用。
 
     ⚠️ `case_id` 在这里是**解析编号**（`contract_parses.id`），
     不是工具 6 里那个同名参数（那是批次编号）—— 理由见模块 docstring。
     调用时批次还不存在，本函数正是创建它的那个。
+
+    ⚠️ `llm` 是**网关对象**而不是版本号字符串：版本号能随便传，
+    而网关只能从组合根拿到 —— 批次声明（`model_version_of(llm)`）
+    与执行方实际使用的模型因此必然同源（M11 Task 1/3）。
     """
     _require(actor, "run_contract_rules")
 
@@ -444,6 +450,7 @@ def run_contract_rules(
         session,
         parse_id=parse_id,
         context=context,
+        model_version=model_version_of(llm),
         prompt_version=PROMPT_VERSION,
         force=force,
     )

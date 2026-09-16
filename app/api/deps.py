@@ -37,6 +37,7 @@ from app.auth import (
 from app.config import settings
 from app.ports.approval_gateway import ApprovalReadGateway
 from app.ports.identity_provider import IdentityProvider
+from app.ports.llm_gateway import LLMGateway
 from app.ports.object_storage import ObjectStorage
 
 #: 会话依赖定义在 `app/db.py`（它同时管理事务边界）。这里转出，
@@ -49,6 +50,7 @@ __all__ = [
     "get_db",
     "get_gateway",
     "get_identity_provider",
+    "get_llm",
     "get_storage",
     "require_permissions",
     "close_adapters",
@@ -157,6 +159,19 @@ def get_gateway(request: Request) -> ApprovalReadGateway:
     return gateway
 
 
+def get_llm(request: Request) -> LLMGateway | None:
+    """按应用生命周期复用的 LLM 网关（M11 Task 3）。`None` = 没接模型（合法配置）。
+
+    ⚠️ 缓存的是 `None` 也要缓存：否则每个请求都会重新判断一次配置，
+    而"有没有模型"在一次进程生命周期内不会变。
+    """
+    if not hasattr(request.app.state, "llm_gateway"):
+        from app.composition.llm_pipeline import build_llm_gateway
+
+        request.app.state.llm_gateway = build_llm_gateway(settings)
+    return request.app.state.llm_gateway
+
+
 def get_storage(request: Request) -> ObjectStorage:
     """按应用生命周期复用的对象存储（M9：按 `storage_backend` 装配实现）。"""
     storage = getattr(request.app.state, "object_storage", None)
@@ -214,6 +229,11 @@ def close_adapters(app: FastAPI) -> None:
     gateway = getattr(app.state, "approval_gateway", None)
     if gateway is not None:
         gateway.close()
+
+    # LLM 网关：openai SDK 客户端持有 httpx 连接池（M11）
+    llm = getattr(app.state, "llm_gateway", None)
+    if llm is not None:
+        llm.close()
 
     # 身份提供方：JWT 实现持有 JWKS 客户端（连接池）
     provider = getattr(app.state, "identity_provider", None)

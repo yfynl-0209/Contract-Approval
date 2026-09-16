@@ -179,6 +179,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     provider = build_identity_provider()
     gateway = MockApprovalGateway()
     storage = build_storage()
+    # M11：两条传输共用**同一个**网关 —— 模型标识与判定钩子必须同源
+    from app.composition.llm_pipeline import build_llm_gateway
+    from app.ports.llm_gateway import model_version_of
+
+    gateway_llm = build_llm_gateway(settings)
+    print(f"[mcp] RULE 作业使用的模型：{model_version_of(gateway_llm)}", flush=True)
 
     try:
         if args.transport == "stdio":
@@ -189,6 +195,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 gateway=gateway,
                 storage=storage,
                 engine_version=ENGINE_VERSION,
+                llm=gateway_llm,
             )
             print(
                 f"[mcp] stdio 启动（身份 id={actor.actor_id}，"
@@ -204,6 +211,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             gateway=gateway,
             storage=storage,
             engine_version=ENGINE_VERSION,
+            llm=gateway_llm,
             host=args.host,
             port=args.port,
         )

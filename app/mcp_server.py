@@ -91,6 +91,7 @@ from app.db import SessionLocal, transactional_session
 from app.errors import AppError
 from app.ports.approval_gateway import ApprovalReadGateway
 from app.ports.identity_provider import IdentityProvider
+from app.ports.llm_gateway import LLMGateway
 from app.ports.object_storage import ObjectStorage
 from app.schemas import ParseOptions
 from app.services.result_service import ResultInputError
@@ -149,6 +150,7 @@ def build_mcp_server(
     actor: Actor | None = None,
     identity_provider: IdentityProvider | None = None,
     session_factory: Callable[[], Session] = SessionLocal,
+    llm: LLMGateway | None = None,
     name: str = "contract-approval-system",
     host: str = "127.0.0.1",
     port: int = DEFAULT_PORT,
@@ -303,7 +305,7 @@ def build_mcp_server(
     def run_contract_rules(case_id: str, force: bool = False) -> dict[str, Any]:
         return invoke(
             lambda session, actor: tool_facade.run_contract_rules(
-                case_id, session=session, actor=actor, force=force
+                case_id, session=session, actor=actor, force=force, llm=llm
             )
         )
 
