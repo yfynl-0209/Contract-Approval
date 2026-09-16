@@ -26,9 +26,12 @@
 | **M7** | **七工具门面 + 任务/确认/重试/规则管理 + RBAC + 附件下发 + MCP 形态** | ✅ **43/43 验收通过**（`scripts/verify_m7.py`，exit=0）；全量基线 **收集 1339（1336 passed / 3 skipped）** |
 | **M8** | **React 五模块调用端** + 规则管理 / 运行管理入口 | ✅ **完成**：五模块 + `/rules` + `/ops` 可用；验收走查 `scripts/verify_m8.py`（9/9，浏览器回归如实 unmet）；**走查修复 2 个真缺陷**（空 `allowed_types` 判死已解析任务、门禁失败任务卡"正在解析"）；契约形状双向钉住（`apiShapes.json` + `apiShape.test.ts`）；前端 **223 测试**、后端 **1393 passed**；演示脚本 `docs/demo/m8-demo-script.md` |
 | **M9** | **基础设施迁移：PostgreSQL / Alembic / Redis / MinIO / Docker Compose** | ✅ **完成**：验收 `scripts/verify_m9.py` **8/8，exit=0**。SQLite 仍是默认（零配置可跑）；PG/Redis/MinIO 经端口与适配器接入，**业务代码零改动**；Alembic 基线（13 表 / CHECK / 复合外键 / 部分唯一索引）+ 往返与结构比对测试；领取 `SKIP LOCKED`、幂等 SAVEPOINT；`docker compose config` 通过、三镜像构建通过；compose 拓扑（内网 + healthcheck + 一次性 migrate 作业 + SIGTERM 优雅停机） |
+| **M11** | **LLM 接入：9 条 `llm` 规则真正调用模型 + 模型合格性实测** | ✅ **完成**（Task 1–5；Task 6 自建 GPU 按计划依赖 M10）：组合根 `llm_pipeline.py`（模型标识与判定钩子唯一来源）；入队冻结真实 `model_version`（REST/MCP 同源）+ Worker 派发前一致性校验；`scripts/check_llm_qualification.py`（退出码 0/1/2）；**deepseek-flash 实测通过**：27 次调用零伪造引用、必判命中 2/2、单次 p50 2.4s；端到端闭环 `judged_by=llm` 实证 |
+| M10 / M12 | 部署底座（HTTPS / 发布脚本 / 备份）/ 黄金合同集 | ⏳ 未开始 |
 
-**实际规模**：**13 张表** · 40 条规则 · **7 个工具已全部落地**
-（**REST 与 MCP 两种形态，共用同一套门面**） · **测试数以 `pytest` 实际输出为准**。
+**实际规模**：**13 张表** · 40 条规则（其中 **9 条 `llm` 规则接模型**，M11）·
+**7 个工具已全部落地**（**REST 与 MCP 两种形态，共用同一套门面**） ·
+**测试数以 `pytest` 实际输出为准**。
 M7 新增的后端接口：任务 / 作业 / 评价 / 结果查询、立场与结果确认、
 附件内容与标准文档下发、人工重试、规则管理（版本化）、日志与审计查询。
 
@@ -82,6 +85,9 @@ cd ..
 .\.venv\Scripts\python.exe scripts\verify_m5.py     # M5：31 条
 .\.venv\Scripts\python.exe scripts\verify_m6.py     # M6：28 条
 .\.venv\Scripts\python.exe scripts\verify_m7.py     # M7：43 条
+.\.venv\Scripts\python.exe scripts\verify_m8.py     # M8：9 条（五模块走查 + 契约漂移）
+.\.venv\Scripts\python.exe scripts\verify_m9.py     # M9：8 条（需本地 PG/Redis/MinIO 容器）
+.\.venv\Scripts\python.exe scripts\check_llm_qualification.py   # M11：模型合格性（需 .env 填 LLM 三项）
 
 # 7) 全部测试
 .\.venv\Scripts\python.exe -m pytest -q
@@ -442,20 +448,21 @@ SELECT * FROM approval_tasks
 WHERE provider = 'mock' AND tenant_id = 'default' AND approval_code = 'HT-2026-0001';
 ```
 
-> M9 引入 PostgreSQL 时，这一条会体现在 Alembic 迁移里，
-> `upgrade` / `downgrade` 都需可往返。
+> ✅ M9 已落地：这条约束体现在 Alembic 基线迁移里，
+> `upgrade` / `downgrade` 往返由 `tests/postgres/test_migrations.py` 守住。
 
 ### 5.2 单租户
 
 `tenant_id` 字段已就位，但 v1 固定为 `default`（由 `TENANT_ID` 配置）。
 多租户的数据模型已具备，尚未提供租户管理与隔离策略。
 
-### 5.3 对象存储为本地文件实现
+### 5.3 对象存储：默认本地文件，MinIO 已就位
 
-`STORAGE_BACKEND=local`：对象落在 `<STORAGE_ROOT>/objects/`（内容寻址）。
+`STORAGE_BACKEND=local`（默认）：对象落在 `<STORAGE_ROOT>/objects/`（内容寻址）。
+M9 起可切 `STORAGE_BACKEND=minio`（S3 兼容），两个实现跑**同一份合约测试**：
 
-- `presign_get()` 返回的是**受控相对路径**，没有真实的签名与过期能力，
-  **不得下发给普通调用端**；M8 起由 MinIO 实现真正的短期授权。
+- `presign_get()`：local 返回**受控相对路径**（不得下发给普通调用端）；
+  **MinIO 实现是真签名 URL**（带过期），M8 设计预留的 (b) 方案自此可用。
 - 对象键（`object_key`，形如 `sha256/ab/cd/<摘要>.pdf`）**只在本系统内部使用，
   不出现在任何接口响应里**（含工具 3）。它仍完整保存在
   `approval_attachments.object_key` 供内部使用。
@@ -470,8 +477,8 @@ M3 阶段没有任何进程消费 `workflow_jobs`；M4 引入 Worker、M6 引入
 这一条**已经关闭**：解析与规则作业由 `scripts/run_worker.py` 领取并重试，
 回写由 `OutboxDispatcher` 投递。
 
-仍未提供的是**人工重试接口**（把 `blocked` 的任务重新推起来）——那在 **M7** 交付。
-在此之前，`blocked` 任务需要人工改库或重新发起调用。
+~~仍未提供的是**人工重试接口**~~ ✅ M7 已交付：`POST /api/tasks/{id}/retry`
+（权限受控、操作原因必填并落审计）。
 
 ### 5.5 详情同步的作业版本取自"已存"上下文
 
@@ -482,15 +489,27 @@ M3 阶段没有任何进程消费 `workflow_jobs`；M4 引入 Worker、M6 引入
 但作业记录的版本号比内容落后一轮，且"首次写入上下文"会多产生一条作业。
 这是刻意取舍——**宁可多一条记录，也不能把对象永久卡死**。
 
-### 5.6 大模型是可选的，默认不启用
+### 5.6 大模型：可选接入，M11 起全链路打通
 
-M5 已引入**受控** LLM 调用（白名单 + Schema 校验 + 证据反向核验）。
-**未配置模型时自动降级为纯规则模式**，功能仍完整可用：
-需要模型的规则按各自携带的 `fallback_match_json` 走降级结论
-（实测 9 条 llm 规则**全部配了** fallback）。
+M5 已引入**受控** LLM 调用（白名单 + Schema 校验 + 证据反向核验）；
+**M11** 把 9 条 `llm` 规则真正接到模型上，并补齐了三件治理设施：
 
-因此"没接模型"不是缺陷状态，而是**默认状态**。反过来说，
-线上**是否真的在用模型**要看配置，不能从"这条规则出了结论"推出来。
+1. **声明与执行一致**：批次的 `model_version` 在入队时由 `model_version_of(网关)`
+   冻结（REST/MCP/Worker 三方同源），Worker 派发前校验——不一致**显式失败**，
+   绝不静默换 fallback 重算；
+2. **可追溯**：每条模型结论带 `judged_by: llm` + `prompt_version`，
+   前端展示为「判定来源：模型」；
+3. **可实测**：`scripts/check_llm_qualification.py` 把"这个模型能不能用"
+   变成退出码（0 合格 / 1 不合格 / 2 未配置）。
+
+**未配置模型时仍自动降级为纯规则模式**，功能完整可用：需要模型的规则按
+各自携带的 `fallback_match_json` 走降级结论（9 条全部配了 fallback）。
+因此"没接模型"不是缺陷状态，而是**默认状态**；接了之后，规则的评价
+结论里 `judged_by` 会如实区分"模型判的"与"规则判的"。
+
+**分工原则**：能用确定性逻辑表达的风险（数值/关键词/正则，31 条）永远
+不调模型；只有必须理解语义的风险（单方承担、明显不利、表述模糊，9 条）
+才配置为 `llm` 模式。固定逻辑判不了（字段缺失等）转人工，**不是**转模型。
 
 ---
 
@@ -504,9 +523,9 @@ M5 已引入**受控** LLM 调用（白名单 + Schema 校验 + 证据反向核�
 ```
 
 `tests/contract/` 存放"同一端口的不同实现都必须通过"的测试。
-`ObjectStorage` 的合约已就位——M9 换成 MinIO 时只需新增一个子类，
-不必重写断言。该目录另有守卫测试，确保合约**不依赖任何具体实现**
-（否则它会静默退化成"本地文件系统的测试"）。
+`ObjectStorage` 的合约已由 LocalFileStorage 与 MinIOStorage **两个实现同时跑**
+（含 M9 的 `stat` / `open_stream` / `read_range` 扩展）。该目录另有守卫测试，
+确保合约**不依赖任何具体实现**（否则它会静默退化成"本地文件系统的测试"）。
 
 ### M3 验收证据
 
@@ -547,6 +566,30 @@ M7 的 43 条覆盖：七个工具名称与**位置参数顺序**逐字一致、
 MCP 七个工具与必填参数、MCP 身份 fail-closed、MCP 长任务返回 `task_ref`、
 MCP 错误载荷保留机器码、生产环境拒绝启动、401/403 可区分、
 审计动作取值域、路由不重复注册、以及全量回归。
+
+### M9 验收证据（基础设施迁移）
+
+```powershell
+.\.venv\Scripts\python.exe scripts\verify_m9.py   # 8 条标准，8/8，exit=0（需本地容器在跑）
+.\.venv\Scripts\python.exe -m pytest tests\postgres -q   # PG 冒烟/迁移往返/结构比对/并发（13 条）
+```
+
+覆盖：PG 可达、Alembic 往返（upgrade→downgrade→upgrade）+ 结构与 ORM 元数据比对、
+**两真并发领取不重复不漏领**、幂等竞态收敛（并发保存/并发回写各一次效果）、
+Redis 断连轮询兜底、清缓存不丢数据、MinIO 与 local 同合约、compose 配置合法。
+
+### M11 验收证据（LLM 接入）
+
+```powershell
+.\.venv\Scripts\python.exe scripts\check_llm_qualification.py   # 退出码 0=模型合格
+.\.venv\Scripts\python.exe -m pytest tests\test_composition_llm.py tests\test_worker_llm_wiring.py tests\test_model_version_wiring.py -q
+```
+
+覆盖：模型标识与判定钩子同源（无配置→`none:fallback`）、
+入队冻结真实 `model_version`（REST/MCP）、批次声明与执行不一致显式失败、
+实测判据（`MODEL_UNAVAILABLE`=0 / 引用作废≤1 / 明确结论比例≥85% / 必判命中）。
+**deepseek-flash 实测基线**：14/14 可判定行全有明确结论、零伪造引用、
+必判命中 2/2、单次 p50 2.4s（9 条串行 ≈75s）。
 
 ### MCP 形态怎么起
 

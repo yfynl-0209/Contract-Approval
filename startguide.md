@@ -25,6 +25,13 @@ Copy-Item .env.example .env
 `.env` 关键项（开发默认值即可跑通）：`DB_URL=sqlite:///./data/app.db`、
 `MOCK_APPROVAL_BASE_URL=http://127.0.0.1:8001`、`AUTH_MODE=dev`。
 
+可选增强（都留空即默认行为）：
+- `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL`：接本地或云端 OpenAI 兼容端点，
+  9 条 `llm` 规则真调用模型（Worker 启动会打印所用的 `model_version`）；
+  留空 = 纯规则模式。合格性实测：`python scripts/check_llm_qualification.py`。
+- `REDIS_URL`：作业唤醒加速（Worker 空闲时等通知而不是干等轮询）；
+  留空 = 纯 DB 轮询。
+
 ## 1. 初始化数据库（首次 / schema 变更后）
 
 ```powershell
