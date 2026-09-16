@@ -1,6 +1,14 @@
 # M11 LLM Integration and Model Qualification Implementation Plan
 
-> **✅ Task 1–5 已完成（2026-09-16）**：组合根 `app/composition/llm_pipeline.py`
+> **✅ Task 1–5 已完成（2026-09-16）**：
+> **端到端闭环实测（deepseek-flash）**：合格性脚本 14/14 可判定行全有明确结论、
+> 零伪造引用、必判命中 2/2（exit=0）；真实栈闭环 `GET /api/runs/{id}` 中
+> 9 条 `llm` 规则由模型判定（`detail.judged_by == "llm"`），模型不确定的
+> 场景正确落入 `needs_review` 转人工；单次 p50 ≈ 2.4s，9 条串行 ≈ 75s。
+> **判定口径修正（实测驱动）**：可判定比例只统计"文本可判"的行 ——
+> 主题缺失（正文没有该类条款）与信息不可得（管辖地取决于签订地）的
+> `undecidable` 转人工是**设计输出**，由样本的 `may_be_undecidable` 显式声明豁免。
+> 组合根 `app/composition/llm_pipeline.py`
 > （模型标识与判定钩子唯一来源）、`NONE_MODEL_ID`/`model_version_of()` 收口
 > `rule_service.DEFAULT_MODEL_VERSION`、Worker 接线 `llm_judge` + 派发前
 > `_ensure_model_matches_run` 一致性校验、REST（`get_llm` + `close_adapters`）

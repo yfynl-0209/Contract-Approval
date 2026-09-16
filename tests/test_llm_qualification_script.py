@@ -160,6 +160,38 @@ def test_undecidable_ratio_below_threshold_is_rejected() -> None:
     assert any("明确结论比例" in reason for reason in reasons)
 
 
+def test_declared_undecidables_do_not_count_into_the_ratio() -> None:
+    """主题缺失/信息不可得的行（样本显式豁免）**不计入**可判定分母。
+
+    对"正文没有知识产权条款"的合同判 needs_review 转人工，
+    是系统的设计输出，不是模型缺陷 —— 否则一条诚实的模型
+    会被 85% 的阈值误杀（deepseek-flash 首次实测正是 63%）。
+    """
+    rows = _all_rows(
+        [
+            ("一方独担违约责任", "LIAB_UNEQUAL_AGAINST_PARTY_A", _match()),
+            ("一方独担违约责任", "IP_TRANSFER_AWAY_FROM_PARTY_A", _unavailable_like_undecidable()),
+            ("保密义务单方承担", "CONF_UNILATERAL_AGAINST_PARTY_B", _match()),
+        ]
+    )
+    ratio, decided, denominator = qual.decidability_ratio(rows)
+
+    assert denominator == 2, "豁免行（IP 主题缺失）不应计入分母"
+    assert decided == 2 and ratio == 1.0
+    ok, reasons = qual.decide(rows)
+    assert ok is True and reasons == []
+
+
+def _unavailable_like_undecidable() -> MatchResult:
+    """判不了（豁免场景）但**不是** MODEL_UNAVAILABLE —— 两类不可混淆。"""
+    return MatchResult(
+        MatchVerdict.UNDECIDABLE,
+        ReasonCode.EVIDENCE_UNCERTAIN,
+        "模型无法可靠判断：正文未涉及该主题",
+        detail={"judged_by": "llm"},
+    )
+
+
 # ------------------------------------------------------------
 # main() 的配置缺失分支（不打模型）
 # ----------------------------------------------------------

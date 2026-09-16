@@ -51,6 +51,12 @@ class Sample:
     text: str
     #: 这份正文里**确实存在**的风险 → 必须判成 matched。空的表示"干净合同"。
     must_match: tuple[str, ...] = ()
+    #: 对这些规则判 `undecidable` 属于**设计内行为**，不计入可判定比例：
+    #: - 主题缺失（正文没有知识产权/验收/管辖条款）—— 模型对"没提"诚实地说
+    #:   判不了，结论转 `needs_review` 交人工，正是系统的设计输出；
+    #: - 信息不可得（管辖地是否不利取决于合同签订地在哪，文本不含此信息）。
+    #: ⚠️ 只有这两类可以豁免；"正文里明明写着却判不了"仍算不合格。
+    may_be_undecidable: tuple[str, ...] = ()
 
 
 SAMPLES: tuple[Sample, ...] = (
@@ -65,6 +71,13 @@ SAMPLES: tuple[Sample, ...] = (
             "第五条 争议解决：双方协商不成的，提交合同签订地人民法院诉讼解决。"
         ),
         must_match=("LIAB_UNEQUAL_AGAINST_PARTY_A",),
+        may_be_undecidable=(
+            "JURIS_UNFAVOR_FOR_PARTY_A",   # 管辖地是否不利取决于签订地（文本无此信息）
+            "JURIS_UNFAVOR_FOR_PARTY_B",
+            "IP_TRANSFER_AWAY_FROM_PARTY_A",  # 样本无知识产权条款（主题缺失）
+            "IP_TRANSFER_AWAY_FROM_PARTY_B",
+            "ACC_VAGUE",                      # 样本无验收条款（主题缺失）
+        ),
     ),
     Sample(
         name="保密义务单方承担",
@@ -75,6 +88,13 @@ SAMPLES: tuple[Sample, ...] = (
             "第四条 违约责任：双方按各自过错程度承担相应责任。"
         ),
         must_match=("CONF_UNILATERAL_AGAINST_PARTY_B",),
+        may_be_undecidable=(
+            "JURIS_UNFAVOR_FOR_PARTY_A",   # 样本无争议解决条款（主题缺失）
+            "JURIS_UNFAVOR_FOR_PARTY_B",
+            "IP_TRANSFER_AWAY_FROM_PARTY_A",
+            "IP_TRANSFER_AWAY_FROM_PARTY_B",
+            "ACC_VAGUE",                   # 样本无验收条款（主题缺失）
+        ),
     ),
     Sample(
         name="条款均衡（假阳性探测）",
@@ -86,6 +106,11 @@ SAMPLES: tuple[Sample, ...] = (
             "第六条 争议解决：双方协商不成的，提交合同签订地人民法院诉讼解决。"
         ),
         must_match=(),
+        may_be_undecidable=(
+            "JURIS_UNFAVOR_FOR_PARTY_A",   # 签订地未知（信息不可得）
+            "IP_TRANSFER_AWAY_FROM_PARTY_A",  # 样本无知识产权条款（主题缺失）
+            "IP_TRANSFER_AWAY_FROM_PARTY_B",
+        ),
     ),
 )
 
@@ -159,6 +184,31 @@ def missed_must_match(rows: tuple[Row, ...]) -> list[tuple[str, str]]:
     ]
 
 
+def _allowed_undecidable() -> set[tuple[str, str]]:
+    """各样本声明"判不了属设计内"的 (样本, 规则) 对。"""
+    return {
+        (sample.name, code)
+        for sample in SAMPLES
+        for code in sample.may_be_undecidable
+    }
+
+
+def decidability_ratio(rows: tuple[Row, ...]) -> tuple[float, int, int]:
+    """可判定比例，**只统计文本可判的行**。
+
+    主题缺失 / 信息不可得的行（样本显式声明豁免）不计入分母 ——
+    对它们判 `needs_review` 转人工，是系统的设计输出而不是模型缺陷。
+    返回 `(比例, 明确结论数, 计入分母的行数)`。
+    """
+    allowed = _allowed_undecidable()
+    counted = [
+        row for row in rows if (row.sample, row.rule) not in allowed
+    ]
+    decided = sum(row.result.decidable for row in counted)
+    ratio = decided / len(counted) if counted else 0.0
+    return ratio, decided, len(counted)
+
+
 def decide(rows: tuple[Row, ...]) -> tuple[bool, list[str]]:
     """按三条阈值 + 假阴性清单判定。返回 `(是否合格, 不合格原因列表)`。"""
     counts_ = counts(rows)
@@ -174,12 +224,11 @@ def decide(rows: tuple[Row, ...]) -> tuple[bool, list[str]]:
             f"证据引用被作废 {counts_['fabricated']} 次（阈值 <= {MAX_FABRICATED}）"
             "—— 模型的逐字摘录能力不足"
         )
-    ratio = (
-        counts_["decidable"] / counts_["total"] if counts_["total"] else 0.0
-    )
+    ratio, decided, denominator = decidability_ratio(rows)
     if ratio < MIN_DECIDABLE_RATIO:
         reasons.append(
-            f"明确结论比例 {ratio:.0%}（阈值 >= {MIN_DECIDABLE_RATIO:.0%}）"
+            f"明确结论比例 {decided}/{denominator} = {ratio:.0%}"
+            f"（阈值 >= {MIN_DECIDABLE_RATIO:.0%}）"
         )
     for sample_name, code in missed_must_match(rows):
         reasons.append(f"判不出：样本「{sample_name}」规则 {code}")
@@ -193,16 +242,17 @@ def _report(
     seconds = [row.seconds for row in rows]
     must_total = sum(len(sample.must_match) for sample in SAMPLES)
     must_hit = must_total - len(missed_must_match(rows))
+    ratio, decided, denominator = decidability_ratio(rows)
     print("-" * 68)
     print(f"model_version         : {model_version}")
     print(
         f"调用总数              : {counts_['total']}"
         f"        ({len(SAMPLES)} 份样本 x {counts_['total'] // len(SAMPLES)} 条 llm 规则)"
     )
-    ratio = counts_["decidable"] / counts_["total"] if counts_["total"] else 0.0
     print(
-        f"明确结论              : {counts_['decidable']}/{counts_['total']}"
-        f"     (阈值 >= {MIN_DECIDABLE_RATIO:.0%})"
+        f"明确结论              : {decided}/{denominator}"
+        f"     (阈值 >= {MIN_DECIDABLE_RATIO:.0%}；"
+        f"主题缺失/信息不可得的 {counts_['total'] - denominator} 次不计入)"
     )
     print(f"MODEL_UNAVAILABLE     : {counts_['unavailable']}         (阈值 = {MAX_UNAVAILABLE})")
     print(f"证据引用被作废        : {counts_['fabricated']}         (阈值 <= {MAX_FABRICATED})")
