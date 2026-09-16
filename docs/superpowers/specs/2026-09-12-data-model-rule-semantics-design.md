@@ -349,7 +349,7 @@ evaluate(rule, review_context, parsed_evidence) -> RuleEvaluation
 | `app/rules/evaluator.py` | 实现固定判定顺序和单一 `evaluate` 接口 |
 | `app/rules/applicability.py` | 解释和校验 `applies_when_json` |
 | `app/rules/aggregator.py` | 只聚合 `hit`，单独统计 `needs_review` 与 `not_applicable` |
-| `app/harness/policy.py` | 增加上下文冲突、待人工判断和内容摘要一致性门禁 |
+| `app/services/writeback_service.py` | 增加上下文冲突、待人工判断和内容摘要一致性门禁（**落点勘误**：本稿原写作 `app/harness/policy.py`；M6 实施时并入回写服务，见 M6 计划 Task 4。仓库中不存在 `app/harness/` 包） |
 | `app/db.py` | 为每个 SQLite 连接启用 `PRAGMA foreign_keys=ON` |
 | `scripts/init_db.py` | 读取与应用统一配置；初始化后校验外键和规则配置 |
 | `tests/` | 增加数据约束、四状态、方向规则、缺失规则、版本隔离和幂等测试 |
@@ -402,7 +402,7 @@ evaluate(rule, review_context, parsed_evidence) -> RuleEvaluation
 6. 更新主项目计划中的 M1 完成条件。
 7. 进入 **M2（mock 审批系统）**。
 
-> M5 才实现：`app/rules/evaluator.py`（四状态判定）、`app/rules/aggregator.py`（风险聚合）、`app/harness/policy.py`（上下文冲突与内容摘要门禁）。本次仅定义其数据结构与语义。
+> M5 才实现：`app/rules/evaluator.py`（四状态判定）、`app/rules/aggregator.py`（风险聚合）、`app/services/writeback_service.py`（上下文冲突与内容摘要门禁；本稿原写作 `app/harness/policy.py`，M6 实施时并入回写服务）。本次仅定义其数据结构与语义。
 
 ## 12. 完成标准
 

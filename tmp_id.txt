@@ -1,0 +1,584 @@
+﻿FF                                                                       [100%]
+================================== FAILURES ===================================
+____________ test_pg_concurrent_identical_saves_return_one_effect _____________
+
+self = <sqlalchemy.engine.base.Connection object at 0x000001BECC0B6AD0>
+dialect = <sqlalchemy.dialects.postgresql.psycopg.PGDialect_psycopg object at 0x000001BECBBF2910>
+context = <sqlalchemy.dialects.postgresql.psycopg.PGExecutionContext_psycopg object at 0x000001BECC0BEB10>
+statement = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x000001BECC0E6810>
+parameters = [{'comment_text': 'ͬһ������', 'confirmed_at': None, 'confirmed_by': None, 'confirmed_digest': None, ...}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 database=m9) at 0x1becbc68720>
+query = 'INSERT INTO review_results (task_id, run_id, overall_risk_level, summary_text, focus_points_json, comment_text, revie...gest)s::VARCHAR, %(confirmed_at)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING review_results.id, review_results.created_at'
+params = {'comment_text': 'ͬһ������', 'confirmed_at': None, 'confirmed_by': None, 'confirmed_digest': None, ...}
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.UniqueViolation: duplicate key value violates unique constraint "review_results_task_id_version_no_key"
+E           DETAIL:  Key (task_id, version_no)=(1, 1) already exists.
+
+.venv\Lib\site-packages\psycopg\cursor.py:97: UniqueViolation
+
+The above exception was the direct cause of the following exception:
+
+pg_session = <sqlalchemy.orm.session.Session object at 0x000001BECB863190>
+pg_sessionmaker = sessionmaker(class_='Session', autocommit=False, future=True, bind=Engine(postgresql+psycopg://m9:***@127.0.0.1:55432/m9), autoflush=False, expire_on_commit=True)
+
+    def test_pg_concurrent_identical_saves_return_one_effect(pg_session, pg_sessionmaker) -> None:
+        run = _completed_run(pg_session)
+        # \u26a0\ufe0f \u7ebf\u7a0b\u91cc\u53ea\u4f20**\u666e\u901a\u503c**\uff1arun \u662f\u4e3b\u7ebf\u7a0b\u4f1a\u8bdd\u7684\u5bf9\u8c61\uff0ccommit \u540e\u5df2\u8fc7\u671f\uff0c
+        # ���߳������ run.id �ᴥ�����߳������أ�Session ���������������
+        run_id: int = run.id
+    
+        def save_same(_: str):
+            session = pg_sessionmaker()
+            try:
+                saved = save_review_result(
+                    session,
+                    run_id=run_id,
+                    overall_risk_level="low",
+                    summary_text="����",
+                    focus_points_json=[],
+                    comment_text="ͬһ������",
+                    actor=_actor("same"),
+                )
+                # \u26a0\ufe0f save_review_result \u660e\u786e"\u4e0d\u63d0\u4ea4"\uff08\u8c03\u7528\u65b9\u51b3\u5b9a\u4e8b\u52a1\u8fb9\u754c\uff09\u2014\u2014
+                # ���ύ�Ļ� close() ��ع�����̬�������ᷢ������һ������ʧ��
+                # �ڶ���"�ɹ�"������ ��̬���Ա���������һ��**����ύ**
+                session.commit()
+                return saved
+            finally:
+                session.close()
+    
+        with ThreadPoolExecutor(max_workers=2) as pool:
+>           results = list(pool.map(save_same, ["a", "b"]))
+
+tests\postgres\test_idempotency_concurrency.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:619: in result_iterator
+    yield _result_or_cancel(fs.pop())
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:317: in _result_or_cancel
+    return fut.result(timeout)
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+tests\postgres\test_idempotency_concurrency.py:89: in save_same
+    saved = save_review_result(
+app\services\result_service.py:261: in save_review_result
+    nested = session.begin_nested()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1969: in begin_nested
+    return self.begin(nested=True)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1935: in begin
+    trans = trans._begin(nested=nested)
+<string>:2: in _begin
+    ???
+.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1045: in _begin
+    return SessionTransaction(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:960: in __init__
+    self._take_snapshot()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1089: in _take_snapshot
+    self.session.flush()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4352: in flush
+    self._flush(objects)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4487: in _flush
+    with util.safe_reraise():
+.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py:146: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4448: in _flush
+    flush_context.execute()
+.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py:466: in execute
+    rec.execute(self)
+.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py:642: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv\Lib\site-packages\sqlalchemy\orm\persistence.py:93: in save_obj
+    _emit_insert_statements(
+.venv\Lib\site-packages\sqlalchemy\orm\persistence.py:1233: in _emit_insert_statements
+    result = connection.execute(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1418: in execute
+    return meth(
+.venv\Lib\site-packages\sqlalchemy\sql\elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 database=m9) at 0x1becbc68720>
+query = 'INSERT INTO review_results (task_id, run_id, overall_risk_level, summary_text, focus_points_json, comment_text, revie...gest)s::VARCHAR, %(confirmed_at)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING review_results.id, review_results.created_at'
+params = {'comment_text': 'ͬһ������', 'confirmed_at': None, 'confirmed_by': None, 'confirmed_digest': None, ...}
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           sqlalchemy.exc.IntegrityError: (psycopg.errors.UniqueViolation) duplicate key value violates unique constraint "review_results_task_id_version_no_key"
+E           DETAIL:  Key (task_id, version_no)=(1, 1) already exists.
+E           [SQL: INSERT INTO review_results (task_id, run_id, overall_risk_level, summary_text, focus_points_json, comment_text, review_status, hit_count, needs_review_count, not_applicable_count, version_no, result_fingerprint, supersedes_result_id, created_by, updated_at, manual_confirmed, confirmed_by, content_digest, confirmed_digest, confirmed_at) VALUES (%(task_id)s::INTEGER, %(run_id)s::INTEGER, %(overall_risk_level)s::VARCHAR, %(summary_text)s::VARCHAR, %(focus_points_json)s::VARCHAR, %(comment_text)s::VARCHAR, %(review_status)s::VARCHAR, %(hit_count)s::INTEGER, %(needs_review_count)s::INTEGER, %(not_applicable_count)s::INTEGER, %(version_no)s::INTEGER, %(result_fingerprint)s::VARCHAR, %(supersedes_result_id)s::INTEGER, %(created_by)s::VARCHAR, %(updated_at)s::TIMESTAMP WITHOUT TIME ZONE, %(manual_confirmed)s::INTEGER, %(confirmed_by)s::VARCHAR, %(content_digest)s::VARCHAR, %(confirmed_digest)s::VARCHAR, %(confirmed_at)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING review_results.id, review_results.created_at]
+E           [parameters: {'task_id': 1, 'run_id': 1, 'overall_risk_level': 'low', 'summary_text': '����', 'focus_points_json': '[]', 'comment_text': 'ͬһ������', 'review_status': 'needs_review', 'hit_count': 0, 'needs_review_count': 0, 'not_applicable_count': 0, 'version_no': 1, 'result_fingerprint': '24b3d0fe80fa51dfdbcedf9346924a365422223804e90066a64b8f47a687de3e', 'supersedes_result_id': None, 'created_by': 'same', 'updated_at': None, 'manual_confirmed': 0, 'confirmed_by': None, 'content_digest': '0b6689cfc6c139861857e1c721c7f964511b76e3bccc1c65902d5ded4b56efdb', 'confirmed_digest': None, 'confirmed_at': None}]
+E           (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+.venv\Lib\site-packages\psycopg\cursor.py:97: IntegrityError
+__________ test_pg_concurrent_writeback_requests_return_one_attempt ___________
+
+self = <sqlalchemy.engine.base.Connection object at 0x000001BECC1A1F90>
+dialect = <sqlalchemy.dialects.postgresql.psycopg.PGDialect_psycopg object at 0x000001BECD040050>
+context = <sqlalchemy.dialects.postgresql.psycopg.PGExecutionContext_psycopg object at 0x000001BECC0EF210>
+statement = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x000001BECC1798D0>
+parameters = [{'attempt_no': 1, 'content_digest': 'c171bf5c69c6db69879fa5e7beca05314788fe3ea68e38777c3428d2fe19b590', 'idempotency_key': '13301bdfe873e430ebdbfdc961f75e416f556ebad5f1964a2f119bc67482738a', 'operator_name': 'w', ...}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 database=m9) at 0x1becc1d54e0>
+query = 'INSERT INTO comment_logs (task_id, review_id, write_status, reason_code, reason_text, content_digest, idempotency_key...xt)s::VARCHAR, %(attempt_no)s::INTEGER, %(operator_name)s::VARCHAR) RETURNING comment_logs.id, comment_logs.created_at'
+params = {'attempt_no': 1, 'content_digest': 'c171bf5c69c6db69879fa5e7beca05314788fe3ea68e38777c3428d2fe19b590', 'idempotency_key': '13301bdfe873e430ebdbfdc961f75e416f556ebad5f1964a2f119bc67482738a', 'operator_name': 'w', ...}
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.UniqueViolation: duplicate key value violates unique constraint "comment_logs_idempotency_key_key"
+E           DETAIL:  Key (idempotency_key)=(13301bdfe873e430ebdbfdc961f75e416f556ebad5f1964a2f119bc67482738a) already exists.
+
+.venv\Lib\site-packages\psycopg\cursor.py:97: UniqueViolation
+
+The above exception was the direct cause of the following exception:
+
+pg_session = <sqlalchemy.orm.session.Session object at 0x000001BECD040990>
+pg_sessionmaker = sessionmaker(class_='Session', autocommit=False, future=True, bind=Engine(postgresql+psycopg://m9:***@127.0.0.1:55432/m9), autoflush=False, expire_on_commit=True)
+
+    def test_pg_concurrent_writeback_requests_return_one_attempt(
+        pg_session, pg_sessionmaker
+    ) -> None:
+        run = _completed_run(pg_session)
+        result = _confirmed_result(pg_session, run)
+        task = pg_session.get(ApprovalTask, run.task_id)
+        task.task_status = TaskStatus.DONE.value
+        pg_session.commit()
+        # \u26a0\ufe0f \u540c\u4e0a\uff1a\u7ebf\u7a0b\u91cc\u53ea\u4f20\u666e\u901a\u503c\uff0c\u907f\u514d\u8de8\u7ebf\u7a0b\u61d2\u52a0\u8f7d
+        instance_id: str = task.instance_id
+        result_id: int = result.id
+    
+        def request(_: str):
+            session = pg_sessionmaker()
+            try:
+                ref = request_writeback(
+                    session,
+                    instance_id=instance_id,
+                    result_id=result_id,
+                    actor=_actor("w"),
+                )
+                session.commit()  # ͬ�ϣ���ͼ���������⣬��̬�Żᷢ��
+                return ref
+            finally:
+                session.close()
+    
+        with ThreadPoolExecutor(max_workers=2) as pool:
+>           refs = list(pool.map(request, ["a", "b"]))
+
+tests\postgres\test_idempotency_concurrency.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:619: in result_iterator
+    yield _result_or_cancel(fs.pop())
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:317: in _result_or_cancel
+    return fut.result(timeout)
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+C:\Users\Yf\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+tests\postgres\test_idempotency_concurrency.py:161: in request
+    ref = request_writeback(
+app\services\writeback_service.py:305: in request_writeback
+    nested = session.begin_nested()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1969: in begin_nested
+    return self.begin(nested=True)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1935: in begin
+    trans = trans._begin(nested=nested)
+<string>:2: in _begin
+    ???
+.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1045: in _begin
+    return SessionTransaction(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:960: in __init__
+    self._take_snapshot()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1089: in _take_snapshot
+    self.session.flush()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4352: in flush
+    self._flush(objects)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4487: in _flush
+    with util.safe_reraise():
+.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py:146: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4448: in _flush
+    flush_context.execute()
+.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py:466: in execute
+    rec.execute(self)
+.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py:642: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv\Lib\site-packages\sqlalchemy\orm\persistence.py:93: in save_obj
+    _emit_insert_statements(
+.venv\Lib\site-packages\sqlalchemy\orm\persistence.py:1233: in _emit_insert_statements
+    result = connection.execute(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1418: in execute
+    return meth(
+.venv\Lib\site-packages\sqlalchemy\sql\elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 database=m9) at 0x1becc1d54e0>
+query = 'INSERT INTO comment_logs (task_id, review_id, write_status, reason_code, reason_text, content_digest, idempotency_key...xt)s::VARCHAR, %(attempt_no)s::INTEGER, %(operator_name)s::VARCHAR) RETURNING comment_logs.id, comment_logs.created_at'
+params = {'attempt_no': 1, 'content_digest': 'c171bf5c69c6db69879fa5e7beca05314788fe3ea68e38777c3428d2fe19b590', 'idempotency_key': '13301bdfe873e430ebdbfdc961f75e416f556ebad5f1964a2f119bc67482738a', 'operator_name': 'w', ...}
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           sqlalchemy.exc.IntegrityError: (psycopg.errors.UniqueViolation) duplicate key value violates unique constraint "comment_logs_idempotency_key_key"
+E           DETAIL:  Key (idempotency_key)=(13301bdfe873e430ebdbfdc961f75e416f556ebad5f1964a2f119bc67482738a) already exists.
+E           [SQL: INSERT INTO comment_logs (task_id, review_id, write_status, reason_code, reason_text, content_digest, idempotency_key, write_response_text, attempt_no, operator_name) VALUES (%(task_id)s::INTEGER, %(review_id)s::INTEGER, %(write_status)s::VARCHAR, %(reason_code)s::VARCHAR, %(reason_text)s::VARCHAR, %(content_digest)s::VARCHAR, %(idempotency_key)s::VARCHAR, %(write_response_text)s::VARCHAR, %(attempt_no)s::INTEGER, %(operator_name)s::VARCHAR) RETURNING comment_logs.id, comment_logs.created_at]
+E           [parameters: {'task_id': 1, 'review_id': 1, 'write_status': 'writing', 'reason_code': None, 'reason_text': None, 'content_digest': 'c171bf5c69c6db69879fa5e7beca05314788fe3ea68e38777c3428d2fe19b590', 'idempotency_key': '13301bdfe873e430ebdbfdc961f75e416f556ebad5f1964a2f119bc67482738a', 'write_response_text': None, 'attempt_no': 1, 'operator_name': 'w'}]
+E           (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+.venv\Lib\site-packages\psycopg\cursor.py:97: IntegrityError
+=========================== short test summary info ===========================
+FAILED tests/postgres/test_idempotency_concurrency.py::test_pg_concurrent_identical_saves_return_one_effect
+FAILED tests/postgres/test_idempotency_concurrency.py::test_pg_concurrent_writeback_requests_return_one_attempt
+2 failed in 4.07s

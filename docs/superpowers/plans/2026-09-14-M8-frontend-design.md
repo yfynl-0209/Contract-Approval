@@ -77,7 +77,7 @@ Node 20 · React 18 · TypeScript 5 · Vite · TanStack Query · PDF 预览组�
 | 编辑合同正文 | 系统只审核、不改合同 |
 | 手工录入规则表达式（图形化） | 规则由 `seed.sql`/管理员维护，M8 只在扩展入口做**启停用、适用条件、版本发布** |
 | 前端计算任何业务口径（风险等级、命中数、统计） | §9 硬约束 |
-| 前端决定"能不能回写" | 回写门禁是后端的事（`app/harness/policy.py`） |
+| 前端决定"能不能回写" | 回写门禁是后端的事（`app/services/writeback_service.py`；本稿原写作 `app/harness/policy.py`） |
 | 移动端适配 | v1 面向桌面法务场景 |
 | 国际化、暗色主题 | v1 中文单语、亮色 |
 

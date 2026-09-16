@@ -26,10 +26,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import time
 from dataclasses import dataclass
 from typing import Protocol
 
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.auth import Actor
@@ -277,6 +279,11 @@ def request_writeback(
                               code=denial[0], text=denial[1], actor=actor)
 
     # ---- 放行：一个事务里 意图 + Outbox + 审计 ----
+    # ⚠️ PG（M9）并发语义：两个请求可能同时走完上面的 SELECT（都看不到
+    # 对方未提交的插入），随后都 INSERT —— 幂等键唯一约束只让**一个**成功，
+    # 另一个抛 IntegrityError。处理：SAVEPOINT 内插入；撞约束就回滚到
+    # savepoint、**重读幂等行**并按重放返回 —— 两次请求一个效果，而不是 500。
+    # （SQLite 顺序写天然串行，预检已覆盖，savepoint 不改变行为。）
     if existing is not None:
         # 曾被拒绝的行转正：同一行从 not_written → writing
         attempt = existing
@@ -294,8 +301,18 @@ def request_writeback(
             idempotency_key=key,
             operator_name=actor.display_name,
         )
-        session.add(attempt)
-        session.flush()
+        # ⚠️ `add` 必须在 begin_nested **之后**：begin_nested 会先自动 flush
+        # 挂起对象 —— 那次 INSERT 在 savepoint 之外，异常接不住（与
+        # result_service 同款教训，实测于 M9 并发测试）。
+        nested = session.begin_nested()
+        try:
+            session.add(attempt)
+            session.flush()
+        except IntegrityError:
+            nested.rollback()  # 只回滚到 savepoint，外层事务继续可用
+            return _idempotent_replay_after_race(session, task=task, view=view, key=key)
+        else:
+            nested.commit()
 
     event = _create_outbox_event(
         session, attempt=attempt, task=task, result=view, idempotency_key=key
@@ -446,6 +463,30 @@ def _create_outbox_event(
     session.add(event)
     session.flush()
     return event
+
+
+def _idempotent_replay_after_race(
+    session: Session,
+    *,
+    task: ApprovalTask,
+    view: ResultView,
+    key: str,
+) -> WritebackRef:
+    """撞了幂等键唯一约束后的**收尾**：返回"赢家的那次尝试"。
+
+    ⚠️ 输家此刻重读，**可能还看不到**赢家的行（对方事务尚未提交）——
+    READ COMMITTED 下只有已提交数据可见。因此带退避地重读几次；
+    仍看不到就原样把竞态炸出来（宁可报错也绝不编一个 attempt_id）。
+    """
+    for _ in range(5):
+        session.commit()  # 结束本次（已失效的）事务，开新事务重读
+        row = session.execute(
+            select(CommentLog).where(CommentLog.idempotency_key == key)
+        ).scalar_one_or_none()
+        if row is not None:
+            return _ref_from_row(task, view, row, reused=True)
+        time.sleep(0.05)
+    raise RuntimeError(f"幂等键写入竞态：插入失败且重读不到对方的行（key={key[:12]}…）")
 
 
 def _ref_from_row(

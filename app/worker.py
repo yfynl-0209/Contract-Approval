@@ -146,11 +146,11 @@ def claim_next_job(
 
     ⚠️ **本函数会提交**（领取必须独立于执行落库，见模块说明）。
 
-    ⚠️ **M9 迁移 PostgreSQL 时这里必须改**：`UPDATE ... WHERE id = (SELECT ... LIMIT 1)`
-    在 SQLite 下可靠（写锁串行化），而在 PG 下两个并发事务可能选中**同一行** ——
-    需要把子查询换成 `SELECT ... FOR UPDATE SKIP LOCKED`。
-    这与 §0.7 记下的"部分唯一索引在 PG 下会退化成全局唯一"是同一类**迁移地雷**：
-    在本机都正常，换库才暴露。
+    ⚠️ **PG 语义（M9 已落）**：候选子查询带 `FOR UPDATE SKIP LOCKED` ——
+    两个并发 Worker 不再读到同一个候选 id：后来者**跳过**被前者锁住的行，
+    直接拿下一行，而不是排在锁上等它提交后再白白失败一次。
+    SQLite 方言**不渲染** `FOR UPDATE`（写锁天然串行化），因此这是
+    单一路径、两库通用，不存在"SQLite 走旧路径"的分叉。
     """
     moment = now or utcnow()
     recycle_expired_leases(session, now=moment)
@@ -161,6 +161,8 @@ def claim_next_job(
         .where(*claimable)
         .order_by(WorkflowJob.id)
         .limit(1)
+        # PG：跳过被并发领取者锁住的行（M9）。SQLite：忽略，语义不变。
+        .with_for_update(skip_locked=True)
         .scalar_subquery()
     )
 

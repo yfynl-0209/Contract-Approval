@@ -18,10 +18,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
 from sqlalchemy import func, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.auth import Actor
@@ -250,8 +252,41 @@ def save_review_result(
         # 机器判据用 `actor_id`，它落在审计事件里 —— 见 `confirm_result`。
         created_by=actor.display_name,
     )
-    session.add(row)
-    session.flush()
+    # ⚠️ PG（M9）并发语义：两个请求对同一批次、同一指纹同时保存时，
+    # 双方都可能走完上面的"幂等预检"（都看不到对方未提交的行）——
+    # 唯一约束 `(run_id, result_fingerprint)` 只让一个 INSERT 成功。
+    # SAVEPOINT 内插入，撞约束就回滚 savepoint、重读对方的行，
+    # 按"幂等复用"返回 —— 同内容两次保存 = 一个效果，而不是 500。
+    # ⚠️ `add` 必须在 begin_nested **之后**：begin_nested 会先自动 flush
+    # 挂起对象 —— 那次 INSERT 在 savepoint 之外，异常根本接不住（实测）。
+    nested = session.begin_nested()
+    try:
+        session.add(row)
+        session.flush()
+    except IntegrityError:
+        nested.rollback()
+        for _ in range(5):
+            session.commit()  # 开新事务重读（READ COMMITTED 需对方已提交）
+            winner = session.execute(
+                select(ReviewResult).where(
+                    ReviewResult.run_id == run_id,
+                    ReviewResult.result_fingerprint == fingerprint,
+                )
+            ).scalar_one_or_none()
+            if winner is not None:
+                return SavedResult(
+                    result_id=winner.id,
+                    run_id=run_id,
+                    task_id=winner.task_id,
+                    version_no=winner.version_no,
+                    reused=True,
+                    overall_risk_level=winner.overall_risk_level,
+                    content_digest=winner.content_digest,
+                )
+            time.sleep(0.05)
+        raise  # 重读不到就原样暴露竞态（不编造 result_id）
+    else:
+        nested.commit()
 
     return SavedResult(
         result_id=row.id,

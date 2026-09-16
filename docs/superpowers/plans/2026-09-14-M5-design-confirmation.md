@@ -118,7 +118,7 @@ M5 的验收**必须自己造数据**（拉取 → 解析 → 审查），不能
 | 前端展示与折叠规则 | **M8** |
 | 真实 LLM 接入与 GPU 推理 | **M11**（M5 只到端口 + Mock） |
 | 黄金合同集的质量统计 | **M12** |
-| 回写门禁（`app/harness/policy.py`） | **M6**（M5 只产出可供其判断的字段） |
+| 回写门禁（`app/services/writeback_service.py`） | **M6**（M5 只产出可供其判断的字段） |
 
 ---
 
@@ -470,6 +470,11 @@ T3a 与 T3/T4 可并行，不拉长关键路径；但 **T8 依赖 T3a**：
   ⚠️ 24–28 是外部评审第 3 轮补入的，见 §10；
 - **3. 是否在 M5 一并实现 `app/harness/policy.py`（回写门禁）** —— 本稿把它留给 M6，
   理由是门禁的输入（确认摘要、结果完整性）在 M6 才齐；若希望 M5 提前定义，请指出。
+  ✅ **已定（M6）**：门禁落地为 **`app/services/writeback_service.py`** 的
+  `evaluate_writeback_gate(task, result, settings) -> GateDecision`（纯函数，不碰数据库）。
+  ⚠️ **落点勘误**：本稿（含 §2.2 的上表）引用的 `app/harness/policy.py` **未按原样建立**，
+  仓库中不存在 `app/harness/` 包 —— 后续文档与代码索引一律以
+  `app/services/writeback_service.py` 为准。
 - ✅ **4. 已定并落地（2026-09-14）**：`PAY_PREPAY_MISSING` **补立场限定** ——
   它原先只按合同类型限定，我方为**采购方**（不需要预付、全额验收后付款）时也会命中 medium，
   导致验收 19「基线总风险 = low」跑不到。已按 §10 的方案 1 处置，**验收 19 现成立**（实证见 §10）。

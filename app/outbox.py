@@ -153,6 +153,9 @@ def claim_next_event(
         .where(*ready)
         .order_by(OutboxEvent.id)
         .limit(1)
+        # PG（M9）：跳过被并发派发器锁住的行，避免"等锁 → 失败 → 白转一圈"；
+        # SQLite 方言不渲染 FOR UPDATE，语义不变。
+        .with_for_update(skip_locked=True)
     ).scalar_one_or_none()
     if candidate is None:
         session.commit()
